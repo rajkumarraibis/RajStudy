@@ -29,6 +29,7 @@ The Databricks Lakehouse Platform is a unified architecture that combines the be
 ---
 
 ## Unified. Open. Scalable.
+![Unified. Open. Scalable](/images/unified_open_scalable.png)
 
 ### Unified
 - One architecture for integration, storage, processing, governance, sharing, analytics, and AI.
