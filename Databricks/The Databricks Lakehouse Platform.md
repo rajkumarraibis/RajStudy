@@ -41,7 +41,7 @@ The Databricks Lakehouse Platform is a unified architecture that combines the be
 - Your data is always under your control, free from proprietary formats and closed ecosystems.
 - Lakehouse is underpinned by widely adopted open-source projects: Apache Spark™, Delta Lake, and MLflow.
 - Delta Sharing provides an open solution to securely share live data from your lakehouse to any computing platform without replication and complicated ETL.
-![Open](/images/open.png)
+<img src="/images/open.png" alt="Open" style="width:50%"/>
 
 ### Scalable
 - Automatic optimization for performance and storage ensures the lowest TCO of any data platform.
