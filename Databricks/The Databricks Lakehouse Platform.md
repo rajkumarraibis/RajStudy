@@ -100,4 +100,4 @@ The Databricks Lakehouse Platform is a unified architecture that combines the be
 
 The Databricks Lakehouse Platform simplifies data architecture while empowering organizations to derive actionable insights faster. By merging the flexibility of data lakes with the reliability of data warehouses, it represents the future of data platforms.
 
-For more details, visit the Databricks Lakehouse Platform page.
+For more details, visit the [Databricks Lakehouse Platform page](https://www.databricks.com/product/data-lakehouse)
