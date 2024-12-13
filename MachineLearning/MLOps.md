@@ -31,4 +31,4 @@
 
 ## What is MLOps ?
 MLOps stands for Machine Learning Operations. MLOps is a core function of Machine Learning engineering, focused on streamlining the process of taking machine learning models to production, and then maintaining and monitoring them. MLOps is a collaborative function, often comprising data scientists, devops engineers, and IT.
-![image](https://github.com/user-attachments/assets/9bc7bd3e-bf10-4139-a9a7-4dcc9b3d88e1)
+![image](/images/mlops-loop-en.jpg)
