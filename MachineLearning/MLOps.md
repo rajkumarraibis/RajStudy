@@ -8,22 +8,23 @@
 
 ### Suggested Reading Outline:
 1. **Introduction to MLOps**:
+   - What is MLOps ?
    - Key components: CI/CD pipelines, monitoring, and automation.
    - Difference between MLOps and DevOps.
    - Popular MLOps tools (Kubeflow, MLflow, SageMaker).
 
-2. **Building CI/CD Pipelines for ML**:
+3. **Building CI/CD Pipelines for ML**:
    - Continuous integration and versioning of models.
    - Automating model retraining and deployment.
 
-3. **Data Management in MLOps**:
+4. **Data Management in MLOps**:
    - Handling feature engineering pipelines.
    - Data drift monitoring and retraining triggers.
 
-4. **MLOps in Cloud Environments**:
+5. **MLOps in Cloud Environments**:
    - Implementing MLOps on AWS, GCP, or Azure.
    - Leveraging Databricks for scalable ML workflows.
 
-5. **Challenges and Case Studies**:
+6. **Challenges and Case Studies**:
    - Real-world examples of successful MLOps implementations.
    - Common pitfalls and solutions.
