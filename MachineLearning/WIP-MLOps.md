@@ -10,7 +10,7 @@
 1. **Introduction to MLOps**:
    - [What is MLOps ?](#what-is-mlops-)
    - [Key components - CI/CD pipelines, monitoring, and automation](#key-components)
-   - Difference between MLOps and DevOps.
+   - Difference between MLOps and DevOps
    
 3. **Building CI/CD Pipelines for ML**:
    - Continuous integration and versioning of models.
@@ -65,4 +65,34 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 
 ---
 
-These tools will help you streamline and operationalize the ML lifecycle efficiently.
+The key difference between **MLOps** and **DevOps** lies in the domain they serve and the challenges they address:
+
+---
+## Difference between MLOps and DevOps
+
+### **1. Purpose**
+- **DevOps**:
+  - Focuses on software development and operational workflows.
+  - Ensures seamless integration, testing, deployment, and monitoring of traditional software applications.
+
+- **MLOps**:
+  - Extends DevOps practices to machine learning workflows.
+  - Focuses on managing the complexities of data, model training, deployment, and monitoring in ML systems.
+
+
+### **2. Core Components**
+| Aspect             | DevOps                                   | MLOps                                  |
+|---------------------|------------------------------------------|----------------------------------------|
+| **Primary Focus**  | Code and software deployment pipelines. | Data, models, and ML workflows.        |
+| **Key Artifacts**  | Source code, binaries, configurations.   | Code, datasets, trained models, features. |
+| **Dependencies**   | Application libraries and environments.  | Data pipelines, model training processes. |
+
+
+### **3. Lifecycle**
+- **DevOps**:
+  - Development → Integration → Testing → Deployment → Monitoring.
+  - Focuses on static artifacts like software binaries.
+
+- **MLOps**:
+  - Data collection → Model training → Validation → Deployment → Continuous Monitoring.
+  - Adds dynamic elements like datasets, model versions, and retraining workflows.
