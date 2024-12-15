@@ -60,6 +60,7 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 - **[Amazon SageMaker Pipelines](https://aws.amazon.com/sagemaker/pipelines/)**: Automates and scales ML workflows on AWS.
 
 #### **Data Pipelines**
+- **[Databricks Workflow](https://www.databricks.com/product/workflows)**: Databricks Workflow orchestration for data and ML pipelines.
 - **[Apache Airflow](https://airflow.apache.org/)**: Workflow orchestration for data and ML pipelines.
 
 ---
