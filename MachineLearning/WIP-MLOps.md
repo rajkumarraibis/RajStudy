@@ -9,7 +9,7 @@
 ### Suggested Reading Outline:
 1. **Introduction to MLOps**:
    - [What is MLOps ?](#what-is-mlops-)
-   - Key components: CI/CD pipelines, monitoring, and automation.
+   - [Key components: CI/CD pipelines, monitoring, and automation.](#key_components:_ci/cd_pipelines,_monitoring,_and_automation.)
    - Difference between MLOps and DevOps.
    - Popular MLOps tools (Kubeflow, MLflow, SageMaker).
 
@@ -34,3 +34,40 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 , devops engineers and IT.
 
 <img src="/images/mlops-loop-en.jpg" alt="MLOps" style="width:50%"/>
+
+Here are the tools for each aspect of MLOps with links to their official resources:
+
+---
+##Key components: CI/CD pipelines, monitoring, and automation.
+
+### **1. CI/CD Pipelines**
+- **[Jenkins](https://www.jenkins.io/)**: Automation server for building and deploying ML models.
+- **[GitHub Actions](https://github.com/features/actions)**: Automates workflows directly from GitHub repositories.
+- **[GitLab CI/CD](https://docs.gitlab.com/ee/ci/)**: Provides integrated pipeline automation for ML.
+- **[Azure DevOps](https://azure.microsoft.com/en-us/products/devops/)**: Streamlined CI/CD with integration into Azure Machine Learning.
+
+---
+
+### **2. Monitoring**
+- **[Prometheus](https://prometheus.io/)**: System monitoring and alerting toolkit.
+- **[Grafana](https://grafana.com/)**: Visualization and analytics tool for metrics (integrates with Prometheus).
+- **[Seldon Core](https://docs.seldon.io/projects/seldon-core/en/latest/)**: For monitoring and managing ML models in production.
+- **[WhyLabs](https://whylabs.ai/)**: AI observability and data quality monitoring tool.
+- **[Amazon CloudWatch](https://aws.amazon.com/cloudwatch/)**: Tracks metrics and logs for models deployed on AWS.
+
+---
+
+### **3. Automation**
+#### **Model Training and Deployment**
+- **[Kubeflow](https://www.kubeflow.org/)**: Orchestrates ML workflows on Kubernetes.
+- **[MLflow](https://mlflow.org/)**: Open-source platform to manage the ML lifecycle.
+- **[Amazon SageMaker Pipelines](https://aws.amazon.com/sagemaker/pipelines/)**: Automates and scales ML workflows on AWS.
+
+#### **Data Pipelines**
+- **[Apache Airflow](https://airflow.apache.org/)**: Workflow orchestration for data and ML pipelines.
+- **[Dagster](https://dagster.io/)**: Orchestration platform for building and maintaining data pipelines.
+- **[Prefect](https://www.prefect.io/)**: Automates, monitors, and schedules data workflows.
+
+---
+
+These tools will help you streamline and operationalize the ML lifecycle efficiently.
