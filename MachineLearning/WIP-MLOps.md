@@ -9,7 +9,7 @@
 # Table of Contents:
 1. **Introduction to MLOps**:
    - [What is MLOps ?](#what-is-mlops-)
-   - [Key components: CI/CD pipelines, monitoring, and automation](#key-components-ci-cd-pipelines-monitoring-and-automation)
+   - [Key components - CI/CD pipelines, monitoring, and automation](#key-components---ci-cd-pipelines-monitoring-and-automation)
 
    - Difference between MLOps and DevOps.
    - Popular MLOps tools (Kubeflow, MLflow, SageMaker).
@@ -38,7 +38,7 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 
 
 
-## Key components: CI/CD pipelines, monitoring, and automation
+## Key components - CI/CD pipelines, monitoring, and automation
 
 ### **1. CI/CD Pipelines**
 - **[Jenkins](https://www.jenkins.io/)**: Automation server for building and deploying ML models.
