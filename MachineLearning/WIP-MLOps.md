@@ -10,7 +10,7 @@
 1. **Introduction to MLOps**:
    - [What is MLOps ?](#what-is-mlops-)
    - [Key components - CI/CD pipelines, monitoring, and automation](#key-components)
-   - Difference between MLOps and DevOps
+   - [Difference between MLOps and DevOps](#difference-between-mlops-and-devops)
    
 3. **Building CI/CD Pipelines for ML**:
    - Continuous integration and versioning of models.
