@@ -10,10 +10,8 @@
 1. **Introduction to MLOps**:
    - [What is MLOps ?](#what-is-mlops-)
    - [Key components - CI/CD pipelines, monitoring, and automation](#key-components)
-
    - Difference between MLOps and DevOps.
-   - Popular MLOps tools (Kubeflow, MLflow, SageMaker).
-
+   
 3. **Building CI/CD Pipelines for ML**:
    - Continuous integration and versioning of models.
    - Automating model retraining and deployment.
