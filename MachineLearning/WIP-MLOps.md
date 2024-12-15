@@ -6,10 +6,11 @@
 - **Relevance to Your Role**: Your experience in cloud technologies like AWS and GCP aligns well with MLOps practices, which often involve these platforms.
 - **Interview Edge**: Knowledge of MLOps demonstrates a practical understanding of deploying and monitoring ML models, which is highly valued.
 
-### Suggested Reading Outline:
+# Table of Contents:
 1. **Introduction to MLOps**:
    - [What is MLOps ?](#what-is-mlops-)
-   - [Key components: CI/CD pipelines, monitoring, and automation.](#key_components:_ci/cd_pipelines,_monitoring,_and_automation.)
+   - [Key Components: CI/CD pipelines, monitoring, and automation.](#key-components-ci-cd-pipelines-monitoring-and-automation)
+
    - Difference between MLOps and DevOps.
    - Popular MLOps tools (Kubeflow, MLflow, SageMaker).
 
