@@ -49,8 +49,6 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 ---
 
 ### **2. Monitoring**
-- **[Prometheus](https://prometheus.io/)**: System monitoring and alerting toolkit.
-- **[Grafana](https://grafana.com/)**: Visualization and analytics tool for metrics (integrates with Prometheus).
 - **[Seldon Core](https://docs.seldon.io/projects/seldon-core/en/latest/)**: For monitoring and managing ML models in production.
 - **[WhyLabs](https://whylabs.ai/)**: AI observability and data quality monitoring tool.
 - **[Amazon CloudWatch](https://aws.amazon.com/cloudwatch/)**: Tracks metrics and logs for models deployed on AWS.
@@ -65,8 +63,6 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 
 #### **Data Pipelines**
 - **[Apache Airflow](https://airflow.apache.org/)**: Workflow orchestration for data and ML pipelines.
-- **[Dagster](https://dagster.io/)**: Orchestration platform for building and maintaining data pipelines.
-- **[Prefect](https://www.prefect.io/)**: Automates, monitors, and schedules data workflows.
 
 ---
 
