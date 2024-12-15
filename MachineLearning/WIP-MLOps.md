@@ -36,9 +36,8 @@ MLOps stands for Machine Learning Operations. MLOps is a core function of Machin
 
 <img src="/images/mlops-loop-en.jpg" alt="MLOps" style="width:50%"/>
 
-Here are the tools for each aspect of MLOps with links to their official resources:
 
----
+
 ## Key components: CI/CD pipelines, monitoring, and automation
 
 ### **1. CI/CD Pipelines**
