@@ -23,11 +23,11 @@
 
 [**Automating Model Retraining and Deployment:**](#automating-model-retraining-and-deployment)
 
-[**Model CI\CD helps in tackling following issues**](#model-cicd-helps-in-tackling-following-issues)
+[**Model CI\CD helps in tackling following issues**](#model-ci-cd-helps-in-tackling-following-issues)
 
-[**Data Drift (with Example):**](#data-drift-with-example)
+[**Data Drift**](#data-drift)
 
-[**Model Atrophy (with Example):**](#model-atrophy-with-example)
+[**Model Atrophy**](#model-atrophy)
 
 5. **Data Management in MLOps**:
    - Handling feature engineering pipelines.
@@ -101,17 +101,17 @@ The key difference between **MLOps** and **DevOps** lies in the domain they serv
   - Data collection → Model training → Validation → Deployment → Continuous Monitoring.
   - Adds dynamic elements like datasets, model versions, and retraining workflows.
 
-**Continuous Integration and Versioning of Models:**  
+**Continuous Integration and Versioning of Models**  
 Regularly update and test models while tracking every change to ensure consistency, reproducibility, and easy rollback.  
 *Example*: Every time you modify a model’s code or data, a pipeline automatically trains, tests, and stores a new, versioned model artifact.
 
-**Automating Model Retraining and Deployment:**  
+**Automating Model Retraining and Deployment**  
 Automatically re-train and deploy new model versions based on defined triggers like drops in accuracy, signs of data drift, or model atrophy.  
 *Example*: If the model’s performance declines or incoming data changes significantly, a pipeline retrains the model with fresh data. Once it passes validation checks, it’s immediately put into production.
 
-**Model CI\CD helps in tackling following issues**
-**Data Drift (with Example):**  
+**Model CI CD helps in tackling following issues**
+**Data Drift**  
 Imagine you use a **Logistic Regression** model to predict whether an online shopper will make a purchase. Initially, your training data shows that most buyers are young adults using desktop computers. Over time, however, more older adults and mobile users start visiting your site. The demographic and device usage patterns shift, causing the model’s input data to differ significantly from what it was trained on. This is data drift—your model still tries to use the old pattern (young desktop users) on new, very different data (older mobile users), leading to poorer predictions.
 
-**Model Atrophy (with Example):**  
+**Model Atrophy**  
 Consider a **Random Forest** model recommending specific products to users of a streaming music service. When the model was created, it learned to associate certain listening habits with particular product preferences. Over the next few months, user tastes change due to new music trends, popular culture shifts, or even seasonal events. While the actual data features (like track play count, time spent on the app) might still look similar, the underlying relationship between user behavior and product preferences no longer holds. Even though the model sees data of the same “type,” it’s now predicting based on outdated associations. This leads to model atrophy: the model’s usefulness fades, and its predictive accuracy declines because the fundamental logic it relied on no longer applies.
