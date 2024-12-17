@@ -12,23 +12,9 @@
    - [Key components - CI/CD pipelines, monitoring, and automation](#key-components)
    - [Difference between MLOps and DevOps](#difference-between-mlops-and-devops)
    
-3. **Building CI/CD Pipelines for ML**:
-   - [**Continuous Integration and Versioning of Models:**](https://mlflow.org/docs/latest/model-registry.html)
-   - [**Automating Model Retraining and Deployment:**](https://cloud.google.com/ai-platform/pipelines/docs)
-   - [**Model CI/CD helps in tackling following issues**](https://towardsdatascience.com/continuous-integration-and-deployment-for-ml-models-1ecf6875cfdc)
-   - [**Data Drift (with Example):**](https://www.tecton.ai/blog/what-is-data-drift-and-how-to-monitor-for-it/)
-   - [**Model Atrophy (with Example):**](https://neptune.ai/blog/data-drift-and-model-performance#model-atrophy)
-
-[**Continuous Integration and Versioning of Models**](#continuous-integration-and-versioning-of-models)
-
-[**Automating Model Retraining and Deployment:**](#automating-model-retraining-and-deployment)
-
-[**Model CI\CD helps in tackling following issues**](#model-ci-cd-helps-in-tackling-following-issues)
-
-[**Data Drift**](#data-drift)
-
-[**Model Atrophy**](#model-atrophy)
-
+3. **CI/CD Pipelines for ML**:
+   - [CI/CD Pipelines for ML](#ci-cd-pipelines-for-ml)
+   
 5. **Data Management in MLOps**:
    - Handling feature engineering pipelines.
    
@@ -101,6 +87,7 @@ The key difference between **MLOps** and **DevOps** lies in the domain they serv
   - Data collection → Model training → Validation → Deployment → Continuous Monitoring.
   - Adds dynamic elements like datasets, model versions, and retraining workflows.
 
+### CI CD Pipelines for ML
 **Continuous Integration and Versioning of Models**  
 Regularly update and test models while tracking every change to ensure consistency, reproducibility, and easy rollback.  
 *Example*: Every time you modify a model’s code or data, a pipeline automatically trains, tests, and stores a new, versioned model artifact.
