@@ -19,7 +19,7 @@
    - [**Data Drift (with Example):**](https://www.tecton.ai/blog/what-is-data-drift-and-how-to-monitor-for-it/)
    - [**Model Atrophy (with Example):**](https://neptune.ai/blog/data-drift-and-model-performance#model-atrophy)
 
-[**Continuous Integration and Versioning of Models:**](#continuous-integration-and-versioning-of-models)
+[**Continuous Integration and Versioning of Models**](#continuous-integration-and-versioning-of-models)
 
 [**Automating Model Retraining and Deployment:**](#automating-model-retraining-and-deployment)
 
