@@ -19,6 +19,16 @@
    - [**Data Drift (with Example):**](https://www.tecton.ai/blog/what-is-data-drift-and-how-to-monitor-for-it/)
    - [**Model Atrophy (with Example):**](https://neptune.ai/blog/data-drift-and-model-performance#model-atrophy)
 
+[**Continuous Integration and Versioning of Models:**](#continuous-integration-and-versioning-of-models)
+
+[**Automating Model Retraining and Deployment:**](#automating-model-retraining-and-deployment)
+
+[**Model CI\CD helps in tackling following issues**](#model-cicd-helps-in-tackling-following-issues)
+
+[**Data Drift (with Example):**](#data-drift-with-example)
+
+[**Model Atrophy (with Example):**](#model-atrophy-with-example)
+
 5. **Data Management in MLOps**:
    - Handling feature engineering pipelines.
    
