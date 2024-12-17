@@ -13,21 +13,15 @@
    - [Difference between MLOps and DevOps](#difference-between-mlops-and-devops)
    
 3. **Building CI/CD Pipelines for ML**:
-   - Continuous integration and versioning of models.
-   - Automating model retraining and deployment.
+   - [**Continuous Integration and Versioning of Models:**](https://mlflow.org/docs/latest/model-registry.html)
+   - [**Automating Model Retraining and Deployment:**](https://cloud.google.com/ai-platform/pipelines/docs)
+   - [**Model CI/CD helps in tackling following issues**](https://towardsdatascience.com/continuous-integration-and-deployment-for-ml-models-1ecf6875cfdc)
+   - [**Data Drift (with Example):**](https://www.tecton.ai/blog/what-is-data-drift-and-how-to-monitor-for-it/)
+   - [**Model Atrophy (with Example):**](https://neptune.ai/blog/data-drift-and-model-performance#model-atrophy)
 
-4. **Data Management in MLOps**:
+5. **Data Management in MLOps**:
    - Handling feature engineering pipelines.
-   - Data drift monitoring and retraining triggers.
-
-5. **MLOps in Cloud Environments**:
-   - Implementing MLOps on AWS, GCP, or Azure.
-   - Leveraging Databricks for scalable ML workflows.
-
-6. **Challenges and Case Studies**:
-   - Real-world examples of successful MLOps implementations.
-   - Common pitfalls and solutions.
-
+   
 ## What is MLOps ?
 MLOps stands for Machine Learning Operations. MLOps is a core function of Machine Learning engineering, focused on streamlining the process of taking machine learning models to production, and then maintaining and monitoring them. MLOps is a collaborative function, often comprising data scientists, Data Engineers 
 , devops engineers and IT.
