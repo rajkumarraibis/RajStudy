@@ -97,6 +97,7 @@ Automatically re-train and deploy new model versions based on defined triggers l
 *Example*: If the model’s performance declines or incoming data changes significantly, a pipeline retrains the model with fresh data. Once it passes validation checks, it’s immediately put into production.
 
 **Model CI CD helps in tackling following issues**
+
 **Data Drift**  
 Imagine you use a **Logistic Regression** model to predict whether an online shopper will make a purchase. Initially, your training data shows that most buyers are young adults using desktop computers. Over time, however, more older adults and mobile users start visiting your site. The demographic and device usage patterns shift, causing the model’s input data to differ significantly from what it was trained on. This is data drift—your model still tries to use the old pattern (young desktop users) on new, very different data (older mobile users), leading to poorer predictions.
 
