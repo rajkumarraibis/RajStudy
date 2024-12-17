@@ -16,7 +16,7 @@
    - [CI/CD Pipelines for ML](#ci-cd-pipelines-for-ml)
    
 5. **Data Management in MLOps**:
-   - Handling feature engineering pipelines.
+   - [Feature Engineering](#feature-engineering)
    
 ## What is MLOps ?
 MLOps stands for Machine Learning Operations. MLOps is a core function of Machine Learning engineering, focused on streamlining the process of taking machine learning models to production, and then maintaining and monitoring them. MLOps is a collaborative function, often comprising data scientists, Data Engineers 
@@ -103,3 +103,17 @@ Imagine you use a **Logistic Regression** model to predict whether an online sho
 
 **Model Atrophy**  
 Consider a **Random Forest** model recommending specific products to users of a streaming music service. When the model was created, it learned to associate certain listening habits with particular product preferences. Over the next few months, user tastes change due to new music trends, popular culture shifts, or even seasonal events. While the actual data features (like track play count, time spent on the app) might still look similar, the underlying relationship between user behavior and product preferences no longer holds. Even though the model sees data of the same “type,” it’s now predicting based on outdated associations. This leads to model atrophy: the model’s usefulness fades, and its predictive accuracy declines because the fundamental logic it relied on no longer applies.
+
+**Feature Engineering** refers to the process of transforming raw data into a set of features that better represent the underlying problem to the predictive models. This often involves:
+
+- **Creating new features:** Combining or manipulating existing data columns to generate more informative inputs (e.g., turning raw timestamps into hour-of-day or day-of-week features).
+- **Selecting relevant features:** Identifying which features are most predictive of the target and removing those that add noise or complexity.
+- **Normalizing and scaling:** Adjusting data ranges so that large-valued features do not overly dominate the model.
+- **Encoding categorical variables:** Converting non-numeric categories into numeric formats, such as one-hot encoding or ordinal encoding.
+
+**Handling Feature Engineering Pipelines** involves automating and systematizing the entire feature engineering process, typically using tools and frameworks that ensure consistency and reproducibility. By defining a pipeline, you can:
+
+- **Apply transformations consistently:** Every time new data arrives, the same sequence of steps (e.g., normalization, encoding) is applied in the same way.
+- **Version and track changes:** Keep track of how features are generated and modified over time.
+- **Make deployment easier:** The same pipeline can be applied both during training and at inference time to ensure that the model receives data in the expected format.
+- **Integrate with CI/CD systems:** If the feature engineering pipeline is part of a continuous integration workflow, any code change to feature processing triggers automated tests, validation, and updates to the deployed model environment.
