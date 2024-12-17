@@ -105,7 +105,7 @@ Imagine you use a **Logistic Regression** model to predict whether an online sho
 Consider a **Random Forest** model recommending specific products to users of a streaming music service. When the model was created, it learned to associate certain listening habits with particular product preferences. Over the next few months, user tastes change due to new music trends, popular culture shifts, or even seasonal events. While the actual data features (like track play count, time spent on the app) might still look similar, the underlying relationship between user behavior and product preferences no longer holds. Even though the model sees data of the same “type,” it’s now predicting based on outdated associations. This leads to model atrophy: the model’s usefulness fades, and its predictive accuracy declines because the fundamental logic it relied on no longer applies.
 
 ### Feature Engineering
-refers to the process of transforming raw data into a set of features that better represent the underlying problem to the predictive models. This often involves:
+Refers to the process of transforming raw data into a set of features that better represent the underlying problem to the predictive models. This often involves:
 
 - **Creating new features:** Combining or manipulating existing data columns to generate more informative inputs (e.g., turning raw timestamps into hour-of-day or day-of-week features).
 - **Selecting relevant features:** Identifying which features are most predictive of the target and removing those that add noise or complexity.
