@@ -237,4 +237,4 @@ Partitioning hints allow users to suggest partitioning strategies in Spark SQL. 
 
 - [Spark SQL Performance Tuning](https://spark.apache.org/docs/latest/sql-performance-tuning.html#performance-tuning)
 - [Spark SQL Partitioning Hints](https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints)
-
+- [What's new in spark 3.5](https://www.databricks.com/blog/introducing-apache-sparktm-35)
