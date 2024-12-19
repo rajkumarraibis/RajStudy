@@ -166,3 +166,75 @@ Choosing efficient file formats like Parquet or ORC can enhance performance due 
 
 Implementing these advanced optimization techniques can lead to significant improvements in Spark job performance, resource utilization, and overall efficiency. Regularly monitoring and tuning your Spark applications based on workload characteristics and cluster resources is essential for maintaining optimal performance.
 
+
+## Caching Data in Memory
+
+Spark SQL can cache tables using an in-memory columnar format by calling `spark.catalog.cacheTable("tableName")` or `dataFrame.cache()`. This enables Spark SQL to scan only the required columns and automatically tune compression to minimize memory usage and GC pressure. To remove cached data, use `spark.catalog.uncacheTable("tableName")` or `dataFrame.unpersist()`.
+
+---
+
+## Other Configuration Options
+
+The following options can be used to tune query execution performance. Note that these options may be deprecated in future releases as Spark continues to automate optimizations.
+
+| Property Name                     | Default  | Meaning                                                                                             | Since Version |
+|-----------------------------------|----------|-----------------------------------------------------------------------------------------------------|---------------|
+| `spark.sql.files.maxPartitionBytes` | 128 MB   | The maximum number of bytes to pack into a single partition when reading files. Effective for file-based sources such as Parquet, JSON, and ORC. | 2.0.0         |
+| `spark.sql.autoBroadcastJoinThreshold` | 10 MB    | Configures the maximum size in bytes for a table to be broadcast to all worker nodes during a join. Set to `-1` to disable broadcasting. Statistics are supported for Hive Metastore tables analyzed with `ANALYZE TABLE <tableName> COMPUTE STATISTICS noscan`. | 1.1.0         |
+
+---
+
+## Join Strategy Hints for SQL Queries
+
+Join strategy hints, such as `BROADCAST`, `MERGE`, `SHUFFLE_HASH`, and `SHUFFLE_REPLICATE_NL`, allow users to suggest specific join strategies in queries. For example:
+
+```python
+spark.table("src").join(spark.table("records").hint("broadcast"), "key").show()
+```
+
+### Key Points:
+- **Priority Order**: Spark prioritizes hints in the following order: `BROADCAST` > `MERGE` > `SHUFFLE_HASH` > `SHUFFLE_REPLICATE_NL`.
+- **Build Side Selection**: When the same hint is specified on both sides, Spark selects the build side based on join type and relation sizes.
+- **No Guarantee**: Spark may ignore hints if a specific strategy is incompatible with the join type.
+
+---
+
+## Partitioning Hints
+
+Partitioning hints allow users to suggest partitioning strategies in Spark SQL. These hints are equivalent to Dataset API methods and help optimize performance and control the number of output files. Supported hints include `COALESCE`, `REPARTITION`, `REPARTITION_BY_RANGE`, and `REBALANCE`.
+
+### Partitioning Hint Types:
+
+- **COALESCE**: Reduces the number of partitions to the specified number. Example:
+  ```sql
+  SELECT /*+ COALESCE(3) */ * FROM t;
+  ```
+
+- **REPARTITION**: Repartitions data using specified partitioning expressions or number of partitions. Examples:
+  ```sql
+  SELECT /*+ REPARTITION(3) */ * FROM t;
+  SELECT /*+ REPARTITION(c) */ * FROM t;
+  SELECT /*+ REPARTITION(3, c) */ * FROM t;
+  ```
+
+- **REPARTITION_BY_RANGE**: Repartitions data by range, using specified columns and optionally a number of partitions. Examples:
+  ```sql
+  SELECT /*+ REPARTITION_BY_RANGE(c) */ * FROM t;
+  SELECT /*+ REPARTITION_BY_RANGE(3, c) */ * FROM t;
+  ```
+
+- **REBALANCE**: Balances partition sizes to avoid excessively small or large partitions. Useful for writing query results to tables. Examples:
+  ```sql
+  SELECT /*+ REBALANCE */ * FROM t;
+  SELECT /*+ REBALANCE(3, c) */ * FROM t;
+  ```
+
+  Note: `REBALANCE` requires AQE to be enabled.
+
+---
+
+## References
+
+- [Spark SQL Performance Tuning](https://spark.apache.org/docs/latest/sql-performance-tuning.html#performance-tuning)
+- [Spark SQL Partitioning Hints](https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-hints.html#partitioning-hints)
+
