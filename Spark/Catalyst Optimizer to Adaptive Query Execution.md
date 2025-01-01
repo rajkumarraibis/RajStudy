@@ -6,6 +6,12 @@ Spark SQL is one of the most valuable components of Apache Spark, powering both 
 
 ---
 
+Relationship Between Catalyst Optimizer and AQE:
+Catalyst Optimizer: A foundational query optimization framework in Spark that operates before the query execution begins. It applies rule-based and cost-based optimizations during query planning to generate the best initial query execution plan.
+AQE: Introduced in Spark 3.0, AQE enhances the Catalyst Optimizer by enabling runtime query optimization. While the Catalyst Optimizer creates the initial plan, AQE modifies and improves it dynamically as the query runs based on real-time statistics.
+
+---
+
 ## Catalyst Optimizer: Workflow Overview
 
 The Catalyst optimizer applies optimizations during both logical and physical planning stages, aiming to execute queries efficiently. Below is an overview of its workflow:
