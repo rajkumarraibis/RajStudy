@@ -8,6 +8,7 @@ Spark SQL is one of the most valuable components of Apache Spark, powering both 
 
 ## Relationship Between Catalyst Optimizer and AQE:
 Catalyst Optimizer: A foundational query optimization framework in Spark that operates before the query execution begins. It applies rule-based and cost-based optimizations during query planning to generate the best initial query execution plan.
+
 AQE: Introduced in Spark 3.0, AQE enhances the Catalyst Optimizer by enabling runtime query optimization. While the Catalyst Optimizer creates the initial plan, AQE modifies and improves it dynamically as the query runs based on real-time statistics.
 
 ---
@@ -23,6 +24,9 @@ The Catalyst optimizer applies optimizations during both logical and physical pl
 5. **Selected Physical Plan**: The best physical plan is chosen based on a cost model.
 6. **RDDs**: The selected physical plan is converted into RDDs, and bytecode for the JVM is generated.
 
+### Catalyst Optimizer Workflow
+<img src="/images/CatalystOptimizer.png" alt="Open" style="width:100%"/>
+
 ### Limitations of Rule-Based Optimization in Spark 2.X
 
 In Spark 2.X, all optimizations were based on static estimations made before runtime. This could lead to suboptimal plans due to inaccuracies in these estimations or unforeseen runtime conditions.
@@ -32,6 +36,9 @@ In Spark 2.X, all optimizations were based on static estimations made before run
 ## Adaptive Query Execution (AQE)
 
 AQE enhances query optimization by dynamically adjusting query plans based on runtime statistics collected during query execution. This eliminates the need for static estimations and allows Spark to re-optimize queries for better performance.
+
+###  Adaptive Query Execution Workflow
+<img src="/images/AQE.png" alt="Open" style="width:100%"/>
 
 ### Key Features of AQE
 
@@ -142,5 +149,4 @@ Adaptive Query Execution is a transformative feature in Apache Spark 3.0, enhanc
 1. [Apache Spark 3.0 Adaptive Query Execution](https://towardsdatascience.com/apache-spark-3-0-adaptive-query-execution-2359e87ae31f)
 2. [Databricks Blog on AQE](https://www.databricks.com/blog/2020/05/29/adaptive-query-execution-speeding-up-spark-sql-at-runtime.html)
 
-![AQE Workflow Image](image-by-author-tag)
 
