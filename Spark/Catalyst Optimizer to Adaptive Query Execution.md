@@ -24,7 +24,7 @@ The Catalyst optimizer applies optimizations during both logical and physical pl
 6. **RDDs**: The selected physical plan is converted into RDDs, and bytecode for the JVM is generated.
 
 ### Catalyst Optimizer Workflow
-<img src="images/CatalystOptimizer.png" alt="Open" style="width:50%"/>
+<img src="/images/CatalystOptimizer.png" alt="Open" style="width:50%"/>
 
 ### Limitations of Rule-Based Optimization in Spark 2.X
 
