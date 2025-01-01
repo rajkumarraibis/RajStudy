@@ -36,6 +36,9 @@ In Spark 2.X, all optimizations were based on static estimations made before run
 
 AQE enhances query optimization by dynamically adjusting query plans based on runtime statistics collected during query execution. This eliminates the need for static estimations and allows Spark to re-optimize queries for better performance.
 
+###  Adaptive Query Execution Workflow
+<img src="/images/AQE.png" alt="Open" style="width:100%"/>
+
 ### Key Features of AQE
 
 1. **Dynamically Switching Join Strategies**
