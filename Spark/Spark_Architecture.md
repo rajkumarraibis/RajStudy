@@ -56,7 +56,7 @@ Apache Spark is an open-source, distributed computing system designed for fast a
 4. **Kubernetes Mode**: Leverages Kubernetes for container orchestration.
 
 ## Spark Architecture Overview
-
+Treat Sparkcontext as SparkSession
 <img src="/images/spark-architecture.png" alt="Open" style="width:100%"/>
 
 ## References
