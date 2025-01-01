@@ -149,5 +149,4 @@ Adaptive Query Execution is a transformative feature in Apache Spark 3.0, enhanc
 1. [Apache Spark 3.0 Adaptive Query Execution](https://towardsdatascience.com/apache-spark-3-0-adaptive-query-execution-2359e87ae31f)
 2. [Databricks Blog on AQE](https://www.databricks.com/blog/2020/05/29/adaptive-query-execution-speeding-up-spark-sql-at-runtime.html)
 
-![AQE Workflow Image](image-by-author-tag)
 
