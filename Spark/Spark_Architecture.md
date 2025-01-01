@@ -55,9 +55,9 @@ Apache Spark is an open-source, distributed computing system designed for fast a
 3. **Mesos Mode**: Supports Apache Mesos for resource scheduling.
 4. **Kubernetes Mode**: Leverages Kubernetes for container orchestration.
 
-## Images
+## Spark Architecture Overview
 
-![Spark Architecture Overview](https://upload.wikimedia.org/wikipedia/commons/f/f3/Spark_Cluster_Overview.png)
+<img src="/images/spark-architecture.png" alt="Open" style="width:100%"/>
 
 ## References
 
