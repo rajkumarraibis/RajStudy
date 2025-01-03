@@ -30,7 +30,7 @@ In other words, the data should be treated as a product that is ready to use and
 
 At a high level, here is a data mesh example:
 
-
+<img src="/images/DataMesh.png" alt="Unified. Open. Scalable Image" style="width:50%"/>
 
 ---
 
