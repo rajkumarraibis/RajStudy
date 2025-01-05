@@ -2,7 +2,25 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **1. Core AWS Services**
+### ** Data Engineering and Analytics**
+- **Big Data Services**:
+  - EMR (Elastic MapReduce)
+  - Glue (ETL, Data Catalog)
+  - Athena (querying data in S3 using SQL)
+  - Kinesis (Data Streams, Firehose, Analytics)
+  - Data Pipeline
+
+- **Data Lake Architecture**:
+  - Best practices for building and optimizing data lakes on AWS.
+  - Lake Formation (managing permissions and automation).
+
+- **Machine Learning Integration**:
+  - SageMaker for ML model development and deployment.
+  - Integration of AI/ML with Big Data pipelines.
+
+---
+
+### ** Core AWS Services**
 - **Compute**: 
   - EC2 (instances, AMIs, scaling, pricing models: On-Demand, Reserved, Spot)
   - Lambda (serverless architecture, triggers, and use cases)
@@ -27,25 +45,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **2. Data Engineering and Analytics**
-- **Big Data Services**:
-  - EMR (Elastic MapReduce)
-  - Glue (ETL, Data Catalog)
-  - Athena (querying data in S3 using SQL)
-  - Kinesis (Data Streams, Firehose, Analytics)
-  - Data Pipeline
-
-- **Data Lake Architecture**:
-  - Best practices for building and optimizing data lakes on AWS.
-  - Lake Formation (managing permissions and automation).
-
-- **Machine Learning Integration**:
-  - SageMaker for ML model development and deployment.
-  - Integration of AI/ML with Big Data pipelines.
-
----
-
-### **3. Security**
+### ** Security**
 - IAM:
   - Users, Groups, Roles, and Policies.
   - Best practices for least privilege access.
@@ -63,7 +63,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **4. Serverless Architecture**
+### ** Serverless Architecture**
 - Lambda best practices:
   - Event-driven architectures.
   - Integration with S3, API Gateway, DynamoDB, and Step Functions.
@@ -77,7 +77,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **5. Monitoring and Optimization**
+### ** Monitoring and Optimization**
 - **CloudWatch**:
   - Metrics, Logs, and Dashboards.
   - Alarms and Events.
@@ -93,7 +93,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **6. Infrastructure as Code (IaC)**
+### ** Infrastructure as Code (IaC)**
 - **CloudFormation**:
   - Writing templates for resource provisioning.
   - Nested stacks and custom resources.
@@ -103,7 +103,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **7. DevOps Tools**
+### ** DevOps Tools**
 - **CI/CD Pipelines**:
   - CodeCommit, CodeBuild, CodeDeploy, and CodePipeline.
   - Integration with Git and Jenkins.
@@ -114,7 +114,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **8. Real-World Scenarios**
+### ** Real-World Scenarios**
 - Architecting highly available, fault-tolerant, and scalable solutions.
 - Migrating on-premises workloads to AWS.
 - Troubleshooting AWS services and optimizing performance.
@@ -122,7 +122,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ---
 
-### **9. Interview-Specific Preparation**
+### ** Interview-Specific Preparation**
 - **Scenario-Based Questions**:
   - Building scalable ETL pipelines.
   - Architecting data lake solutions.
@@ -132,5 +132,3 @@ For interview preparation based on your profile and expertise in AWS, you should
   - Use AWS free tier or sandbox environments to deploy common architectures (e.g., VPC with subnets, Lambda workflows, S3 to Redshift ETL pipelines).
 
 ---
-
-Would you like more resources, links, or practice questions to aid your preparation?
