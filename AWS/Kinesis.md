@@ -17,7 +17,7 @@ Kinesis Data Streams (KDS) is a highly scalable and durable real-time streaming 
 - **Data Ingestion**:
   - Producers send data into the stream using the AWS SDK, Kinesis Producer Library (KPL), or Kinesis Agent.
 - **Consumers**:
-  - Applications (e.g., AWS Lambda, EC2, Kinesis Client Library (KCL)) process data in real-time.
+  - Applications (e.g., AWS Lambda, EC2, Glue, Kinesis Client Library (KCL)) process data in real-time.
   - Supports enhanced fan-out for parallel processing with dedicated throughput for each consumer.
 
 #### **Use Cases**:
