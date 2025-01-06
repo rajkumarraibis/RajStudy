@@ -4,10 +4,8 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ### ** Data Engineering and Analytics**
 - **Big Data Services**:
-  - EMR (Elastic MapReduce)
   - Glue (ETL, Data Catalog)
   - Athena (querying data in S3 using SQL)
-  - Kinesis (Data Streams, Firehose, Analytics)
   - Data Pipeline
 
 - **Data Lake Architecture**:

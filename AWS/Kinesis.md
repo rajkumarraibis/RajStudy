@@ -1,4 +1,4 @@
-Amazon Kinesis is a suite of services designed for real-time data processing and analytics. Below are detailed explanations of **Kinesis Data Streams**, **Kinesis Data Firehose**, and **Kinesis Data Analytics** as per your resume's focus and general utility.
+Amazon Kinesis is a suite of services designed for real-time data processing and analytics. Below are detailed explanations of **Kinesis Data Streams**, **Kinesis Data Firehose**, and **Kinesis Data Analytics**.
 
 ---
 
