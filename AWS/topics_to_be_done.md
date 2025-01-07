@@ -5,7 +5,6 @@ For interview preparation based on your profile and expertise in AWS, you should
 ### ** Data Engineering and Analytics**
 - **Big Data Services**:
   - Athena (querying data in S3 using SQL)
-  - Data Pipeline
 
 - **Data Lake Architecture**:
   - Best practices for building and optimizing data lakes on AWS.
