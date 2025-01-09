@@ -3,8 +3,6 @@ For interview preparation based on your profile and expertise in AWS, you should
 ---
 
 ### ** Data Engineering and Analytics**
-- **Big Data Services**:
-  - Athena (querying data in S3 using SQL)
 
 - **Data Lake Architecture**:
   - Best practices for building and optimizing data lakes on AWS.
@@ -18,21 +16,12 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ### ** Core AWS Services**
 - **Compute**: 
-  - EC2 (instances, AMIs, scaling, pricing models: On-Demand, Reserved, Spot)
   - Lambda (serverless architecture, triggers, and use cases)
-  - Elastic Beanstalk
   - ECS/EKS (Container orchestration)
 
 - **Storage**:
   - S3 (buckets, lifecycle policies, storage classes, versioning, encryption)
-  - EBS (volume types, snapshots, encryption)
   - Glacier (archival storage and retrieval policies)
-
-- **Networking**:
-  - VPC (subnets, route tables, internet gateways, NAT gateways)
-  - Elastic Load Balancer (ALB, NLB, CLB)
-  - Security Groups and Network ACLs
-  - Direct Connect and VPNs
 
 - **Database**:
   - RDS (PostgreSQL, MySQL, Aurora)
