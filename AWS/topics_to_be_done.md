@@ -4,10 +4,6 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ### ** Data Engineering and Analytics**
 
-- **Data Lake Architecture**:
-  - Best practices for building and optimizing data lakes on AWS.
-  - Lake Formation (managing permissions and automation).
-
 - **Machine Learning Integration**:
   - SageMaker for ML model development and deployment.
   - Integration of AI/ML with Big Data pipelines.
