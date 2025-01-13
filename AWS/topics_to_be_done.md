@@ -1,12 +1,5 @@
 For interview preparation based on your profile and expertise in AWS, you should focus on the following topics:
 
----
-
-### ** Data Engineering and Analytics**
-
-- **Machine Learning Integration**:
-  - SageMaker for ML model development and deployment.
-  - Integration of AI/ML with Big Data pipelines.
 
 ---
 
