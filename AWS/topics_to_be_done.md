@@ -5,7 +5,6 @@ For interview preparation based on your profile and expertise in AWS, you should
 
 ### ** Core AWS Services**
 - **Compute**: 
-  - Lambda (serverless architecture, triggers, and use cases)
   - ECS/EKS (Container orchestration) and Kubernetes
 
 - **Storage**:
