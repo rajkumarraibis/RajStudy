@@ -6,7 +6,7 @@ For interview preparation based on your profile and expertise in AWS, you should
 ### ** Core AWS Services**
 - **Compute**: 
   - Lambda (serverless architecture, triggers, and use cases)
-  - ECS/EKS (Container orchestration)
+  - ECS/EKS (Container orchestration) and Kubernetes
 
 - **Storage**:
   - S3 (buckets, lifecycle policies, storage classes, versioning, encryption)
@@ -82,9 +82,6 @@ For interview preparation based on your profile and expertise in AWS, you should
   - CodeCommit, CodeBuild, CodeDeploy, and CodePipeline.
   - Integration with Git and Jenkins.
 
-- **Containerization**:
-  - ECS, EKS, and Fargate.
-  - Docker on AWS.
 
 ---
 
@@ -102,7 +99,5 @@ For interview preparation based on your profile and expertise in AWS, you should
   - Architecting data lake solutions.
   - Cost optimization strategies for data-heavy workloads.
 
-- **Hands-On Practice**:
-  - Use AWS free tier or sandbox environments to deploy common architectures (e.g., VPC with subnets, Lambda workflows, S3 to Redshift ETL pipelines).
 
 ---
