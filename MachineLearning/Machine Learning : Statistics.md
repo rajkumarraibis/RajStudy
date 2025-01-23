@@ -50,16 +50,6 @@ Here’s a concise set of notes summarizing the key concepts from the **"Machine
 
 ---
 
-### **7. Inferential Statistics**
-- **Hypothesis Testing**:
-  - Null Hypothesis (\(H_0\)): No effect or difference.
-  - Alternative Hypothesis (\(H_a\)): There is an effect/difference.
-- **p-value**: Probability of observing results under \(H_0\).
-  - \(p < 0.05\): Statistically significant.
-- **Confidence Interval**: Range where the true parameter likely lies.
-
----
-
 ### **8. Correlation and Causation**
 - **Correlation**: Relationship strength between two variables.
   - Positive: Variables move in the same direction.
