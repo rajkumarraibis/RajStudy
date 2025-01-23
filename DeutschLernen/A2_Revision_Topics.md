@@ -8,6 +8,35 @@ Table for the possessive article **"mein"** (my) in all cases and genders:
 | ihr | geht | seid |
 | Sie/sie | gehen | sind |
 
+| Gender | Definite Article | Examples | Common Endings/Rules |
+|---|---|---|---|
+| Masculine | der | der Mann (the man), der Tisch (the table) | - Male people or animals; most words ending in "-er", "-el", or "-en" |
+| Feminine | die | die Frau (the woman), die Lampe (the lamp) | - Female people or animals; most words ending in "-e" |
+| Neuter | das | das Auto (the car), das Buch (the book) | - Infinitives used as nouns; most words ending in "-chen" or "-lein" |
+| Plural | die | die Männer (the men), die Frauen (the women), die Kinder (the children) | All plural nouns |
+
+## **Declension Table:**
+
+**Here's a Markdown table for the declension of German nouns:**
+
+### **Definite Articles:**
+
+| Case | Masculine | Feminine | Neuter | Plural |
+|---|---|---|---|---|
+| Nominative | der | die | das | die |
+| Accusative | den | die | das | die |
+| Dative | dem | der | dem | den |
+
+### **Indefinite Articles:**
+
+| Case | Masculine | Feminine | Neuter | Plural |
+|---|---|---|---|---|
+| Nominative | ein | eine | ein | - |
+| Accusative | einen | eine | ein | - |
+| Dative | einem | einer | einem | - |
+
+
+
 | **Case**         | **Masculine** (e.g., Opa) | **Feminine** (e.g., Tante) | **Neutral** (e.g., Baby) | **Plural** (e.g., Neffen) |
 |-------------------|---------------------------|----------------------------|--------------------------|---------------------------|
 | **Nominative**    | mein Opa                 | meine Tante                | mein Baby                | meine Neffen              |
