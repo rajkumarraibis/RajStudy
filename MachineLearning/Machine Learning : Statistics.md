@@ -140,6 +140,9 @@ print("Correlation Coefficient:", correlation)
 
 - **Standardization (Z-Score Normalization)**:
   - Convert data to a standard scale (mean = 0, standard deviation = 1).
+  - Standardization (Z-Score Normalization) is a critical preprocessing step in machine learning because it ensures that the features of your dataset are on a similar scale.
+Example: Age might range from 20–80, while salary might range from 30,000–200,000.
+if you directly use them salary will dominate the model
     ```python
     standardized_data = (data - np.mean(data)) / np.std(data)
     print("Standardized Data:", standardized_data)
