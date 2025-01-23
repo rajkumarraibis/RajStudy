@@ -1,4 +1,12 @@
 Table for the possessive article **"mein"** (my) in all cases and genders:
+| Person | gehen (to go) | sein (to be) |
+|---|---|---|
+| ich | gehe | bin |
+| du | gehst | bist |
+| er/sie/es | geht | ist |
+| wir | gehen | sind |
+| ihr | geht | seid |
+| Sie/sie | gehen | sind |
 
 | **Case**         | **Masculine** (e.g., Opa) | **Feminine** (e.g., Tante) | **Neutral** (e.g., Baby) | **Plural** (e.g., Neffen) |
 |-------------------|---------------------------|----------------------------|--------------------------|---------------------------|
