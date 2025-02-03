@@ -124,13 +124,6 @@ Lambda supports numerous triggers, such as:
 
 ---
 
-#### **Certifications to Boost Credibility**
-- **AWS Certified Solutions Architect – Associate**
-- **AWS Certified Developer – Associate**
-- **AWS Certified DevOps Engineer – Professional**
-
----
-
 #### **Resources for Learning and Practice**
 1. **AWS Official Documentation**
    - Lambda Overview: [AWS Lambda Docs](https://docs.aws.amazon.com/lambda)
