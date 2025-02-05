@@ -25,7 +25,7 @@ Below are detailed examples of use cases where machine learning and big data pip
       - Use SageMaker Model Monitor to track model accuracy and performance metrics.
 
 #### Example Model:
-   - Time-series forecasting models (e.g., LSTMs) for patient vital sign monitoring.
+   - Time-series forecasting models (e.g., LSTMs) for patient vital sign monitoring. LSTM is Long Short-Term Memory It is also good for other sequential data like financial data.It is a spcial case of neural network.
    - XGBoost for disease risk prediction.
 
 ---
