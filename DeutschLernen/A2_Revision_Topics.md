@@ -43,6 +43,41 @@ Table for the possessive article **"mein"** (my) in all cases and genders:
 | **Accusative**    | meinen Opa               | meine Tante                | mein Baby                | meine Neffen              |
 | **Dative**        | meinem Opa               | meiner Tante               | meinem Baby              | meinen Neffen             |
 
+
+# Table of the verb **"können"** (to be able to/can) with its conjugations and examples  
+
+| Pronoun               | Conjugation | Example Sentence                                  |  
+|-----------------------|------------|--------------------------------------------------|  
+| **ich** / **er (he)** / **sie (she)** / **es** | kann       | Ich kann gut schwimmen. *(I can swim well.)*  |  
+|                       |            | Er kann gut tanzen. *(He can dance well.)*      |  
+| **du**               | kannst      | Du kannst wirklich gut Gitarre spielen. *(You can really play guitar well.)* |  
+| **wir** / **sie (They)** / **Sie (You formal)** | können     | Wir können gut schwimmen. *(We can swim well.)* |  
+|                       |            | Sie können gut schwimmen. *(They/You (formal) can do that.)* |  
+
+---
+
+# Table of the verb **"Haben"** (to have) with its conjugations and examples  
+
+| Pronoun              | Conjugation | Example Sentence                      |  
+|----------------------|------------|--------------------------------------|  
+| **ich**             | habe       | Ich habe ein Buch. *(I have a book.)* |  
+| **du**             | hast       | Du hast ein Buch. *(You have a book.)* |  
+| **er/sie/es**      | hat        | Er hat ein Buch. *(He has a book.)*   |  
+| **wir** / **sie (They)** / **Sie (You formal)** | haben | Wir haben ein Buch. *(We have a book.)* |  
+
+---
+
+# Table for the perfect tense (**Perfekt**) with the auxiliary verb **"sein"** (to be)  
+
+| Pronoun           | Conjugation of "sein" | Example Sentence (Perfekt)         | Translation                               |  
+|------------------|----------------------|----------------------------------|-------------------------------------------|  
+| **ich**         | bin                  | Ich bin nach Hause gegangen.     | *I have gone home.*                      |  
+| **du**         | bist                  | Du bist früh aufgestanden.       | *You have gotten up early.*              |  
+| **er/sie/es**  | ist                   | Er ist ins Kino gegangen.        | *He has gone to the cinema.*             |  
+| **wir** / **sie (They)** / **Sie (You formal)** | sind | Wir sind nach Berlin gefahren. | *We have traveled to Berlin.*  |  
+|                 |                      | Sie sind in den Urlaub gefahren. | *They/You (formal) have gone on vacation.* |  
+
+
 Here’s a **simple explanation with examples** for both **Perfekt** and **Präteritum**:
 
 ---
