@@ -66,7 +66,7 @@ Table for the possessive article **"mein"** (my) in all cases and genders:
 | **wir** / **sie (They)** / **Sie (You formal)** | haben | Wir haben ein Buch. *(We have a book.)* |  
 
 ---
-## **Vergangenheit** (**past tense**)
+# **Vergangenheit** (**past tense**)
 It is divided into three main forms:
 
 1. **Präteritum** *(Simple Past)* – Used mostly in written German and formal storytelling.
