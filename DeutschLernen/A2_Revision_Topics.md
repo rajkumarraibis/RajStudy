@@ -66,8 +66,24 @@ Table for the possessive article **"mein"** (my) in all cases and genders:
 | **wir** / **sie (They)** / **Sie (You formal)** | haben | Wir haben ein Buch. *(We have a book.)* |  
 
 ---
+**Vergangenheit** (**past tense**)
+It is divided into three main forms:
 
-# Table for the perfect tense (**Perfekt**) with the auxiliary verb **"sein"** (to be)  
+1. **Präteritum** *(Simple Past)* – Used mostly in written German and formal storytelling.
+2. **Perfekt** *(Present Perfect)* – Used mainly in spoken German for past events.
+3. **Plusquamperfekt** *(Past Perfect)* – Used to describe an event that happened before another past event.
+
+### Summary Table:
+
+| **Past Tense Type**  | **German Name**  | **Example Sentence** |
+|----------------------|-----------------|----------------------|
+| **Simple Past** | **Präteritum** | *Ich ging nach Hause.* (I went home.) |
+| **Present Perfect** | **Perfekt** | *Ich bin nach Hause gegangen.* (I have gone home.) |
+| **Past Perfect** | **Plusquamperfekt** | *Ich war schon nach Hause gegangen, als du kamst.* (I had already gone home when you came.) |
+
+
+
+# Table for the perfect tense (**Perfekt**) (Conversational Past) with the auxiliary verb **"sein"** (to be)  
 
 | Pronoun           | Conjugation of "sein" | Example Sentence (Perfekt)         | Translation                               |  
 |------------------|----------------------|----------------------------------|-------------------------------------------|  
