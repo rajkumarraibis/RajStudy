@@ -3,7 +3,7 @@ Here’s a comprehensive list of possible interview questions for the **Senior A
 ---
 
 ### **1. General AI & GenAI Questions**
-#### **Q1: What is Generative AI, and how does it differ from traditional AI?**
+###### **Q1: What is Generative AI, and how does it differ from traditional AI?**
 **A:**  
 Generative AI refers to models that can generate new content, such as text, images, and music, rather than just making predictions or classifications. Unlike traditional AI, which primarily focuses on recognizing patterns and making decisions based on existing data, GenAI models (e.g., GPT, DALL-E, Stable Diffusion) create new content by learning from large-scale training datasets.
 
@@ -44,7 +44,7 @@ Generative AI models like **GPT, DALL-E, and Stable Diffusion** generate new con
 Generative AI models **don’t create content from scratch**; they generate new outputs based on **patterns learned from vast training data**, guided by **deep learning techniques (Transformers for text, Diffusion Models for images).** 🚀
 
 
-#### **Q2: How do you ensure the reliability and scalability of GenAI models in production?**  
+###### **Q2: How do you ensure the reliability and scalability of GenAI models in production?**  
 **A:**  
 - Use **MLOps** practices for continuous monitoring, retraining, and deployment.  
 - Optimize models using **quantization** and **distillation** to reduce computational costs.  
