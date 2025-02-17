@@ -52,11 +52,8 @@ Generative AI models **don’t create content from scratch**; they generate new 
 - Deploy on **cloud-native environments** (Kubernetes, serverless) for auto-scaling.  
 - Monitor **bias and drift detection** using fairness-aware metrics.
 
-### **Q2: How do you ensure the reliability and scalability of GenAI models in production?**
 
 Ensuring **reliability** (consistent performance, accuracy, and robustness) and **scalability** (handling increased workloads efficiently) is crucial for deploying **Generative AI (GenAI) models** like GPT, DALL-E, or Stable Diffusion in production. Below is a **detailed breakdown** of each strategy mentioned in the answer:
-
----
 
 ## **1. Use MLOps Practices for Continuous Monitoring, Retraining, and Deployment**
 ### **Why?**
