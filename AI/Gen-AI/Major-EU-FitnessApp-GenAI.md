@@ -46,9 +46,9 @@ The chatbot is:
 | **AWS API Gateway** | Exposes the chatbot as a web service |
 | **AWS Lambda** | Processes requests & queries the AI model |
 | **Pinecone (Vector DB)** | Stores embeddings for **retrieval & caching** |
-| **OpenAI GPT-3.5** | Generates fitness recommendations when retrieval alone isn’t enough |
+| **OpenAI GPT-4** | Generates fitness recommendations when retrieval alone isn’t enough |
 | **LlamaIndex** | Manages embedding generation & document indexing |
-| **FAISS/Pinecone Index** | Performs **similarity search** for RAG |
+| **Pinecone Index** | Performs **similarity search** for RAG |
 | **SimpleDirectoryReader** | Loads **workout plans & fitness guides** into vector storage |
 | **OpenAI Embeddings (`text-embedding-ada-002`)** | Converts text into **vector embeddings** for retrieval |
 | **Prompt Engineering (`server.py`)** | Dynamically constructs **input prompts** before querying GPT |
