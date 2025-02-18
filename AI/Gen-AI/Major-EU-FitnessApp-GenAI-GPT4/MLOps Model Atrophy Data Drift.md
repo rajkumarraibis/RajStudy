@@ -101,8 +101,8 @@ Here’s a **visual representation** of how this **MLOps pipeline** works:
 ✅ **Automated retraining and redeployment** ensure the chatbot stays accurate.  
 ✅ **Can be integrated with AWS SageMaker, GCP Vertex AI, or FastAPI CI/CD for production deployment**.  
 
-### **🔹 Yes! OpenAI Creates a Personal Fine-Tuned GPT-4 Model for You**
-When you fine-tune GPT-4 using OpenAI’s API, **OpenAI hosts and maintains a custom version of GPT-4 just for you**.  
+
+
 
 ---
 
@@ -113,6 +113,10 @@ When you fine-tune GPT-4 using OpenAI’s API, **OpenAI hosts and maintains a cu
 4️⃣ **OpenAI Handles Deployment** → No need to set up servers—OpenAI **hosts & manages the fine-tuned model** for you.
 
 ---
+
+### **🔹 Yes! OpenAI Creates a Personal Fine-Tuned GPT-4 Model for You**
+When you fine-tune GPT-4 using OpenAI’s API, **OpenAI hosts and maintains a custom version of GPT-4 just for you**.  
+
 
 ## **🔹 How to Access Your Personal Fine-Tuned Model**
 After fine-tuning, OpenAI returns a **model ID**, like:
