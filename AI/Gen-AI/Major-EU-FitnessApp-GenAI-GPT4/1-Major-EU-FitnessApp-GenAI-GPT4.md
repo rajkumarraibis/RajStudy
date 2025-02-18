@@ -126,10 +126,11 @@ Here’s a **visual representation** of how the chatbot components interact:
 
 ---
 
-## **⚡ Next Steps**
-Would you like:
-1️⃣ **To integrate user workout history for better fitness recommendations?**  
-2️⃣ **An optimized architecture for AWS deployment?**  
-3️⃣ **A fallback mechanism to prevent irrelevant responses?**  
+📌 Key Takeaways
+1️⃣ Pinecone becomes the core AI component because most queries skip GPT-4 over time.
+2️⃣ The more the system learns, the faster & cheaper it becomes (Pinecone replaces GPT for repeat queries).
+3️⃣ GPT-4 is used only for complex, unique, or new fitness questions, while Pinecone handles 80%+ of the load.
+
+Would you like help optimizing Pinecone query efficiency for better performance? 🚀
 
 Let me know how you'd like to proceed! 🚀
