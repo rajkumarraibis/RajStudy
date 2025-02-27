@@ -92,7 +92,7 @@ At **Freeletics AI Labs**, the team had already built two AI-powered systems:
 
 ---
 ### ** Solution Diagram
-![AI Fitness Coaching System](images/NeuralNetwork_LLM_RAG.png)
+![AI Fitness Coaching System](/images/NeuralNetwork_LLM_RAG.png)
 
 ---
 ## **🔹 Phase 1: How LLM + RAG + TensorFlow Work Together**
