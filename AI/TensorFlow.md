@@ -94,6 +94,18 @@ At **Freeletics AI Labs**, the team had already built two AI-powered systems:
 ### ** Solution Diagram
 ![AI Fitness Coaching System](/images/NeuralNetwork_LLM_RAG.png)
 
+### **Diagram Explanation:**
+1️⃣ **User** asks a fitness-related question.  
+2️⃣ **AI Coaching Layer** processes the request and sends it to:  
+   - **LLM (Large Language Model)** → Generates human-like explanations.  
+   - **TensorFlow Model** → Predicts future workout performance based on **Fitness Data**.  
+3️⃣ **LLM** queries the **RAG System** to retrieve **scientific fitness knowledge** from the **Knowledge Base**.  
+4️⃣ **AI Coaching Layer** integrates:
+   - **TensorFlow’s personalized predictions** 📊
+   - **LLM’s contextual reasoning & explanations** 🧠  
+5️⃣ The **Final Response** is generated, delivering a **personalized fitness recommendation** with **scientific backing**.
+
+
 ---
 ## **🔹 Phase 1: How LLM + RAG + TensorFlow Work Together**
 The AI system now had **three major components**:
