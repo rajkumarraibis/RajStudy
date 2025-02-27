@@ -91,7 +91,10 @@ At **Freeletics AI Labs**, the team had already built two AI-powered systems:
 💡 **Solution**: Combine **LLM (for reasoning & explanations)** + **TensorFlow (for predictions & data-driven insights)** into a **Unified AI Fitness Coach**.
 
 ---
+### ** Solution Diagram
+![AI Fitness Coaching System](images/NeuralNetwork_LLM_RAG.png)
 
+---
 ## **🔹 Phase 1: How LLM + RAG + TensorFlow Work Together**
 The AI system now had **three major components**:
 
