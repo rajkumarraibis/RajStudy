@@ -49,6 +49,20 @@ graph TD
     H -->|Final Workout & Diet Plan| I
 ```
 
+```mermaid
+graph TD
+    A[User Inputs: Goals, Health Data] -->|Sends request| B(AI Fitness Agent: LangChain)
+    B -->|Retrieves Knowledge| C(RAG System: Pinecone, ChromaDB, OpenAI Embeddings)
+    B -->|Fetches real-time data| D(Health API: Apple Health, Fitbit, Garmin)
+    B -->|Sends tasks| E(Planner Agent: FastAPI, Celery, Kubernetes)
+    B -->|Adjusts macros| F(Nutrition Agent: TensorFlow, PyTorch)
+    B -->|Checks for risky exercises| G(Injury Prevention Agent: OpenAI GPT, Hugging Face Transformers)
+    B -->|Engages User| H(Motivation Engine: Twilio, Firebase, GPT-4)
+    E -->|Final Workout & Diet Plan| I[Output: Personalized Dynamic Plan (Deployed via AWS Lambda)]
+    F -->|Final Workout & Diet Plan| I
+    G -->|Final Workout & Diet Plan| I
+    H -->|Final Workout & Diet Plan| I
+```
 
 ### **Step-by-Step Breakdown**
 1️⃣ **User Inputs Fitness Goals & Preferences**  
