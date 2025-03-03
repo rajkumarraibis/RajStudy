@@ -2,7 +2,7 @@ Here is the **Markdown (MD) version** of the **AI-Powered Fitness Assistant Use 
 
 ---
 
-```markdown
+
 # AI-Powered Fitness Assistant - LLM Agent Use Case
 _A Dynamic AI Coaching System for Personalized Workouts & Nutrition_
 
@@ -46,7 +46,7 @@ graph TD
     F -->|Final Workout & Diet Plan| I
     G -->|Final Workout & Diet Plan| I
     H -->|Final Workout & Diet Plan| I
-```
+
 
 ### **Step-by-Step Breakdown**
 1️⃣ **User Inputs Fitness Goals & Preferences**  
