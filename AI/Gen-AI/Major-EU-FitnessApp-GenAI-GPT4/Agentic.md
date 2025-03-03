@@ -33,7 +33,7 @@ A **Conversational AI Agent** that:
 
 ## 🔹 AI-Powered Fitness Assistant: **System Architecture**
 
-```mermaid
+
 graph TD
     A[User Inputs: Goals, Health Data] -->|Sends request| B(AI Fitness Agent)
     B -->|Retrieves Knowledge| C(RAG System)
@@ -65,7 +65,7 @@ graph TD
 4️⃣ **Final Plan is Continuously Updated**  
    - **Dynamically adjusts recommendations** as user progresses.
 
----
+
 
 ## 🔹 Example Freeletics Use Case: AI in Action
 
@@ -86,9 +86,9 @@ graph TD
 ✔️ **Scalable, enterprise-ready AI coaching system.**  
 
 🚀 **This AI agent-driven model is ideal for Freeletics to enhance AI-powered coaching!**
-```
 
----
+
+
 
 ### **Key Takeaways**
 - **This MD file** clearly **explains the AI-powered fitness agent**.
