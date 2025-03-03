@@ -123,7 +123,7 @@ In deploying the **AI-Powered Fitness Assistant**, we faced **two key technical 
 
 📌 **Solution:**  
 ✅ **Implemented Shared Context Memory (Vector Storage + LangChain Agent Memory)**  
-- Agents now **store recent queries & responses** in a **shared memory layer** (ChromaDB).  
+- Agents now **store recent queries & responses** in a **shared memory layer** (Pinecone).  
 - **If an agent requests data already fetched by another**, it **retrieves it from memory** instead of making a new API call.  
 
 ✅ **Batch Processing with Task Queues (Celery + Redis)**  
