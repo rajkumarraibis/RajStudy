@@ -58,11 +58,11 @@ graph TD
     B -->|Adjusts macros| F(Nutrition Agent: TensorFlow, PyTorch)
     B -->|Checks for risky exercises| G(Injury Prevention Agent: OpenAI GPT, Hugging Face Transformers)
     B -->|Engages User| H(Motivation Engine: Twilio, Firebase, GPT-4)
-    E -->|Final Workout & Diet Plan| I[Output: Personalized Dynamic Plan (Deployed via AWS Lambda)]
+    E -->|Final Workout & Diet Plan| I[Output: Personalized Dynamic Plan - AWS Lambda Deployment]
     F -->|Final Workout & Diet Plan| I
     G -->|Final Workout & Diet Plan| I
     H -->|Final Workout & Diet Plan| I
-```
+
 
 ### **Step-by-Step Breakdown**
 1️⃣ **User Inputs Fitness Goals & Preferences**  
