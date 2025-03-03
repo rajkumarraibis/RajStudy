@@ -34,20 +34,7 @@ A **Conversational AI Agent** that:
 ## 🔹 AI-Powered Fitness Assistant: **System Architecture**
 
 
-```mermaid
-graph TD
-    A[User Inputs: Goals, Health Data] -->|Sends request| B(AI Fitness Agent)
-    B -->|Retrieves Knowledge| C(RAG System)
-    B -->|Fetches real-time data| D(Health API)
-    B -->|Sends tasks| E(Planner Agent: Workout Plans)
-    B -->|Adjusts macros| F(Nutrition Agent)
-    B -->|Checks for risky exercises| G(Injury Prevention Agent)
-    B -->|Engages User| H(Motivation Engine)
-    E -->|Final Workout & Diet Plan| I[Output: Personalized Dynamic Plan]
-    F -->|Final Workout & Diet Plan| I
-    G -->|Final Workout & Diet Plan| I
-    H -->|Final Workout & Diet Plan| I
-```
+
 
 ```mermaid
 graph TD
