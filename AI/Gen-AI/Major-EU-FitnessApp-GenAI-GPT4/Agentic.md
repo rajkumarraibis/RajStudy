@@ -62,7 +62,7 @@ graph TD
     F -->|Final Workout & Diet Plan| I
     G -->|Final Workout & Diet Plan| I
     H -->|Final Workout & Diet Plan| I
-
+```
 
 ### **Step-by-Step Breakdown**
 1️⃣ **User Inputs Fitness Goals & Preferences**  
