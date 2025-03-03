@@ -1,5 +1,3 @@
-Here is the **Markdown (MD) version** of the **AI-Powered Fitness Assistant Use Case** with **technical details, diagrams, and key differentiators from RAG**.
-
 ---
 
 
