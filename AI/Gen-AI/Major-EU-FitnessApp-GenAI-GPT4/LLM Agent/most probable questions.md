@@ -204,5 +204,3 @@ print(response)
 
 🚀 **Now you're fully prepared for your technical deep-dive interview!** 🎯  
 ```
-
-Now, you have a **final MD file** with **probable questions and strong technical answers**. **Good luck!** 🚀🔥
