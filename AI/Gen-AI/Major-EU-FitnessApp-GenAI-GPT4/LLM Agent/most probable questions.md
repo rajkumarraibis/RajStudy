@@ -16,6 +16,7 @@ _A focused technical preparation for the hands-on AI specialist role._
 ✅ **Answer:**  
 A production-grade **LLM-powered AI agent system** must be **scalable, efficient, and cost-optimized**. Below is a **high-level architecture**:
 ---
+
 ```mermaid
 graph TD
     A[User Input: Task Request] -->|Processes Query| B[AI Orchestration Layer (LangChain)]
@@ -24,21 +25,6 @@ graph TD
     D -->|Fetches External Data| E[Vector DB (Pinecone, ChromaDB)]
     D -->|Calls External APIs| F[3rd Party APIs (Health, CRM, Finance)]
     D -->|Sends Final Response| G[User Output]
-```
-
-```mermaid
-graph TD
-    A[User Inputs: Goals, Health Data] -->|Sends request| B(AI Fitness Agent: LangChain)
-    B -->|Retrieves Knowledge| C(RAG System: Pinecone, ChromaDB, OpenAI Embeddings)
-    B -->|Fetches real-time data| D(Health API: Apple Health, Fitbit, Garmin)
-    B -->|Sends tasks| E(Planner Agent: FastAPI, Celery, Kubernetes)
-    B -->|Adjusts macros| F(Nutrition Agent: TensorFlow, PyTorch)
-    B -->|Checks for risky exercises| G(Injury Prevention Agent: OpenAI GPT, Hugging Face Transformers)
-    B -->|Engages User| H(Motivation Engine: Twilio, Firebase, GPT-4)
-    E -->|Final Workout & Diet Plan| I[Output: Personalized Dynamic Plan - AWS Lambda Deployment]
-    F -->|Final Workout & Diet Plan| I
-    G -->|Final Workout & Diet Plan| I
-    H -->|Final Workout & Diet Plan| I
 ```
 
 📌 **Key Components & Tech Stack:**
