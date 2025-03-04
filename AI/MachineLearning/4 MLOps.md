@@ -1,4 +1,4 @@
-### **Topic**: "MLOps Best Practices for Scaling Machine Learning in Production"
+### "MLOps Best Practices for Scaling Machine Learning in Production"
 
 # Table of Contents:
 1. **Introduction to MLOps**:
