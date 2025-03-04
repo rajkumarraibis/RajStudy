@@ -15,7 +15,7 @@ _A focused technical preparation for the hands-on AI specialist role._
 
 ✅ **Answer:**  
 A production-grade **LLM-powered AI agent system** must be **scalable, efficient, and cost-optimized**. Below is a **high-level architecture**:
-
+---
 ```mermaid
 graph TD
     A[User Input: Task Request] -->|Processes Query| B[AI Orchestration Layer (LangChain)]
