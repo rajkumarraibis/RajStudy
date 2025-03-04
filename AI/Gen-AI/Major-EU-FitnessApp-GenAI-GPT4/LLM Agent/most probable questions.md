@@ -17,6 +17,7 @@ _A focused technical preparation for the hands-on AI specialist role._
 A production-grade **LLM-powered AI agent system** must be **scalable, efficient, and cost-optimized**. Below is a **high-level architecture**:
 ---
 
+
 ```mermaid
 graph TD
     A[User Input: Task Request] -->|Processes Query| B[AI Orchestration Layer (LangChain)]
@@ -25,7 +26,7 @@ graph TD
     D -->|Fetches External Data| E[Vector DB (Pinecone, ChromaDB)]
     D -->|Calls External APIs| F[3rd Party APIs (Health, CRM, Finance)]
     D -->|Sends Final Response| G[User Output]
-
+```
 
 📌 **Key Components & Tech Stack:**
 - **Inference Layer**: `Kubernetes + vLLM` for LLM model scaling.  
