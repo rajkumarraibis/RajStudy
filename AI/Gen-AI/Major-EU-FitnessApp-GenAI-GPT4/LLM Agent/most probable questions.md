@@ -25,7 +25,7 @@ graph TD
     D -->|Fetches External Data| E[Vector DB (Pinecone, ChromaDB)]
     D -->|Calls External APIs| F[3rd Party APIs (Health, CRM, Finance)]
     D -->|Sends Final Response| G[User Output]
-```
+
 
 📌 **Key Components & Tech Stack:**
 - **Inference Layer**: `Kubernetes + vLLM` for LLM model scaling.  
