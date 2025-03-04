@@ -22,12 +22,13 @@ A production-grade **LLM-powered AI agent system** must be **scalable, efficient
 
 ```mermaid
 graph TD
-    A[User Input: Task Request] -->|Processes Query| B[AI Orchestration Layer (LangChain)]
+    A[User Input: Task Request] -->|Processes Query| B[AI Orchestration Layer - LangChain]
     B -->|Decides Workflow| C[Multi-Agent System]
     C -->|Executes Tasks| D{Agents: Planner, RAG, Action Executor}
-    D -->|Fetches External Data| E[Vector DB (Pinecone, ChromaDB)]
-    D -->|Calls External APIs| F[3rd Party APIs (Health, CRM, Finance)]
+    D -->|Fetches External Data| E[Vector DB - Pinecone, ChromaDB]
+    D -->|Calls External APIs| F[3rd Party APIs - Health, CRM, Finance]
     D -->|Sends Final Response| G[User Output]
+
 ```
 
 📌 **Key Components & Tech Stack:**
