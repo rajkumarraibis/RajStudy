@@ -26,6 +26,21 @@ graph TD
     D -->|Sends Final Response| G[User Output]
 ```
 
+```mermaid
+graph TD
+    A[User Inputs: Goals, Health Data] -->|Sends request| B(AI Fitness Agent: LangChain)
+    B -->|Retrieves Knowledge| C(RAG System: Pinecone, ChromaDB, OpenAI Embeddings)
+    B -->|Fetches real-time data| D(Health API: Apple Health, Fitbit, Garmin)
+    B -->|Sends tasks| E(Planner Agent: FastAPI, Celery, Kubernetes)
+    B -->|Adjusts macros| F(Nutrition Agent: TensorFlow, PyTorch)
+    B -->|Checks for risky exercises| G(Injury Prevention Agent: OpenAI GPT, Hugging Face Transformers)
+    B -->|Engages User| H(Motivation Engine: Twilio, Firebase, GPT-4)
+    E -->|Final Workout & Diet Plan| I[Output: Personalized Dynamic Plan - AWS Lambda Deployment]
+    F -->|Final Workout & Diet Plan| I
+    G -->|Final Workout & Diet Plan| I
+    H -->|Final Workout & Diet Plan| I
+```
+
 📌 **Key Components & Tech Stack:**
 - **Inference Layer**: `Kubernetes + vLLM` for LLM model scaling.  
 - **AI Orchestration**: `LangChain` for multi-agent execution.  
