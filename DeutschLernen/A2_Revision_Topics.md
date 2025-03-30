@@ -4,9 +4,8 @@ Table for the possessive article **"mein"** (my) in all cases and genders:
 | ich | gehe | bin |
 | du | gehst | bist |
 | er/sie/es | geht | ist |
-| wir | gehen | sind |
+| wir/Sie/sie | gehen | sind |
 | ihr | geht | seid |
-| Sie/sie | gehen | sind |
 
 | Gender | Definite Article | Examples | Common Endings/Rules |
 |---|---|---|---|
