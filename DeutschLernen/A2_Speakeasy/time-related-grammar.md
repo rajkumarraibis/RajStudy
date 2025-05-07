@@ -34,7 +34,7 @@ Use these adjectives with the correct article endings for the **Akkusativ** case
 - These are used in **time expressions**, which typically take the **accusative** case.
 - You will often find them used with **Wann?** questions.
 
-# More Time Expressions
+# Time Expressions
 
 These phrases answer the question **"Wann?"** (When?) and help place actions or events in **time**.
 
