@@ -1,4 +1,4 @@
-# Präteritum – Simple Past (Lesson 1)
+## ✅ **Präteritum – Simple Past Tense (Vergangenheit)**
 
 Used mostly in **written** German or for certain common verbs (*sein*, *haben*).
 
@@ -23,10 +23,6 @@ Used mostly in **written** German or for certain common verbs (*sein*, *haben*).
 | sie/Sie | hatten |
 
 categorized examples of **Präteritum** (Simple Past) usage — focusing on when and how it's used in German:
-
----
-
-## ✅ **Präteritum – Simple Past Tense (Vergangenheit)**
 
 ### 🔹 1. Common Verbs (sein, haben, werden)
 
