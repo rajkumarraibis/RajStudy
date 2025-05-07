@@ -71,7 +71,7 @@ The **Perfekt (Present Perfect Tense)** in German is mainly used to describe **p
 | Formal writing     | Präteritum           |
 | Verbs: sein/haben  | Präteritum (usually) |
 
-# Verben – Perfekt mit *haben* und *sein* (Wiederholung)
+# Verben – Perfekt mit *haben* und *sein* 
 
 | Verbart              | Infinitiv     | er/sie | Partizip …t          | Partizip …en            |
 |----------------------|---------------|--------|-----------------------|--------------------------|
