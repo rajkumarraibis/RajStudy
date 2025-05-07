@@ -101,3 +101,5 @@ Used as an **adverb** of frequency. No case change needed.
 | immer               | Always               | Adverb                         |
 | vor einer Woche     | A week ago           | vor + Dativ (feminine noun)    |
 
+![image](https://github.com/user-attachments/assets/c9cb2efa-552d-4578-99de-c046876e35ed)
+
