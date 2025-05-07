@@ -70,3 +70,17 @@ The **Perfekt (Present Perfect Tense)** in German is mainly used to describe **p
 | Informal writing   | Perfekt              |
 | Formal writing     | Präteritum           |
 | Verbs: sein/haben  | Präteritum (usually) |
+
+# Verben – Perfekt mit *haben* und *sein* (Wiederholung)
+
+| Verbart              | Infinitiv     | er/sie | Partizip …t          | Partizip …en            |
+|----------------------|---------------|--------|-----------------------|--------------------------|
+| regelmäßig           | kochen        |        | **hat gekocht**       |                          |
+| unregelmäßig         | essen         |        |                       | **hat gegessen**         |
+|                      | gehen         |        |                       | **ist gegangen**         |
+| trennbare Verben     | mitmachen     |        | **hat mitgemacht**    |                          |
+|                      | einladen      |        |                       | **hat eingeladen**       |
+|                      | ankommen      |        |                       | **ist angekommen**       |
+| Verben auf -ieren    | probieren     |        | **hat probiert**      |                          |
+| nicht trennbare Verben| verkaufen    |        | **hat verkauft**      |                          |
+|                      | gewinnen      |        |                       | **hat gewonnen**         |
