@@ -1,6 +1,6 @@
 # Unregelmäßige Verben – Komplette Liste (aus dem Buch)
 
-| Nr. | Infinitiv       | Präsens (er/sie/es) | Perfekt             | English Meaning       |
+| Nr. | Infinitiv       | Präsens (er/sie/es) | Perfekt  (er/sie/es)   | English Meaning       |
 |-----|------------------|----------------------|----------------------|------------------------|
 | 1   | abbiegen         | biegt ab             | ist abgebogen        | to turn (off) |
 | 2   | abfahren         | fährt ab             | ist abgefahren       | to depart, leave |
