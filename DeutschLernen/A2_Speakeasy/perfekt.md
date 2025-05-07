@@ -1,4 +1,4 @@
-# Perfekt – Present Perfect Tense (Lesson 1)
+# Perfekt – Conversational Past Tense  (Vergangenheit)
 
 Perfekt = Auxiliary verb (haben/sein) + Partizip II (past participle)
 
