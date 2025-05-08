@@ -1,6 +1,6 @@
 # Lernwortschatz – Kapitel 1 (Seiten 106–109)
 
-| Deutsch                              | English                          |
+| Deutsch                              | English                          |Perfekt (if applicable)|
 |--------------------------------------|----------------------------------|
 | das Jubiläum, Jubiläen               | anniversary |
 | die Europameisterschaft              | European Championship |
@@ -87,3 +87,8 @@
 | das Tal                              | valley |
 | das Feld                             | field |
 | die Alternative                      | alternative |
+ danach     | afterwards     | –                           |
+| probieren  | to try         | hat probiert                |
+| verkaufen  | to sell        | hat verkauft                |
+| gewinnen   | to win         | hat gewonnen                |
+| schreiben  | to write       | hat geschrieben             |
