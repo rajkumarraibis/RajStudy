@@ -3,14 +3,14 @@
 Perfekt = Auxiliary verb (haben/sein) + Partizip II (past participle)
 
 
-| **Person**    | **Perfekt with haben**                  | **Meaning**                      | **Perfekt with sein**                  | **Meaning**                  |
-| ------------- | --------------------------------------- | -------------------------------- | -------------------------------------- | ---------------------------- |
-| **ich**       | Ich **habe** eine Mahlzeit **gekocht**. | I cooked a meal.                 | Ich **bin** nach Hause **gegangen**.   | I went home.                 |
-| **du**        | Du **hast** das Fenster **geöffnet**.   | You opened the window.           | Du **bist** früh **aufgestanden**.     | You got up early.            |
-| **er/sie/es** | Er **hat** einen Film **gesehen**.      | He watched a movie.              | Sie **ist** ins Kino **gegangen**.     | She went to the cinema.      |
-| **wir**       | Wir **haben** Fußball **gespielt**.     | We played football.              | Wir **sind** nach Berlin **gefahren**. | We traveled to Berlin.       |
-| **ihr**       | Ihr **habt** laut **gelacht**.          | You (plural) laughed loudly.     | Ihr **seid** schnell **gelaufen**.     | You (plural) ran fast.       |
-| **sie/Sie**   | Sie **haben** das Buch **gelesen**.     | They/You (formal) read the book. | Sie **sind** spät **gekommen**.        | They/You (formal) came late. |
+| **Person** | **haben (form)** | **Beispiel (haben)**                  | **Meaning**                  | **sein (form)** | **Beispiel (sein)**                    | **Meaning**             |
+| ---------- | ---------------- | ------------------------------------- | ---------------------------- | --------------- | -------------------------------------- | ----------------------- |
+| ich        | habe       | Ich **habe** ein Buch **gelesen**.    | I read a book.               | bin      | Ich **bin** nach Hause **gegangen**.   | I went home.            |
+| du         | hast       | Du **hast** einen Apfel **gegessen**. | You ate an apple.            | bist     | Du **bist** früh **aufgestanden**.     | You got up early.       |
+| er/sie/es  | hat        | Er **hat** das Fenster **geöffnet**.  | He opened the window.        | ist      | Sie **ist** ins Kino **gegangen**.     | She went to the cinema. |
+| wir        | haben      | Wir **haben** Fußball **gespielt**.   | We played football.          | sind     | Wir **sind** nach Berlin **gefahren**. | We went to Berlin.      |
+| ihr        | habt       | Ihr **habt** laut **gelacht**.        | You (plural) laughed loudly. | seid     | Ihr **seid** schnell **gelaufen**.     | You (plural) ran fast.  |
+| sie/Sie    | haben      | Sie **haben** das Essen **gekocht**.  | They/You cooked the food.    | sind     | Sie **sind** spät **gekommen**.        | They/You came late.     |
 
 
 Use **haben** for most verbs.  
