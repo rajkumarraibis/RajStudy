@@ -1,11 +1,14 @@
-Table for the possessive article **"mein"** (my) in all cases and genders:
-| Person | gehen (to go) | sein (to be) |
-|---|---|---|
-| ich | gehe | bin |
-| du | gehst | bist |
-| er/sie/es | geht | ist |
-| wir/Sie/sie | gehen | sind |
-| ihr | geht | seid |
+### **Conjugation of the Verbs "gehen" (to go) and "sein" (to be) in Präsens (Present Tense)**
+
+| **Person**    | **gehen** | **Example (gehen)**       | **Meaning (gehen)**            | **sein** | **Example (sein)**      | **Meaning (sein)**              |
+| ------------- | --------- | ------------------------- | ------------------------------ | -------- | ----------------------- | ------------------------------- |
+| **ich**       | gehe      | Ich **gehe** zur Schule.  | I go to school.                | bin      | Ich **bin** zu Hause.   | I am at home.                   |
+| **du**        | gehst     | Du **gehst** ins Kino.    | You go to the cinema.          | bist     | Du **bist** freundlich. | You are friendly.               |
+| **er/sie/es** | geht      | Er **geht** nach Hause.   | He goes home.                  | ist      | Sie **ist** müde.       | She is tired.                   |
+| **wir**       | gehen     | Wir **gehen** spazieren.  | We go for a walk.              | sind     | Wir **sind** hungrig.   | We are hungry.                  |
+| **ihr**       | geht      | Ihr **geht** in den Park. | You (plural) go to the park.   | seid     | Ihr **seid** laut.      | You (plural) are loud.          |
+| **sie/Sie**   | gehen     | Sie **gehen** einkaufen.  | They/You (formal) go shopping. | sind     | Sie **sind** Lehrer.    | They/You (formal) are teachers. |
+
 
 | Gender | Definite Article | Examples | Common Endings/Rules |
 |---|---|---|---|
