@@ -55,7 +55,7 @@ Table for the possessive article **"mein"** (my) in all cases and genders:
 
 ---
 
-# Table of the verb **"Haben"** (to have) with its conjugations and examples  
+# Table of the Präsens (Present Tense) verb **"Haben"** (to have) with its conjugations and examples  
 
 | Pronoun              | Conjugation | Example Sentence                      |  
 |----------------------|------------|--------------------------------------|  
