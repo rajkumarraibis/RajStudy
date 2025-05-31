@@ -8,3 +8,21 @@ Kapitel 1 Seite 29
 | er/sie/es    | kann   | muss   | soll   | will   | darf   | mag    | möchte  |
 | wir/sie/Sie  | können | müssen | sollen | wollen | dürfen | mögen  | möchten |
 | ihr          | könnt  | müsst  | sollt  | wollt  | dürft  | mögt   | möchtet |
+
+Below are example sentences using **können** with each subject, in **Präsens tense**:
+
+---
+
+### ✅ **Examples with "können" (to be able to / can)**
+
+| **Person**       | **Verb** | **Example Sentence (Deutsch)**      | **Translation (English)**                |
+| ---------------- | -------- | ----------------------------------- | ---------------------------------------- |
+| **ich**          | kann     | Ich kann gut schwimmen.             | I can swim well.                         |
+| **du**           | kannst   | Du kannst sehr schnell laufen.      | You can run very fast.                   |
+| **er/sie/es**    | kann     | Sie kann gut singen.                | She can sing well.                       |
+| **wir**          | können   | Wir können heute ins Kino gehen.    | We can go to the cinema today.           |
+| **ihr**          | könnt    | Ihr könnt sehr schön malen.         | You (plural) can paint very beautifully. |
+| **sie (plural)** | können   | Sie können viele Sprachen sprechen. | They can speak many languages.           |
+| **Sie (formal)** | können   | Können Sie mir bitte helfen?        | Can you please help me? (formal)         |
+
+---
