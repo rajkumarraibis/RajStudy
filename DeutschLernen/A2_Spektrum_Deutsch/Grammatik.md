@@ -25,6 +25,26 @@ Below are example sentences using **können** with each subject, in **Präsens t
 | **sie (plural)** | können   | Sie können viele Sprachen sprechen. | They can speak many languages.           |
 | **Sie (formal)** | können   | Können Sie mir bitte helfen?        | Can you please help me? (formal)         |
 
+
+### Konjugation von „haben“ und „sein“ in Präsens, Präteritum und Perfekt
+|               | **Präsens** | **Präteritum** | **Perfekt**  |
+| ------------- | ----------- | -------------- | ------------ |
+| **ich**       | habe        | hatte          | habe gehabt  |
+| **du**        | hast        | hattest        | hast gehabt  |
+| **er/sie/es** | hat         | hatte          | hat gehabt   |
+| **wir**       | haben       | hatten         | haben gehabt |
+| **ihr**       | habt        | hattet         | habt gehabt  |
+| **Sie/sie**   | haben       | hatten         | haben gehabt |
+
+|               | **Präsens** | **Präteritum** | **Perfekt**  |
+| ------------- | ----------- | -------------- | ------------ |
+| **ich**       | bin         | war            | bin gewesen  |
+| **du**        | bist        | warst          | bist gewesen |
+| **er/sie/es** | ist         | war            | ist gewesen  |
+| **wir**       | sind        | waren          | sind gewesen |
+| **ihr**       | seid        | wart           | seid gewesen |
+| **Sie/sie**   | sind        | waren          | sind gewesen |
+
 ---
 
 Table to include the **tense** being used — specifically **Perfekt** (present perfect) and **Präteritum** (simple past) — to make things clearer.
