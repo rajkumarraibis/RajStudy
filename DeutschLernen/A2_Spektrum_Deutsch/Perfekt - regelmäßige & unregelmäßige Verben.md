@@ -38,14 +38,16 @@ Examples:
 
 ---
 
-### Summary Table:
+### ✅ **Summary Table:**
 
-| Type of verb                 | Use auxiliary | Partizip II form                |
-| ---------------------------- | ------------- | ------------------------------- |
-| Regular verb                 | haben         | ge- + stem + -t                 |
-| Verb ending in **-ieren**    | haben         | stem + -iert                    |
-| Movement / state change verb | sein          | (irregular or regular Partizip) |
-| Irregular verb (no movement) | haben         | irregular form (learn it!)      |
+| Type of verb                                                          | Use auxiliary | Partizip II form                              |
+| --------------------------------------------------------------------- | ------------- | --------------------------------------------- |
+| Regular verb                                                          | haben         | **ge-** + stem + **-t**                       |
+| Verb with **inseparable prefix** (*be-*, *ver-*, *er-*, *ent-*, etc.) | haben         | prefix + stem + **-t** (⚠️ no **ge-**)        |
+| Verb ending in **-ieren**                                             | haben         | stem + **-iert**                              |
+| Movement / state change verb                                          | sein          | (irregular or regular Partizip II)            |
+| Irregular verb (no movement)                                          | haben         | irregular form (must be learned individually) |
+
 
 ---
 
