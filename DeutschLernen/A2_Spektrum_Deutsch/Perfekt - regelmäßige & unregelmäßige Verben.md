@@ -90,7 +90,7 @@ You use **sein** + Partizip II with these:
 
 ---
 
-## ✅ Top 20 **irregular verbs** you should learn first
+## ✅ Top **irregular verbs** you should learn first
 
 Very common — used in **daily conversation**:
 
@@ -116,6 +116,7 @@ Very common — used in **daily conversation**:
 | treffen          | getroffen   | to meet          |
 | helfen           | geholfen    | to help          |
 | beginnen         | begonnen    | to begin/start   |
+| fliegen         | geflogen     | to fly            |
 
 ---
 
