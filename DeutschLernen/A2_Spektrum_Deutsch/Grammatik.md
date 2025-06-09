@@ -1,3 +1,18 @@
+**Der–Die–Das table** for German definite articles across cases:
+
+---
+
+### ✅ **Definite Articles Table (Der–Die–Das)**
+
+| Case                           | Masculine (**der**) | Feminine (**die**) | Neuter (**das**) | Plural (**die**) |
+| ------------------------------ | ------------------- | ------------------ | ---------------- | ---------------- |
+| **Nominative** (subject)       | **der** Mann        | **die** Frau       | **das** Kind     | **die** Kinder   |
+| **Accusative** (direct object) | **den** Mann        | **die** Frau       | **das** Kind     | **die** Kinder   |
+| **Dative** (indirect object)   | **dem** Mann        | **der** Frau       | **dem** Kind     | **den** Kindern  |
+| **Genitive** (possession)      | **des** Mannes      | **der** Frau       | **des** Kindes   | **der** Kinder   |
+
+---
+
 Kapitel 1 Seite 29
 ### Modalverben im Präsens und **möchte-**
 
