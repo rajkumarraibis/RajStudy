@@ -60,3 +60,15 @@ Below are example sentences using **können** with each subject, in **Präsens t
 | **Accusative** (direct object) | **den** Mann        | **die** Frau       | **das** Kind     | **die** Kinder   |
 | **Dative** (indirect object)   | **dem** Mann        | **der** Frau       | **dem** Kind     | **den** Kindern  |
 | **Genitive** (possession)      | **des** Mannes      | **der** Frau       | **des** Kindes   | **der** Kinder   |
+
+
+### ✅ **Indefinite Articles Table (ein / eine / ein)**
+
+| **Case**                       | **Masculine**    | **Feminine**   | **Neuter**       |
+| ------------------------------ | ---------------- | -------------- | ---------------- |
+| **Nominative** (subject)       | **ein** Mann     | **eine** Frau  | **ein** Kind     |
+| **Accusative** (direct object) | **einen** Mann   | **eine** Frau  | **ein** Kind     |
+| **Dative** (indirect object)   | **einem** Mann   | **einer** Frau | **einem** Kind   |
+| **Genitive** (possession)      | **eines** Mannes | **einer** Frau | **eines** Kindes |
+
+---
