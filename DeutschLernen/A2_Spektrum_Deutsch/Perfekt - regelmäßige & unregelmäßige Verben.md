@@ -80,9 +80,3 @@ Very common — used in **daily conversation**:
 
 ---
 
----
-
-If you want, I can also give you a simple **Anki flashcard deck** to practice this easily every day (5–10 min/day — very effective).
-→ Would you like me to prepare it?
-(*You can use it on phone or laptop.*) 🚀
-
