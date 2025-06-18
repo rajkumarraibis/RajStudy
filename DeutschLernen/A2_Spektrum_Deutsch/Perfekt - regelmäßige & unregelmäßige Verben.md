@@ -1,44 +1,4 @@
-Super! Here is a very simple and practical **flow chart** to help you decide *which rule to use* for **Perfekt**:
-
----
-
-### 📝 Perfekt Flow Chart
-
-**1️⃣ What is your verb?**
-
-👉 Does it end in **-ieren**?
-➡️ **YES** → Partizip II = **stem + -iert**, use **haben**
-➡️ Example: *studieren → studiert*
-
----
-
-**2️⃣ Does the verb show a movement/change of state?**
-
-👉 Examples: *gehen, fahren, kommen, aufstehen, sterben*
-➡️ **YES** → use **sein** + Partizip II
-➡️ Partizip II can be regular or irregular (depends on verb)
-
-Examples:
-
-| Infinitiv | Partizip II  | Perfekt Satz         |
-| --------- | ------------ | -------------------- |
-| gehen     | gegangen     | Ich bin gegangen.    |
-| aufstehen | aufgestanden | Er ist aufgestanden. |
-| sterben   | gestorben    | Sie ist gestorben.   |
-
----
-
-**3️⃣ All other verbs → check if regular or irregular**
-
-👉 Is it a **regular verb** (no vowel change)?
-➡️ **YES** → *haben* + ge- + stem + -t
-
-👉 Is it an **irregular verb** (vowel change or strange Partizip II)?
-➡️ **YES** → *haben* or *sein* + irregular Partizip II (you must learn it)
-
----
-
-### ✅ **Summary Table:**
+### ✅ **Summary Table: to help you decide *which rule to use for Perfekt**
 
 | Type of verb                                                          | Use auxiliary | Partizip II form                              |
 | --------------------------------------------------------------------- | ------------- | --------------------------------------------- |
@@ -119,12 +79,6 @@ Very common — used in **daily conversation**:
 | fliegen         | geflogen     | to fly            |
 
 ---
-
-### Summary: How to study it?
-
-👉 Step 1 → Learn the **"sein" list** → very important for correct grammar.
-👉 Step 2 → Learn these **top 20 irregular verbs** → 80% of daily conversation will use them.
-👉 Step 3 → Regular verbs → just follow *ge- + stem + -t*.
 
 ---
 
