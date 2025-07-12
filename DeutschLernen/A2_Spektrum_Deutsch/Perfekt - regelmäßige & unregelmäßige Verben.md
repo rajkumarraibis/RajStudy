@@ -69,6 +69,7 @@ Very common — used in **daily conversation**:
 | finden           | gefunden    | to find          |
 | lesen            | gelesen     | to read          |
 | schreiben        | geschrieben | to write         |
+| sprechen         | gesprochen  | to write         |
 | denken           | gedacht     | to think         |
 | wissen           | gewusst     | to know (a fact) |
 | schlafen         | geschlafen  | to sleep         |
