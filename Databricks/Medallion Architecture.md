@@ -169,7 +169,7 @@ As data moves from Bronze → Silver → Gold:
 
 - Lakehouse Architecture
 - Delta Live Tables (DLT)
-- Streaming Ingestion (Auto Loader)
+- [Streaming Ingestion (Auto Loader)](https://github.com/rajkumarraibis/RajStudy/blob/main/Databricks/Auto%20Loader.md)
 - Data Lineage
 - RAG + AI with Medallion (Emerging Pattern)
 
