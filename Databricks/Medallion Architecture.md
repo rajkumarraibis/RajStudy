@@ -1,6 +1,6 @@
 # Medallion Architecture (Databricks)
 
-<img src="/images/building-data-pipelines-with-delta-lake-120823.png" alt="Medallion Architecture Diagram" style="width:50%"/>
+<img src="/images/building-data-pipelines-with-delta-lake-120823.png" alt="Medallion Architecture Diagram" style="width:80%"/>
 
 ## 🔍 What is Medallion Architecture?
 
