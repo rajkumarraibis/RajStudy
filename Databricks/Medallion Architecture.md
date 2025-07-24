@@ -69,9 +69,9 @@ It helps ensure:
 
 ### Building Data Pipelines with Medallion Architecture
 
-Databricks provides tools like **Lakeflow Declarative Pipelines** that allow users to instantly build data pipelines with **Bronze**, **Silver**, and **Gold** tables from just a few lines of code.
+Databricks provides tools like [Lakeflow Declarative Pipelines](https://www.databricks.com/product/data-engineering/lakeflow-declarative-pipelines) that allow users to instantly build data pipelines with **Bronze**, **Silver**, and **Gold** tables from just a few lines of code.
 
-With **streaming tables** and **materialized views**, users can create **streaming Lakeflow pipelines** built on **Apache Spark™ Structured Streaming** that are incrementally refreshed and updated.
+With [streaming tables](https://docs.databricks.com/aws/en/dlt/streaming-tables) and **materialized views**, users can create **streaming Lakeflow pipelines** built on **Apache Spark™ Structured Streaming** that are incrementally refreshed and updated.
 
 ➡️ *For more details, see Databricks documentation on combining streaming tables and materialized views in a single pipeline.*
 
@@ -180,3 +180,4 @@ As data moves from Bronze → Silver → Gold:
 The Medallion Architecture is not just a best practice — it's a **foundation** for any scalable, governed, and performant lakehouse on platforms like **Databricks**.  
 By structuring your pipelines around **Bronze → Silver → Gold**, you can support **real-time, ML, BI, and operational workloads** with confidence.
 
+[source](https://www.databricks.com/glossary/medallion-architecture)
