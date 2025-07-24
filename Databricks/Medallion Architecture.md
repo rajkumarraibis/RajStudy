@@ -1,6 +1,6 @@
 # Medallion Architecture (Databricks)
 
-![Medallion Architecture Diagram](https://www.databricks.com/sites/default/files/2023-03/medallion-architecture.png)
+<img src="/images/building-data-pipelines-with-delta-lake-120823.png" alt="Medallion Architecture Diagram" style="width:50%"/>
 
 ## 🔍 What is Medallion Architecture?
 
