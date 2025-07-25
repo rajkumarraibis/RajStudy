@@ -15,6 +15,14 @@ Check out the video for demos and insights:
 
 ---
 
+### ## FEATURES
+
+## Data and AI Catalog
+<img src="/images/uc-feature-image-1.png" alt="Data and AI Catalog" style="width:80%"/>
+Unified catalog for all structured data, unstructured data, business metrics and AI models across open data formats like Delta Lake, Apache Iceberg, Hudi, Parquet and more.
+
+---
+
 ### ## 2. Object Model & Terminology
 
 * A **metastore** is the top-level metadata container — one per region, shared across workspaces ([Databricks Documentation][1]).
