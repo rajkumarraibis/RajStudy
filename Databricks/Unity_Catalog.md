@@ -21,6 +21,8 @@ Check out the video for demos and insights:
 <img src="/images/uc-feature-image-1.png" alt="Data and AI Catalog" style="width:80%"/>
 Unified catalog for all structured data, unstructured data, business metrics and AI models across open data formats like Delta Lake, Apache Iceberg, Hudi, Parquet and more.
 
+add more features from
+https://www.databricks.com/product/unity-catalog#features
 ---
 
 ### ## 2. Object Model & Terminology
