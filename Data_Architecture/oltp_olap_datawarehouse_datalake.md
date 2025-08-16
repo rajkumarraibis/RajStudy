@@ -1,4 +1,3 @@
-```markdown
 # OLTP, OLAP, Data Warehouse, Data Lake, Data Lakehouse
 
 ## 🔎 TL;DR Summary  
@@ -58,33 +57,31 @@
 ## 3. Data Flow – End-to-End Architecture  
 
 ```
-
-Data Sources
+   Data Sources
 (SCADA, IoT sensors, Market Data, ERP)
-│
-▼
-Ingestion Layer
+       │
+       ▼
+   Ingestion Layer
 (Kafka, APIs, Batch ETL)
-│
-▼
-Staging Area
-(Raw S3 bucket, Landing Zone)
-│
-▼
-Data Lake / Lakehouse
+       │
+       ▼
+   Staging Area
+   (Raw S3 bucket, Landing Zone)
+       │
+       ▼
+   Data Lake / Lakehouse
 (Delta Lake / Iceberg)
-│
-├── Cleaned / Curated Zone
-├── Aggregated / Gold Zone
-│
-▼
-Data Warehouse (optional)
-(Snowflake / Redshift / BigQuery)
-│
-▼
-BI & Analytics
+       │
+       ├── Cleaned / Curated Zone
+       ├── Aggregated / Gold Zone
+       │
+       ▼
+   Data Warehouse (optional)
+   (Snowflake / Redshift / BigQuery)
+       │
+       ▼
+   BI & Analytics
 (Dashboards, Forecasting, ML Models)
-
 ```
 
 **Zones in Lakehouse**:  
@@ -108,6 +105,72 @@ BI & Analytics
 
 ---
 
+## 5. Entity Model Example (Energy Grid Context)
+
+A simplified **entity model** for a Regional Coordination Centre (RCC) managing cross-border grid data:
+
+### Entities & Attributes
+
+1. **Grid_Sensor**
+   - sensor_id (PK)
+   - country_id (FK → Country.country_id)
+   - location
+   - type (voltage, current, frequency)
+   - installation_date
+
+2. **Country**
+   - country_id (PK)
+   - name
+   - tso_name (Transmission System Operator)
+   - region
+
+3. **Load_Reading**
+   - reading_id (PK)
+   - sensor_id (FK → Grid_Sensor.sensor_id)
+   - timestamp
+   - voltage
+   - current
+   - frequency
+   - load_mw
+
+4. **Capacity_Forecast**
+   - forecast_id (PK)
+   - country_id (FK → Country.country_id)
+   - timestamp
+   - forecast_mw
+   - model_version
+
+5. **Incident_Report**
+   - incident_id (PK)
+   - country_id (FK → Country.country_id)
+   - timestamp
+   - description
+   - severity_level
+
+---
+
+### Relationships
+- **Country** 1 ──── *M* **Grid_Sensor**  
+- **Grid_Sensor** 1 ──── *M* **Load_Reading**  
+- **Country** 1 ──── *M* **Capacity_Forecast**  
+- **Country** 1 ──── *M* **Incident_Report**  
+
+---
+
+### Diagram (textual representation)
+
+```
+Country ──< Grid_Sensor ──< Load_Reading
+   │
+   ├──< Capacity_Forecast
+   └──< Incident_Report
+```
+
+👉 **How to explain in an interview:**  
+- *“Each country operates multiple grid sensors. Sensors generate continuous load readings. At the country level, RCC generates capacity forecasts and records incident reports for outages or anomalies.”*  
+
+---
+
 ## 📝 Practice Exercise  
 
 **Use Case:**  
@@ -120,26 +183,22 @@ BI & Analytics
 **Solution – High-level Architecture**  
 
 ```
-
-```
-   Grid Sensors (TSOs)  ──►  Kafka (Streaming Ingestion)
-                                  │
-                                  ▼
-                      Staging / Raw Data (S3 / Delta Bronze)
-                                  │
-                                  ▼
-                    PySpark / dbt Transformations (Airflow Orchestration)
-                                  │
-                                  ▼
-                   Curated Data (Delta Silver)  ──►  ML Models (Forecasting)
-                                  │
-                                  ▼
-                    Aggregated / Gold (Delta + Data Warehouse)
-                                  │
-                                  ▼
-                BI Dashboards (Tableau/PowerBI) & ENTSO-E Reporting
-```
-
+       Grid Sensors (TSOs)  ──►  Kafka (Streaming Ingestion)
+                                      │
+                                      ▼
+                          Staging / Raw Data (S3 / Delta Bronze)
+                                      │
+                                      ▼
+                        PySpark / dbt Transformations (Airflow Orchestration)
+                                      │
+                                      ▼
+                       Curated Data (Delta Silver)  ──►  ML Models (Forecasting)
+                                      │
+                                      ▼
+                        Aggregated / Gold (Delta + Data Warehouse)
+                                      │
+                                      ▼
+                    BI Dashboards (Tableau/PowerBI) & ENTSO-E Reporting
 ```
 
 ---
@@ -162,6 +221,3 @@ BI & Analytics
 **Energy / ENTSO-E Context**  
 - [ENTSO-E Overview](https://www.entsoe.eu/about/)  
 - [ENTSO-E Transparency Platform (electricity data)](https://transparency.entsoe.eu/)  
-```
-
----
