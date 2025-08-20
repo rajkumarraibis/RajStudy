@@ -1,5 +1,3 @@
-Perfect, Raj 👍 — here’s your **full Day 1 package in text form**. You can copy/paste directly into your practice environment without needing external links.
-
 ---
 
 # 📅 **Day 1 – SQL + Python Warm-up (Text-Only)**
@@ -197,5 +195,3 @@ print(result)
 * Built a small **Python ETL pipeline** (CSV → SQLite → Query).
 
 ---
-
-👉 Raj, do you want me to also prepare **Day 2 in the same text-only format** (SQL Window Functions Deep Dive + CTE practice + more ETL exercises), so you can continue without needing links?
