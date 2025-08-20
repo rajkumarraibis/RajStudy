@@ -1,5 +1,3 @@
----
-
 # 📅 **Day 1 – SQL + Python Warm-up (Text-Only)**
 
 ### 🎯 **Goal**
