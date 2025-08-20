@@ -1,4 +1,4 @@
-# 📅 **Day 1 – SQL + Python Warm-up (Text-Only)**
+# 📅 **Day 1 – SQL + Python Warm-up**
 
 ### 🎯 **Goal**
 
@@ -418,5 +418,3 @@ print(result)
 * Built a **Python ETL** with multiple tables + transformations.
 
 ---
-
-👉 Raj, do you also want me to prepare **Day 3 in the same text-only format**, where we’ll move into **SQL Optimization (indexes, partitions, EXPLAIN plans)** and **Spark basics** so you align with Cosnova’s pipeline focus?
