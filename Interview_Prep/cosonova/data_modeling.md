@@ -87,10 +87,25 @@ At Freeletics, I implemented a **DV 2.0 style architecture on Databricks with De
 * **Sat_Subscription** captured plan details, including upgrades/downgrades over time.
 * Implemented **CDC using Delta Lake MERGE** to capture new inserts/updates efficiently.
 * Used **Delta Time Travel** for historization and audit.
-* Embedded **data quality checks** with Great Expectations and lineage with Unity Catalog.
-* Built **CI/CD pipelines with GitHub Actions** to ensure consistent deployments.
+* Embedded **data quality checks** with **Great Expectations** to validate uniqueness, referential integrity, and business rules before data moved downstream.
+* Integrated **Unity Catalog** for governance: schema and catalog management (Bronze, Silver, Gold), fine-grained permissions, and lineage from raw → DV2 → Star Schema marts.
+* Built **CI/CD pipelines with GitHub Actions** to test, validate, and deploy Databricks pipelines automatically, ensuring stable, repeatable deployments.
 
-👉 *Result:* We achieved **traceable, historized user and subscription data**, which allowed finance and product teams to answer: *“What was the user’s subscription state on any given date?”* while maintaining compliance.
+👉 *Result:* We achieved **traceable, historized user and subscription data**, which allowed finance and product teams to answer: *“What was the user’s subscription state on any given date?”* while maintaining compliance and governance.
+
+---
+
+### 🔹 Medallion Architecture (Databricks)
+
+We followed the **Medallion Architecture** (Bronze → Silver → Gold) as the layering principle:
+
+* **Bronze (Raw Ingest):** Landing raw data from sources (CRM, app, transactions).
+* **Silver (Cleansed / Modeled):** Applied DV 2.0 modeling with Hubs, Links, Satellites, CDC, and historization.
+* **Gold (Curated / Marts):** Star Schema facts & dimensions for BI, dashboards, and AI/ML feature stores.
+
+👉 This layering ensured clear separation of concerns: raw data preserved in Bronze, governed enterprise model in Silver, and business-friendly marts in Gold.
+
+![Medallion Architecture](https://databricks.com/wp-content/uploads/2023/06/medallion-architecture.png)
 
 ---
 
@@ -98,12 +113,12 @@ At Freeletics, I implemented a **DV 2.0 style architecture on Databricks with De
 
 1. **Audit Trail** → full history of product, pricing, campaigns (important in retail).
 2. **Schema Evolution** → new attributes can be added without disrupting existing model.
-3. **Traceability** → easy to trace any KPI back to raw source.
-4. **Modularity** → new hubs/links/sats can be added as business grows.
-5. **Business Alignment** → provides a governed foundation, then transformed for BI/AI use.
+3. **Traceability** → lineage from Bronze → Silver → Gold with Unity Catalog.
+4. **Data Quality** → embedded validations with Great Expectations.
+5. **Reliable Deployments** → CI/CD pipelines reduced manual errors.
 
 👉 **Interview Soundbite:**
-*"At Freeletics, we used DV 2.0 to historize subscription and user changes with Delta Lake CDC and Time Travel. I see a similar value at cosnova for tracking product, pricing, and campaign changes with full traceability and governance."*
+*"At Freeletics, we used DV 2.0 in the Silver layer with Delta Lake CDC and Unity Catalog for governance. On top, we built Gold layer Star Schema marts for analysts. This gave us auditability, history, and simple business views — exactly the balance cosnova needs for scaling analytics and AI."*
 
 ---
 
@@ -163,5 +178,5 @@ At Freeletics, after building the raw DV 2.0 layer:
 
 ---
 
-✅ If you can explain **DV = raw, auditable foundation** and **Star = consumable marts**, with your Freeletics examples, you’ll hit Yannick’s sweet spot.
+✅ With Unity Catalog, Great Expectations, CI/CD, and Medallion layering woven into your Freeletics story, you now have a **production-grade narrative** for cosnova.
 
