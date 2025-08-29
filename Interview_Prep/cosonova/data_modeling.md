@@ -1,5 +1,3 @@
-
-
 # 📌 Data Vault 2.0
 
 ### 🔹 Core Idea
@@ -22,14 +20,12 @@ It’s designed for:
 * Represents the *core business entity* (immutable ID).
 * Examples: `Customer_ID`, `Product_ID`, `Store_ID`.
 * Columns:
-
   * Business key (natural ID)
   * Surrogate hash key (HK)
   * Load date
   * Record source
 
 👉 *Example:*
-
 ```sql
 Hub_Customer
 +------------+-------------+-----------+--------------+
@@ -45,14 +41,12 @@ Hub_Customer
 * Represents **transactions, events, or associations**.
 * Examples: *Customer buys Product*, *Product sold in Store*.
 * Columns:
-
   * Surrogate hash key
   * Foreign keys to hubs
   * Load date
   * Record source
 
 👉 *Example:*
-
 ```sql
 Link_Sales
 +---------+-------------+-----------+-----------+--------------+
@@ -68,20 +62,35 @@ Link_Sales
 * Keeps **history** (effective date, expiry, load date).
 * Examples: Customer Name, Address, Product Price.
 * Columns:
-
   * Parent hub/link key
   * Attribute(s)
   * Effective date, Load date
   * Record source
 
 👉 *Example:*
-
 ```sql
 Sat_Product
 +-----------+-------------+----------+-----------+--------------+
 | Product_HK| ProductName | Category | LoadDate  | RecordSource |
 +-----------+-------------+----------+-----------+--------------+
 ```
+
+---
+
+### 🔹 Freeletics Implementation Example (DV2 on Databricks)
+
+At Freeletics, I implemented a **DV 2.0 style architecture on Databricks with Delta Lake**, focusing on **CDC (Change Data Capture), history tracking, and governance**:
+
+* **Hub_User** stored unique user IDs (immutable business keys).
+* **Link_Subscription** captured relationships between users and subscriptions (many-to-many over time).
+* **Sat_User** recorded changing user attributes (email, country, subscription tier) with full historization.
+* **Sat_Subscription** captured plan details, including upgrades/downgrades over time.
+* Implemented **CDC using Delta Lake MERGE** to capture new inserts/updates efficiently.
+* Used **Delta Time Travel** for historization and audit.
+* Embedded **data quality checks** with Great Expectations and lineage with Unity Catalog.
+* Built **CI/CD pipelines with GitHub Actions** to ensure consistent deployments.
+
+👉 *Result:* We achieved **traceable, historized user and subscription data**, which allowed finance and product teams to answer: *“What was the user’s subscription state on any given date?”* while maintaining compliance.
 
 ---
 
@@ -94,7 +103,7 @@ Sat_Product
 5. **Business Alignment** → provides a governed foundation, then transformed for BI/AI use.
 
 👉 **Interview Soundbite:**
-*"I see Data Vault 2.0 as cosnova’s governed raw data backbone — hubs capture keys like Product or Customer, links capture relationships like Sales, and satellites capture changing attributes like prices or categories. It ensures history and compliance, while still enabling agile growth."*
+*"At Freeletics, we used DV 2.0 to historize subscription and user changes with Delta Lake CDC and Time Travel. I see a similar value at cosnova for tracking product, pricing, and campaign changes with full traceability and governance."*
 
 ---
 
@@ -112,20 +121,33 @@ Sat_Product
 
 From DV 2.0:
 
-* **Hub\_Customer** → becomes **Dim\_Customer**
-* **Hub\_Product + Sat\_Product** → becomes **Dim\_Product**
-* **Link\_Sales + Sat\_Sales** → becomes **Fact\_Sales**
+* **Hub_Customer** → becomes **Dim_Customer**
+* **Hub_Product + Sat_Product** → becomes **Dim_Product**
+* **Link_Sales + Sat_Sales** → becomes **Fact_Sales**
 
 ---
 
-**Fact\_Sales (from Link\_Sales + Sat\_Sales)**
-\| Sale\_ID | Date\_Key | Customer\_Key | Product\_Key | Quantity | Sales\_Amount |
+**Fact_Sales (from Link_Sales + Sat_Sales)**
+| Sale_ID | Date_Key | Customer_Key | Product_Key | Quantity | Sales_Amount |
 
-**Dim\_Customer (from Hub\_Customer + Sat\_Customer)**
-\| Customer\_Key | Customer\_Name | Gender | City | Country |
+**Dim_Customer (from Hub_Customer + Sat_Customer)**
+| Customer_Key | Customer_Name | Gender | City | Country |
 
-**Dim\_Product (from Hub\_Product + Sat\_Product)**
-\| Product\_Key | Product\_Name | Category | Brand |
+**Dim_Product (from Hub_Product + Sat_Product)**
+| Product_Key | Product_Name | Category | Brand |
+
+---
+
+### 🔹 Freeletics Star Schema Example
+
+At Freeletics, after building the raw DV 2.0 layer:
+
+* We exposed **Fact_SubscriptionEvents** from Link_Subscription + Sat_Subscription.
+* Built **Dim_User** from Hub_User + Sat_User.
+* Built **Dim_Product** from Hub_Product + Sat_Product.
+* These star schema marts powered BI dashboards (subscription funnel, churn rates) and supported AI models for churn prediction.
+
+👉 *Result:* BI analysts had **fast, simple marts** (facts/dims), while DV 2.0 still retained the **raw audit trail** for compliance.
 
 ---
 
@@ -137,10 +159,9 @@ From DV 2.0:
 4. **Flexibility** → Still backed by DV → full history and governance.
 
 👉 **Interview Soundbite:**
-*"In practice, I’d use Data Vault 2.0 as the enterprise raw layer for audit/history, and then transform into Star Schema marts for BI. For example, a Link\_Sales and Sat\_Sales in DV would transform into a Fact\_Sales table, with Dim\_Customer and Dim\_Product from their hubs and satellites. This way, analysts get simplicity, and IT retains auditability."*
+*"At Freeletics, I transformed DV 2.0 into star schema marts, e.g., subscription facts and user/product dimensions, enabling analysts to get simple, performant access while IT still had a complete historical trail. For cosnova, I see the same pattern: DV for governance and audit, Star for reporting and analytics."*
 
 ---
 
-✅ If you can explain **DV = raw, auditable foundation** and **Star = consumable marts**, you’ll hit Yannick’s sweet spot.
+✅ If you can explain **DV = raw, auditable foundation** and **Star = consumable marts**, with your Freeletics examples, you’ll hit Yannick’s sweet spot.
 
----
