@@ -1,15 +1,20 @@
-## 1️⃣ Role Context (from JD)
-
-* Build, automate, and optimize **data pipelines (batch + streaming)**.
-* **Data platform ownership**: development → provisioning → maintenance.
-* Strong knowledge of **databases & modeling** (esp. **Data Vault 2.0**).
-* Experience in **modern architectures**: Data Warehouse, Data Mesh, Data Fabric.
-* **Python + SQL** expertise.
-* **Cloud-based data stack** (likely Azure + Databricks).
-* **Data governance & quality**.
-* Support **analytics & AI teams** with reliable data products.
-
 ---
+
+Yannick Priority Pitch (Opening Statement)
+
+“Thanks for having me. Let me quickly share how I see myself adding value at cosnova:
+
+Data Modeling Expertise – I’ve worked with both Star Schema for analytics and Data Vault 2.0 for raw, auditable layers. I know how to combine them so the business gets fast insights, while IT keeps full history and compliance.
+
+Data Platform Ownership – At Freeletics and Humana, I built end-to-end platforms — ingestion, storage, transformation, and delivery — supporting both batch and streaming data. I see this role as owning the backbone that powers analytics and AI across cosnova.
+
+Scalability & Optimization – I specialize in Databricks/Spark optimization: reducing shuffles, using broadcast joins, partition pruning, and solving the small-file problem. These optimizations directly translate into fresher data and lower costs.
+
+Governance & Trust – I always embed data quality checks, lineage, and CI/CD into pipelines. In my view, governance isn’t a blocker — it’s what makes data truly usable and trustworthy for BI and AI teams.
+
+Business Enablement – Ultimately, my goal is to make data a product that empowers stakeholders. For example, at Freeletics I cut pipeline runtimes from hours to under 30 minutes, which allowed product and AI teams to iterate much faster.”
+
+“…That’s the value I’d like to bring to cosnova.”
 
 ## 2️⃣ Interview Simulation – Q\&A (as Yannick)
 
