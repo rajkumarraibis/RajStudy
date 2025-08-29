@@ -1,4 +1,4 @@
----
+
 
 ##  Yannick Priority Pitch (Opening Statement)
 
@@ -16,6 +16,8 @@ Governance & Trust – I always embed data quality checks, lineage, and CI/CD in
 Business Enablement – Ultimately, my goal is to make data a product that empowers stakeholders. For example, at Freeletics I cut pipeline runtimes from hours to under 30 minutes, which allowed product and AI teams to iterate much faster.”
 
 “…That’s the value I’d like to bring to cosnova.”
+
+---
 
 ## 2️⃣ Interview Simulation – Q\&A (as Yannick)
 
