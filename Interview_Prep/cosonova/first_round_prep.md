@@ -1,10 +1,11 @@
 ---
 
-Yannick Priority Pitch (Opening Statement)
+##  Yannick Priority Pitch (Opening Statement)
 
 “Thanks for having me. Let me quickly share how I see myself adding value at cosnova:
 
 Data Modeling Expertise – I’ve worked with both Star Schema for analytics and Data Vault 2.0 for raw, auditable layers. I know how to combine them so the business gets fast insights, while IT keeps full history and compliance.
+“I see Data Vault 2.0 as the foundation layer for compliance, history, and evolution, and then expose Star Schema marts for consumption. That way we balance governance with usability.”
 
 Data Platform Ownership – At Freeletics and Humana, I built end-to-end platforms — ingestion, storage, transformation, and delivery — supporting both batch and streaming data. I see this role as owning the backbone that powers analytics and AI across cosnova.
 
