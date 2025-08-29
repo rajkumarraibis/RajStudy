@@ -13,12 +13,12 @@ It’s designed for:
 
 ---
 
-### 🔹 Components
+### 🔹 Components (Freeletics-specific)
 
 **1. Hub (Business Keys)**
 
 * Represents the *core business entity* (immutable ID).
-* Examples: `Customer_ID`, `Product_ID`, `Store_ID`.
+* Freeletics Examples: `User_ID`, `Subscription_ID`, `Campaign_ID`.
 * Columns:
   * Business key (natural ID)
   * Surrogate hash key (HK)
@@ -27,10 +27,10 @@ It’s designed for:
 
 👉 *Example:*
 ```sql
-Hub_Customer
-+------------+-------------+-----------+--------------+
-| Customer_HK| Customer_ID | LoadDate  | RecordSource |
-+------------+-------------+-----------+--------------+
+Hub_User
++---------+----------+-----------+--------------+
+| User_HK | User_ID  | LoadDate  | RecordSource |
++---------+----------+-----------+--------------+
 ```
 
 ---
@@ -39,7 +39,7 @@ Hub_Customer
 
 * Connects **two or more hubs** (many-to-many relationships).
 * Represents **transactions, events, or associations**.
-* Examples: *Customer buys Product*, *Product sold in Store*.
+* Freeletics Examples: *User subscribes to a plan*, *Campaign targets User*.
 * Columns:
   * Surrogate hash key
   * Foreign keys to hubs
@@ -48,10 +48,10 @@ Hub_Customer
 
 👉 *Example:*
 ```sql
-Link_Sales
-+---------+-------------+-----------+-----------+--------------+
-| Sales_HK| Customer_HK | Product_HK| SaleDate  | RecordSource |
-+---------+-------------+-----------+-----------+--------------+
+Link_Subscription
++-----------------+---------+------------------+-----------+--------------+
+| Subscription_HK | User_HK | Subscription_ID  | StartDate | RecordSource |
++-----------------+---------+------------------+-----------+--------------+
 ```
 
 ---
@@ -60,7 +60,7 @@ Link_Sales
 
 * Stores **descriptive attributes** about hubs or links.
 * Keeps **history** (effective date, expiry, load date).
-* Examples: Customer Name, Address, Product Price.
+* Freeletics Examples: User profile details, subscription plan attributes, campaign metadata.
 * Columns:
   * Parent hub/link key
   * Attribute(s)
@@ -69,10 +69,17 @@ Link_Sales
 
 👉 *Example:*
 ```sql
-Sat_Product
-+-----------+-------------+----------+-----------+--------------+
-| Product_HK| ProductName | Category | LoadDate  | RecordSource |
-+-----------+-------------+----------+-----------+--------------+
+Sat_UserDetails
++---------+-------------+----------+-----------+--------------+
+| User_HK | Country     | Language | LoadDate  | RecordSource |
++---------+-------------+----------+-----------+--------------+
+```
+
+```sql
+Sat_SubscriptionPlan
++-----------------+----------+--------------+-----------+--------------+
+| Subscription_HK | PlanType | Price        | LoadDate  | RecordSource |
++-----------------+----------+--------------+-----------+--------------+
 ```
 
 ---
@@ -81,17 +88,19 @@ Sat_Product
 
 At Freeletics, I implemented a **DV 2.0 style architecture on Databricks with Delta Lake**, focusing on **CDC (Change Data Capture), history tracking, and governance**:
 
-* **Hub_User** stored unique user IDs (immutable business keys).
-* **Link_Subscription** captured relationships between users and subscriptions (many-to-many over time).
-* **Sat_User** recorded changing user attributes (email, country, subscription tier) with full historization.
-* **Sat_Subscription** captured plan details, including upgrades/downgrades over time.
-* Implemented **CDC using Delta Lake MERGE** to capture new inserts/updates efficiently.
+* **Hub_User** stored immutable user IDs.
+* **Hub_Subscription** stored subscription IDs.
+* **Link_Subscription** connected users with their subscriptions over time.
+* **Sat_UserDetails** tracked changing user attributes like email, language, or country.
+* **Sat_SubscriptionPlan** historized subscription tier changes (Free, Premium, Family) and price changes.
+* **Hub_Campaign** represented marketing campaigns, with a **Link_UserCampaign** capturing which users were targeted.
+* Implemented **CDC using Delta Lake MERGE** to capture user profile and subscription updates.
 * Used **Delta Time Travel** for historization and audit.
-* Embedded **data quality checks** with **Great Expectations** to validate uniqueness, referential integrity, and business rules before data moved downstream.
-* Integrated **Unity Catalog** for governance: schema and catalog management (Bronze, Silver, Gold), fine-grained permissions, and lineage from raw → DV2 → Star Schema marts.
-* Built **CI/CD pipelines with GitHub Actions** to test, validate, and deploy Databricks pipelines automatically, ensuring stable, repeatable deployments.
+* Embedded **data quality checks** with **Great Expectations** (e.g., User_ID not null, subscription price within expected range).
+* Integrated **Unity Catalog** for schema/catalog management (Bronze, Silver, Gold), fine-grained access, and lineage tracking.
+* Built **CI/CD pipelines with GitHub Actions** for automated validation and deployment.
 
-👉 *Result:* We achieved **traceable, historized user and subscription data**, which allowed finance and product teams to answer: *“What was the user’s subscription state on any given date?”* while maintaining compliance and governance.
+👉 *Result:* Finance could accurately report on subscription revenue by date, Product teams could track plan migrations, and Marketing could analyze campaign performance historically.
 
 ---
 
@@ -99,9 +108,9 @@ At Freeletics, I implemented a **DV 2.0 style architecture on Databricks with De
 
 We followed the **Medallion Architecture** (Bronze → Silver → Gold) as the layering principle:
 
-* **Bronze (Raw Ingest):** Landing raw data from sources (CRM, app, transactions).
-* **Silver (Cleansed / Modeled):** Applied DV 2.0 modeling with Hubs, Links, Satellites, CDC, and historization.
-* **Gold (Curated / Marts):** Star Schema facts & dimensions for BI, dashboards, and AI/ML feature stores.
+* **Bronze (Raw Ingest):** Landing raw user events, campaign logs, subscription transactions.
+* **Silver (Cleansed / Modeled):** Applied DV 2.0 modeling with Hubs (User, Subscription, Campaign), Links (User-Subscription, User-Campaign), Satellites (UserDetails, SubscriptionPlan, CampaignMetadata).
+* **Gold (Curated / Marts):** Exposed Star Schema facts/dimensions for KPIs: subscription funnel, churn rates, campaign ROI.
 
 👉 This layering ensured clear separation of concerns: raw data preserved in Bronze, governed enterprise model in Silver, and business-friendly marts in Gold.
 
@@ -111,14 +120,14 @@ We followed the **Medallion Architecture** (Bronze → Silver → Gold) as the l
 
 ### 🔹 Why It’s Valuable (for cosnova)
 
-1. **Audit Trail** → full history of product, pricing, campaigns (important in retail).
-2. **Schema Evolution** → new attributes can be added without disrupting existing model.
-3. **Traceability** → lineage from Bronze → Silver → Gold with Unity Catalog.
-4. **Data Quality** → embedded validations with Great Expectations.
-5. **Reliable Deployments** → CI/CD pipelines reduced manual errors.
+1. **Audit Trail** → e.g., track historical campaign targeting or subscription changes.
+2. **Schema Evolution** → add new campaign types or user attributes without redesign.
+3. **Traceability** → full lineage from raw user events → DV layer → KPI dashboards.
+4. **Data Quality** → validated via Great Expectations before business consumption.
+5. **Governance** → Unity Catalog controlled access and provided lineage.
 
 👉 **Interview Soundbite:**
-*"At Freeletics, we used DV 2.0 in the Silver layer with Delta Lake CDC and Unity Catalog for governance. On top, we built Gold layer Star Schema marts for analysts. This gave us auditability, history, and simple business views — exactly the balance cosnova needs for scaling analytics and AI."*
+*"At Freeletics, we applied DV 2.0 in the Silver layer with Unity Catalog for governance and Great Expectations for quality checks. On top, we exposed Gold layer Star Schema marts — e.g., Fact_SubscriptionEvents with Dim_User and Dim_Subscription — which powered churn prediction and campaign ROI dashboards. This balance of auditability and simplicity is exactly what I see cosnova needing for products, prices, and campaigns."*
 
 ---
 
@@ -132,51 +141,52 @@ We followed the **Medallion Architecture** (Bronze → Silver → Gold) as the l
 
 ---
 
-### 🔹 Example Transformation
+### 🔹 Example Transformation (Freeletics-specific)
 
 From DV 2.0:
 
-* **Hub_Customer** → becomes **Dim_Customer**
-* **Hub_Product + Sat_Product** → becomes **Dim_Product**
-* **Link_Sales + Sat_Sales** → becomes **Fact_Sales**
+* **Hub_User + Sat_UserDetails** → becomes **Dim_User**
+* **Hub_Subscription + Sat_SubscriptionPlan** → becomes **Dim_Subscription**
+* **Link_Subscription + Sat_SubscriptionEvents** → becomes **Fact_SubscriptionEvents**
+* **Hub_Campaign + Sat_CampaignMetadata** → becomes **Dim_Campaign**
+* **Link_UserCampaign** → part of **Fact_CampaignEngagement**
 
 ---
 
-**Fact_Sales (from Link_Sales + Sat_Sales)**
-| Sale_ID | Date_Key | Customer_Key | Product_Key | Quantity | Sales_Amount |
+**Fact_SubscriptionEvents**
+| Event_ID | Date_Key | User_Key | Subscription_Key | EventType | Revenue |
 
-**Dim_Customer (from Hub_Customer + Sat_Customer)**
-| Customer_Key | Customer_Name | Gender | City | Country |
+**Dim_User**
+| User_Key | Country | Language | SignupDate |
 
-**Dim_Product (from Hub_Product + Sat_Product)**
-| Product_Key | Product_Name | Category | Brand |
+**Dim_Subscription**
+| Subscription_Key | PlanType | Price | ValidFrom | ValidTo |
+
+**Fact_CampaignEngagement**
+| Engagement_ID | User_Key | Campaign_Key | Clicks | Conversions |
 
 ---
 
-### 🔹 Freeletics Star Schema Example
+### 🔹 Why It’s Valuable (Freeletics)
 
-At Freeletics, after building the raw DV 2.0 layer:
-
-* We exposed **Fact_SubscriptionEvents** from Link_Subscription + Sat_Subscription.
-* Built **Dim_User** from Hub_User + Sat_User.
-* Built **Dim_Product** from Hub_Product + Sat_Product.
-* These star schema marts powered BI dashboards (subscription funnel, churn rates) and supported AI models for churn prediction.
-
-👉 *Result:* BI analysts had **fast, simple marts** (facts/dims), while DV 2.0 still retained the **raw audit trail** for compliance.
+* BI teams tracked **subscription funnel metrics** (trial → paid → churn) via Fact_SubscriptionEvents.
+* Finance validated **historical revenue** by joining Dim_Subscription with Fact_SubscriptionEvents.
+* Marketing analyzed **campaign ROI** by combining Fact_CampaignEngagement with Dim_Campaign.
+* Data Science built **churn models** using Dim_User + Fact_SubscriptionEvents features.
 
 ---
 
 ### 🔹 Why It’s Valuable (for cosnova)
 
-1. **Ease of Use** → Analysts, BI tools (Power BI, Tableau) prefer facts/dims.
-2. **Performance** → Queries run faster (optimized for aggregations).
-3. **Business Alignment** → Exposes KPIs directly.
-4. **Flexibility** → Still backed by DV → full history and governance.
+1. **Ease of Use** → Analysts see simple facts/dims, not complex DV tables.
+2. **Performance** → Optimized joins for BI dashboards.
+3. **Business Alignment** → KPIs directly exposed (e.g., sales by campaign, pricing changes over time).
+4. **Flexibility** → Backed by DV 2.0 for audit/history.
 
 👉 **Interview Soundbite:**
-*"At Freeletics, I transformed DV 2.0 into star schema marts, e.g., subscription facts and user/product dimensions, enabling analysts to get simple, performant access while IT still had a complete historical trail. For cosnova, I see the same pattern: DV for governance and audit, Star for reporting and analytics."*
+*"At Freeletics, I transformed DV 2.0 into Star Schema marts like Fact_SubscriptionEvents, Dim_User, and Dim_Campaign, enabling finance, marketing, and product teams to access reliable KPIs. I see cosnova following the same pattern — DV for governance and history, Star Schema for fast business insights."*
 
 ---
 
-✅ With Unity Catalog, Great Expectations, CI/CD, and Medallion layering woven into your Freeletics story, you now have a **production-grade narrative** for cosnova.
+✅ With Freeletics-specific examples (users, subscriptions, campaigns), your story is **authentic, easy to remember, and perfectly transferable** to cosnova’s domain.
 
