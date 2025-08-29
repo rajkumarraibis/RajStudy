@@ -153,6 +153,30 @@ From DV 2.0:
 
 ---
 
+### 🔹 Why `Link_Subscription + Sat_SubscriptionEvents` → Fact_SubscriptionEvents
+
+* In **DV**, the Link captures the **relationship** (User ↔ Subscription) and the Satellite captures the **event attributes** (event_type, timestamp, price_at_event).
+* In a **Star Schema**, a Fact table represents **events or states** at a defined **grain**.
+* Here, the grain is **“one subscription event per user per timestamp.”**
+* Joining the Link with its Satellite produces a natural **event-grain fact table**: `Fact_SubscriptionEvents`.
+
+👉 **Freeletics Example Fact_SubscriptionEvents:**
+- Events like `START` (trial started), `RENEWAL` (billing cycle), `UPGRADE`, `DOWNGRADE`, `CANCEL`.
+- Keys: `User_Key`, `Subscription_Key`, `Date_Key`, `Campaign_Key` (if attributed).
+- Measures: `revenue`, `discount_amount`.
+- Degenerate dimensions: IDs, event types.
+
+**Alternative Facts also possible:**
+1. **Periodic Snapshot Fact** → daily active subscriptions, MRR snapshots.
+2. **Accumulating Snapshot Fact** → subscription lifecycle milestones (start, first payment, cancel).
+
+👉 **Interview Soundbite:**
+*“In DV, the Link stores relationships and the Satellite stores event details. That maps directly into an event-grain Fact — `Fact_SubscriptionEvents` — with measures like revenue and keys to User, Subscription, Date, and Campaign. From this, we could also build snapshots or lifecycle facts depending on the business use case.”*
+
+---
+
+### 🔹 Example Star Schema Tables
+
 **Fact_SubscriptionEvents**
 | Event_ID | Date_Key | User_Key | Subscription_Key | EventType | Revenue |
 
@@ -188,5 +212,5 @@ From DV 2.0:
 
 ---
 
-✅ With Freeletics-specific examples (users, subscriptions, campaigns), your story is **authentic, easy to remember, and perfectly transferable** to cosnova’s domain.
+✅ With Freeletics-specific examples (users, subscriptions, campaigns) and explanation of why events become facts, your story is **authentic, easy to remember, and perfectly transferable** to cosnova’s domain.
 
