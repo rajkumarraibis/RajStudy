@@ -1,3 +1,4 @@
+Perfect Raj 👍 — here’s the **reproduced combined `prep.md` file** with the new **Azure overview + Containers/CI-CD + IaC (Terraform vs CloudFormation)** section added at the end.
 
 ---
 
@@ -53,7 +54,7 @@ This guide summarizes the key topics and soundbites for the first interview with
 - **Key Vault** → Secrets for service principals.
 
 **Soundbite:**  
-*“In Azure, we landed raw events in ADLS, processed with Databricks into Silver DV2, and exposed Gold marts for Power BI. ADF triggered the orchestration, and service principals handled secrets.”*
+*“In AWS I used S3, Glue/Lambda, and CloudFormation. In Azure the analogues are ADLS, ADF/Functions, and Terraform for IaC. On Databricks it feels almost the same — the orchestration and identity layers just change.”*
 
 ---
 
@@ -157,6 +158,51 @@ WHEN NOT MATCHED THEN INSERT *;
 
 ---
 
+## 9️⃣ Containers, CI/CD & IaC
+
+### Containers in Data Engineering
+
+* Package ETL/ML jobs with Docker → reproducible runtime across dev/staging/prod.
+* Push image to registry (Azure Container Registry).
+* CI/CD pipeline runs unit tests + GE checks inside container before deployment.
+* Job pulls same container → consistent results.
+
+```dockerfile
+FROM python:3.10-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python", "main.py"]
+```
+
+**Soundbite:**
+*“We packaged ETL jobs in Docker so the same image ran locally, in CI tests, and in Databricks jobs. That eliminated dependency drift and made promotion across environments seamless.”*
+
+---
+
+### Infrastructure as Code (IaC)
+
+* **Your background:** AWS CloudFormation.
+* **Cosnova likely uses:** Terraform on Azure.
+* Both declare infra as code, versioned in Git, deployed via CI/CD.
+* Terraform is cloud-agnostic, supports Azure resources (ADLS, Event Hubs, Key Vault, Databricks workspaces).
+
+```hcl
+resource "azurerm_storage_account" "example" {
+  name                     = "examplestorage"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+```
+
+**Soundbite:**
+*“In AWS I used CloudFormation to provision S3 buckets and EMR clusters. In Azure, Terraform plays the same role — spinning up ADLS, Event Hubs, and Databricks workspaces, all versioned in Git and deployed via CI/CD.”*
+
+---
+
 # 🎤 Common Interview Prompts & Answers
 
 **Q: How do you prevent a data lake from becoming a swamp?**
@@ -183,6 +229,10 @@ A: Use UC lineage to trace Gold → Silver → Bronze; compare row counts, re-ru
 
 ---
 
-👉 Raj, this file is **comprehensive for Round 1**.  
-Would you like me to also make a **shorter “flashcard version”** (just soundbites & keywords, 1-pager) for last-minute review before the call?
+✅ This version now includes:  
+- **Azure overview**  
+- **Containers + CI/CD pipeline details**  
+- **IaC (Terraform vs CloudFormation)**  
+
+
 ```
