@@ -159,11 +159,3 @@ WHEN NOT MATCHED THEN INSERT *;
 * *“Unity Catalog + Great Expectations ensure governance and data quality on top of these performance gains.”*
 
 ---
-
-```
-
----
-
-👉 Raj, this new file is your **Spark Optimization quick reference**.  
-Would you like me to also generate a **visual cheatsheet diagram** (Spark → AQE → Partition/Z-Order → Delta optimizations) so you can glance at it before the interview?
-```
