@@ -212,5 +212,40 @@ From DV 2.0:
 
 ---
 
-✅ With Freeletics-specific examples (users, subscriptions, campaigns) and explanation of why events become facts, your story is **authentic, easy to remember, and perfectly transferable** to cosnova’s domain.
+# 📌 Additional Note: Row-level CDC vs. Table-level Lineage
+
+### 🔹 Row-level CDC (Change Data Capture)
+
+* Implemented directly in **Data Vault 2.0 tables**.
+* **Hubs:** store only business keys (no row-level history).
+* **Links:** each row = a new event/association (naturally historized).
+* **Satellites:** store descriptive attributes with `LoadDate`, `RecordSource` → full row-level history of changes.
+
+👉 **Freeletics Example:** `Sat_SubscriptionEvents`
+
+| Subscription\_HK | EventType | Event\_TS  | Price | LoadDate   | RecordSource |
+| ---------------- | --------- | ---------- | ----- | ---------- | ------------ |
+| 123              | START     | 2025-01-01 | 50€   | 2025-01-01 | Stripe       |
+| 123              | RENEWAL   | 2025-02-01 | 50€   | 2025-02-01 | Stripe       |
+| 123              | CANCEL    | 2025-03-15 | NULL  | 2025-03-15 | Stripe       |
+
+➡️ Each change (start, renewal, cancel) is a **new row** = full CDC trace.
+
+---
+
+### 🔹 Table-level Lineage (Unity Catalog)
+
+* Tracks how **tables feed into other tables and dashboards**.
+* Granularity = **table-level** (and column-level in preview).
+* Not row-level history, but **end-to-end pipeline trace**.
+
+👉 **Freeletics Example:**
+`bronze.stripe_events` → `silver.sat_subscriptionevents` → `gold.fact_subscriptionevents` → `finance.revenue_dashboard`
+
+---
+
+### 🎤 Interview Soundbite
+
+*“CDC itself we modeled at row-level in DV2 Satellites and Links — every subscription change became a new row. Unity Catalog then gave us table-level lineage: showing how those DV2 tables flowed into Gold facts and dashboards. Together, we had both detailed history and complete end-to-end traceability.”*
+
 
