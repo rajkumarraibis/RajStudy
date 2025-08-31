@@ -286,4 +286,174 @@ I use **Infrastructure as Code (IaC)** for infra, **Docker** for reproducible bu
 
 ✅ Raj, now every answer is **deep, structured, and story-backed**.
 
-Would you like me to now expand the **7 STAR behavioral questions** in the same detailed structure so you have ready-made stories for *any* behavioral probe?
+Below bonus **7 STAR behavioral questions** 
+
+Perfect Raj 🙌 — let’s do the **7 STAR behavioral questions**, each with the full structure:
+
+* ✅ Clear answer
+* 🧠 Step-by-step reasoning (Situation → Task → Action → Result)
+* ⚖️ Trade-offs (if relevant)
+* 📈 Business value
+* 🎯 Freeletics (or Humana/Valence Health) example
+
+---
+
+# ⭐ STAR Behavioral Q\&A (Cosnova – Senior Data Engineer)
+
+---
+
+### 🔹 Q1: *“Tell me about a time you scaled a pipeline that couldn’t keep up with data growth.”*
+
+**✅ Final Solution:**
+Scaled Freeletics subscription event pipeline from 4h runtime to 30m by optimizing Spark jobs, partitioning, and leveraging Delta Lake features.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** Freeletics pipeline ingesting Stripe subscription events was growing to TB scale; daily batch ran 4+ hours and missed SLAs.
+* **Task:** Reduce runtime while keeping data quality.
+* **Action:**
+
+  * Repartitioned data by `event_date`.
+  * Z-Ordered on `user_id`.
+  * Used broadcast joins for user metadata.
+  * Compacted JSON files with Delta OPTIMIZE.
+  * Enabled AQE (Adaptive Query Execution).
+* **Result:** Runtime dropped from 4h → 30m; costs cut by \~40%.
+
+**⚖️ Trade-offs:** Needed initial investment in redesign, but sustainable.
+**📈 Business Value:** Finance dashboards refreshed by 9am, enabling timely reporting.
+**🎯 Example:** “Optimized subscription events pipeline in Databricks with partition pruning + Z-Order — runtime 4h → 30m, cost down 40%.”
+
+---
+
+### 🔹 Q2: *“Describe a time you collaborated across teams to deliver a data solution.”*
+
+**✅ Final Solution:**
+Built a Gold layer for Freeletics that served both BI and Data Science teams.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** BI wanted simple Star marts for reporting, while DS needed historized raw events.
+* **Task:** Design a model that satisfied both.
+* **Action:**
+
+  * Built Silver DV2 tables (hubs, links, satellites) with historized CDC.
+  * Exposed Gold Star facts/dims for BI.
+  * Designed PIT tables for DS to simplify queries.
+* **Result:** Both BI and DS teams had trusted datasets; reduced friction and duplicated work.
+
+**⚖️ Trade-offs:** DV2 queries are join-heavy → mitigated with PIT tables.
+**📈 Business Value:** One source of truth → eliminated silos.
+**🎯 Example:** “At Freeletics, DV2 + Star dual layer satisfied BI & DS — BI got simple marts, DS got full history for models.”
+
+---
+
+### 🔹 Q3: *“How did you handle ambiguity in a project?”*
+
+**✅ Final Solution:**
+At Humana, integrated siloed healthcare claims and member data into a unified GCP data lake despite unclear requirements.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** Humana had 5+ claim systems; inconsistent schemas, unclear ownership.
+* **Task:** Deliver unified member-level view in GCP.
+* **Action:**
+
+  * Conducted stakeholder workshops to define core entities.
+  * Designed DV2 Hubs for Members, Providers, Policies.
+  * Integrated sources incrementally.
+* **Result:** Built a Member 360 view; enabled new fraud detection models.
+
+**⚖️ Trade-offs:** Slower initial progress due to discovery, but avoided rework later.
+**📈 Business Value:** Millions saved by detecting duplicate claims.
+**🎯 Example:** “At Humana, tackled ambiguity by defining core business keys → DV2 unified siloed claim data into Member 360.”
+
+---
+
+### 🔹 Q4: *“Tell me about a conflict with stakeholders and how you resolved it.”*
+
+**✅ Final Solution:**
+Balanced urgency vs governance by delivering quick dataset + robust DV2/Star mart later.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** Freeletics Product team needed churn KPIs quickly; batch pipeline refresh was too slow.
+* **Task:** Deliver churn metrics without bypassing governance.
+* **Action:**
+
+  * Built temporary Bronze→Silver dataset directly from raw Stripe.
+  * In parallel, implemented DV2 Satellites and Gold Fact for churn.
+* **Result:** Product unblocked in 2 days; Finance got governed dataset in 2 weeks.
+
+**⚖️ Trade-offs:** Temporary pipeline required cleanup.
+**📈 Business Value:** Immediate stakeholder satisfaction + long-term integrity.
+**🎯 Example:** “At Freeletics, I managed conflict by delivering quick churn data in 2 days, while building DV2+Star solution for long-term governance.”
+
+---
+
+### 🔹 Q5: *“How did you mentor or lead juniors?”*
+
+**✅ Final Solution:**
+Mentored junior engineers in Spark/Databricks best practices at Freeletics.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** Team had 2 juniors new to PySpark + Delta Lake.
+* **Task:** Upskill them for production pipelines.
+* **Action:**
+
+  * Ran weekly code reviews.
+  * Created optimization “cheat sheet” (broadcast joins, partitioning).
+  * Paired on debugging jobs in Spark UI.
+* **Result:** Juniors independently delivered new pipelines in 3 months.
+
+**⚖️ Trade-offs:** Time investment upfront, but reduced rework later.
+**📈 Business Value:** Higher team velocity; better job maintainability.
+**🎯 Example:** “At Freeletics, I mentored juniors on Spark — in 3 months, they shipped production-grade pipelines independently.”
+
+---
+
+### 🔹 Q6: *“Give an example of innovation you brought to a project.”*
+
+**✅ Final Solution:**
+Introduced GenAI-powered RAG pipeline with LlamaIndex at Freeletics.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** Need for faster internal documentation Q\&A.
+* **Task:** Enable non-technical staff to query docs.
+* **Action:**
+
+  * Built RAG pipeline on Databricks using LlamaIndex + locally stored GPT-4.
+  * Embedded documents, indexed in vector DB.
+  * Built simple interface for querying.
+* **Result:** Reduced support tickets by 30%.
+
+**⚖️ Trade-offs:** Early experimentation needed monitoring.
+**📈 Business Value:** Saved engineering time; empowered staff with self-service Q\&A.
+**🎯 Example:** “At Freeletics, built a RAG pipeline with LlamaIndex + GPT — reduced support tickets 30%, boosted productivity.”
+
+---
+
+### 🔹 Q7: *“Tell me about a failure and how you handled it.”*
+
+**✅ Final Solution:**
+Schema migration failure at Freeletics → recovered using Unity Catalog lineage + stronger CI/CD checks.
+
+**🧠 STAR Reasoning:**
+
+* **Situation:** Introduced new column in subscription fact; downstream dashboard broke.
+* **Task:** Fix quickly + prevent recurrence.
+* **Action:**
+
+  * Used Unity Catalog lineage to trace which dashboards broke.
+  * Hotfixed with fallback schema.
+  * Added GE tests for schema evolution in CI/CD.
+* **Result:** Downtime <4h; no repeat issues.
+
+**⚖️ Trade-offs:** Took short-term hit, but strengthened platform.
+**📈 Business Value:** Restored stakeholder confidence, improved resilience.
+**🎯 Example:** “At Freeletics, a schema migration broke dashboards. I traced via UC lineage, fixed in 4h, and added CI/CD schema tests — no recurrence.”
+
+---
+
