@@ -5,7 +5,7 @@
 - **Star Schema**: Facts = events (subscriptions/products), Dims = users/customers.  
 - **Governance**: Unity Catalog (schemas, ACLs, lineage).  
 - **Quality**: Great Expectations → block bad data at Silver.  
-- **Azure Stack**: ADLS = S3, ADF = Glue/StepFunctions, Event Hubs = Kinesis, Key Vault = Secrets Manager.  
+- **Azure Stack**: ADLS = S3, ADF = Glue/StepFunctions, Event Hubs = Kinesis, DynamoDB = CosmosDB,Key Vault = Secrets Manager.  
 - **Optimization**: Partition pruning, Z-Ordering, broadcast joins, AQE, OPTIMIZE.  
 - **CDC**: Auto Loader + MERGE INTO (row-level CDC in Satellites).  
 - **CI/CD**: GitHub Actions + Docker containers + GE tests + Databricks deploys.  
