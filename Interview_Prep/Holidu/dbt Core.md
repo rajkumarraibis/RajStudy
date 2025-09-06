@@ -1,169 +1,114 @@
+# 📘 dbt Core – My Experience (Databricks Focused)
+
+This is how I’ve learned and used **dbt Core** directly with **Databricks Jobs**.
 
 ---
 
-# 📘 dbt Core – Dumbed Down Cheat Sheet (for Interview)
+## 🔹 How I Set It Up
 
-dbt = **Data Build Tool**
-
-* Think of it as: *“SQL + config + tests + docs + lineage”*.
-* Runs on top of your **warehouse/engine** (Databricks/SparkSQL, Redshift, Athena, DuckDB).
-* **Core idea**: Organize transformations into **models** → build **DAGs** → test + document them.
+* Created a **dbt project** (`dbt_project.yml` + `models/`).
+* Uploaded it into **Databricks Workspace** under my user folder.
+* Configured a **Databricks Job** with task type = `dbt`.
+* Job ran the commands: `dbt deps`, `dbt run`, `dbt test`.
+* Used a **Databricks SQL Warehouse** as the execution engine.
 
 ---
 
-## 🔹 1. dbt Project Basics
+## 🔹 Simple Model I Built
 
-Every dbt project has:
+**`models/hello_world.sql`**
 
+```sql
+{{ config(materialized='table') }}
+
+SELECT
+    1 as id,
+    'hello dbt on databricks' as message,
+    current_date() as run_date
 ```
-dbt_project.yml   # configs
-models/           # SQL or Python models
-  ├─ staging/
-  ├─ intermediate/
-  └─ marts/
-```
 
-* **staging** = raw sources (Bronze).
-* **intermediate** = cleaned, joined (Silver).
-* **marts** = business-friendly tables (Gold).
+* dbt compiled this SQL and created a Delta table in the warehouse.
+* Verified the result with:
+
+  ```sql
+  SELECT * FROM default.hello_world;
+  ```
 
 ---
 
-## 🔹 2. A Simple SQL Model
+## 🔹 Incremental Model I Practiced
 
-`models/staging/stg_bookings.sql`
+**`models/incremental_dates.sql`**
 
 ```sql
 {{ config(
     materialized='incremental',
-    unique_key='booking_id'
+    unique_key='run_date'
 ) }}
 
 SELECT
-    booking_id,
-    user_id,
-    destination,
-    price,
-    booking_date
-FROM {{ source('raw', 'bookings') }}
+    current_date() as run_date,
+    'daily load' as note
 
 {% if is_incremental() %}
-  WHERE booking_date >= (SELECT max(booking_date) FROM {{ this }})
+  -- Only add new rows not already in table
+  WHERE current_date() > (SELECT max(run_date) FROM {{ this }})
 {% endif %}
 ```
 
-✅ What happens:
-
-* dbt builds this table in your warehouse (Delta, Redshift, etc.).
-* Runs incrementally = only new rows since last run.
-* Uses macros (`{{ }}`) to make SQL smarter.
+* First run: creates the table with today’s date.
+* Next runs: only append new dates if missing.
+* Shows how dbt handles **incremental appends** automatically.
 
 ---
 
-## 🔹 3. A Simple Python Model (Databricks/Spark)
+## 🔹 Tests I Added
 
-`models/bronze/tracking_events.py`
-
-```python
-{{ config(materialized="incremental", unique_key="event_id") }}
-
-def model(dbt, session):
-    import json
-    from datetime import datetime, timedelta
-    
-    # read yesterday's events (like your PySpark job)
-    yesterday = (datetime.utcnow() - timedelta(days=1)).strftime("%Y-%m-%d")
-    path = f"s3://ppm-analytics-share-dev/tracking/events/{yesterday}/*/*.json"
-
-    df = session.read.json(path)
-
-    return df
-```
-
-✅ dbt will:
-
-* Run this on Databricks/SparkSQL.
-* Save results as a **Delta table**.
-* Handle incrementals & schema merge.
-
----
-
-## 🔹 4. Adding Tests
-
-`models/staging/stg_bookings.yml`
+**`models/hello_world.yml`**
 
 ```yaml
 version: 2
 
 models:
-  - name: stg_bookings
-    description: "Bookings data cleaned from raw layer"
+  - name: hello_world
+    description: "Simple hello world dbt model"
     columns:
-      - name: booking_id
+      - name: id
         tests:
           - not_null
           - unique
-      - name: price
+
+  - name: incremental_dates
+    description: "Demo incremental model appending run dates"
+    columns:
+      - name: run_date
         tests:
           - not_null
+          - unique
 ```
 
-✅ If a test fails, dbt raises error in logs/Airflow.
+* dbt ran these automatically with `dbt test`.
+* Ensured **data quality** for both models.
 
 ---
 
-## 🔹 5. Documentation & Lineage
+## 🔹 What I Learned
 
-* Add descriptions in `.yml`.
-* Run:
+* **dbt Core in Databricks Jobs** = project lives in Workspace, job runs transformations on SQL Warehouse.
+* dbt provides:
 
-  ```bash
-  dbt docs generate
-  dbt docs serve
-  ```
-* Opens a web UI with **lineage graph** + schema docs.
-
----
-
-## 🔹 6. Orchestration with Airflow
-
-Airflow DAG task (simplified):
-
-```python
-from airflow.operators.bash import BashOperator
-
-dbt_run = BashOperator(
-    task_id="dbt_run",
-    bash_command="dbt run --profiles-dir . --project-dir ."
-)
-
-dbt_test = BashOperator(
-    task_id="dbt_test",
-    bash_command="dbt test --profiles-dir . --project-dir ."
-)
-
-dbt_run >> dbt_test
-```
-
-✅ Airflow schedules & runs dbt models in order.
+  * **Models**: organized SQL/Python transformations.
+  * **Tests**: simple YAML-based data quality checks.
+  * **Docs**: lineage and descriptions auto-generated.
+  * **Incrementals**: efficient way to append only new data.
+* Heavy processing is still **Databricks + Spark**; dbt standardizes, tests, and documents results.
 
 ---
 
-## 🔹 7. How to Explain in Interview
+## 🔹 My Story for Interview
 
-Use this **one-liner**:
+* I’ve used **dbt Core only inside Databricks**.
+* I understand **incremental models, tests, docs, and orchestration**.
+* The **concepts are portable** → the only thing that changes in Holidu is the adapter (Databricks → Redshift/Athena/DuckDB).
 
-> “In our pipelines, Databricks + PySpark does the heavy lifting, and dbt Core standardizes the transformations: incremental models, tests, docs, and orchestration via Airflow. That way, analysts get trusted data with clear lineage.”
-
----
-
-# 📝 Key Phrases to Drop in Interview
-
-* “We use **staging → silver → marts** structure.”
-* “I configure **incremental models** with `is_incremental()`.”
-* “dbt tests ensure **data quality at transformation layer**.”
-* “dbt docs give **lineage graphs** for analysts.”
-* “Airflow triggers **dbt run + dbt test** in sequence.”
-
----
-
+👉 This keeps my story authentic, simple, and aligned with my real hands-on use.
