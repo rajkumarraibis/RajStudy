@@ -323,3 +323,130 @@ Here’s a **focused Q\&A set from her perspective**, with **detailed answers** 
 * Network/firewall issues → solve with private endpoints.
 
 ---
+
+PREPARTION FROM PYTHON POV
+
+Good catch 👍 — if Cosnova doesn’t have **PySpark**, then Preethini is less likely to drill into Spark internals.
+She’ll test you more on **Python-based ETL design, DV2 modeling, SCD handling, and data modeling trade-offs**.
+
+Here’s your **updated prep Q\&A (Python + DV2 angle, with light Spark flavor where relevant):**
+
+---
+
+## 🔹 DV2 / Data Modeling
+
+**Q1: How would you model SAP data in DV2?**
+**A:**
+
+* **Hubs** → Business keys (`Customer_H`, `Order_H`, `Material_H`).
+* **Links** → Relationships (`OrderLine_L` linking orders ↔ materials).
+* **Satellites** → Descriptive attributes with history (`Customer_S` for addresses, `Order_S` for status/amount).
+* **Fit for SAP:**
+
+  * VBELN → Order hub, KUNNR → Customer hub, MATNR → Material hub.
+  * Satellites capture change over time (SCD2).
+* **Benefit:** Stable keys, audit trail, flexibility for schema evolution.
+
+---
+
+**Q2: How do you handle SCD2 in DV2?**
+**A:**
+
+* Happens in **Silver → Gold**.
+* Logic:
+
+  * Detect changes with hash of descriptive columns.
+  * If changed → close old row (`valid_to = new_ts, is_current = false`) and insert new (`valid_from = new_ts, is_current = true`).
+* **In Python:** compare current record vs. previous, version new record if changed.
+* **In Spark SQL (if scaling):** use `MERGE` into satellite table.
+* DV2 satellites are designed for this — you always keep history.
+
+---
+
+**Q3: What challenges exist mapping SAP → DV2?**
+**A:**
+
+* Composite keys (need surrogate hub keys).
+* Hidden ABAP logic in SAP extractors (decide what to replicate).
+* High-volume tables (line items) → must partition + incremental load.
+* Mitigation: Start small (Orders, Materials, Customers), expand gradually.
+
+---
+
+## 🔹 ETL / Python / Pipelines
+
+**Q4: How do you ensure idempotency in pipelines?**
+**A:**
+
+* **Python:** deduplicate by `(business_key, change_timestamp)`. Re-run produces same result.
+* **Spark SQL flavor:** `MERGE` with condition `src._cdc_ts > tgt._cdc_ts`.
+* Use watermarks (`last_processed_ts`) to avoid replaying old data.
+* Idempotency ensures safe retries and reproducibility.
+
+---
+
+**Q5: How do you validate merge logic?**
+**A:**
+
+* Test with sample CDC events: insert-only, update, delete.
+* Schema validation, PK uniqueness, null checks.
+* Business checks: e.g., `InvoiceAmount > 0`.
+* Row counts & sums reconciled with SAP totals.
+* Failures → Dead Letter Queue for review.
+
+---
+
+**Q6: How do you structure Python projects for maintainability?**
+**A:**
+
+* **Layered:** ingestion (bronze), cleansing (silver), business logic (gold).
+* **Config-driven:** schema mappings, PKs, thresholds in YAML/JSON.
+* **Testing:** Pytest for transformation functions.
+* **Logging:** structured JSON logs for observability.
+* **CI/CD:** Deploy workflows via Argo pipelines, version-controlled in Git.
+
+---
+
+## 🔹 Data Quality & Governance
+
+**Q7: Why Great Expectations if Purview exists?**
+**A:**
+
+* Purview: metadata, lineage, sensitivity labels, catalog.
+* GE: row-level validation, null %, regex, ranges, thresholds.
+* Example: Purview says *column = Currency*, GE enforces *Currency ∈ {EUR, USD}*.
+* Together → governance + quality gate.
+
+---
+
+**Q8: How do you monitor pipelines?**
+**A:**
+
+* Infra health: Azure Monitor (ADF, SHIR).
+* Application health: job runtimes, row counts, CDC lag.
+* Business health: validation pass rate (GE).
+* Alerts on SLA breaches or validation failures.
+
+---
+
+## 🔹 Risk & Edge Cases
+
+**Q9: What risks exist with ADF SAP CDC?**
+**A:**
+
+* Needs self-hosted IR (can fail → mitigate with HA).
+* Throughput limits (solve with parallel pipelines).
+* Dependency on SAP Basis for ODP setup.
+* Network/firewall issues (solve with private endpoints).
+
+---
+
+**Q10: What if SAP schema changes?**
+**A:**
+
+* Bronze: store as-is (schema drift allowed).
+* Silver: config-driven mappings + default values.
+* Purview: captures schema change for review.
+* Promote to Gold only after validation.
+
+---
