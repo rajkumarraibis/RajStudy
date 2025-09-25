@@ -60,50 +60,93 @@ FROM user_stats;
 ## 🔹 Window Functions
 
 ```sql
--- Latest confirmed booking per user
-SELECT *
-FROM (
-  SELECT b.user_id, b.booking_id, b.created_at, b.amount,
-         ROW_NUMBER() OVER (
-           PARTITION BY b.user_id 
-           ORDER BY b.created_at DESC
-         ) AS rn
-  FROM bookings b
-  WHERE b.status='confirmed'
-) t
-WHERE rn=1;
 
--- Top 3 users by spend (include ties)
-SELECT user_id, name, total_spent
-FROM (
-  SELECT u.user_id, u.name,
-         SUM(b.amount) AS total_spent,
-         RANK() OVER (ORDER BY SUM(b.amount) DESC) AS rnk
-  FROM users u
-  JOIN bookings b ON u.user_id = b.user_id
-  WHERE b.status='confirmed'
-  GROUP BY u.user_id, u.name
-) x
-WHERE rnk <= 3;
+
+# 🧠 One pattern to remember
+
+```sql
+<FUNCTION>() OVER (
+  PARTITION BY <group_cols>      -- e.g., month, user_id, category
+  ORDER BY <metric> DESC, <tiebreaker>
+)
 ```
 
-👉 `ROW_NUMBER()` → unique row
-👉 `RANK()` → ties allowed
-👉 `DENSE_RANK()` → no gaps in ranks
+Pick `<FUNCTION>` from: **ROW\_NUMBER**, **RANK**, **DENSE\_RANK**.
+
+* **ROW\_NUMBER** → one winner per group (dedupe, unique Top-N).
+* **RANK** → ties share rank, **gaps** (1,1,3).
+* **DENSE\_RANK** → ties share rank, **no gaps** (1,1,2) → “Top N with ties”.
+
+💡 Global ranking? Either **omit `PARTITION BY`** or use `PARTITION BY 1` (single bucket) if you like the uniform pattern.
 
 ---
 
-## 🔹 Dates & Time
+## Tiny examples (PostgreSQL)
+
+### 1) Unique Top-3 per category (no ties) — `ROW_NUMBER`
 
 ```sql
--- Daily revenue from confirmed & paid bookings
-SELECT DATE(b.created_at) AS booking_date,
-       SUM(b.amount) AS total_revenue
-FROM bookings b
-JOIN payments p ON b.booking_id = p.booking_id
-WHERE b.status='confirmed' AND p.payment_status='paid'
-GROUP BY DATE(b.created_at)
-ORDER BY booking_date;
+SELECT *
+FROM (
+  SELECT
+    category, product, SUM(amount) AS revenue,
+    ROW_NUMBER() OVER (
+      PARTITION BY category
+      ORDER BY SUM(amount) DESC, product ASC
+    ) AS rn
+  FROM sales
+  GROUP BY 1,2
+) s
+WHERE rn <= 3;
+```
+
+### 2) Top-2 per month **including ties** — `DENSE_RANK`
+
+```sql
+WITH m AS (
+  SELECT date_trunc('month', b.created_at)::date AS mth,
+         b.destination, SUM(p.amount) AS revenue
+  FROM bookings b JOIN payments p USING (booking_id)
+  WHERE p.payment_status='paid'
+  GROUP BY 1,2
+)
+SELECT *
+FROM (
+  SELECT m.*,
+         DENSE_RANK() OVER (
+           PARTITION BY mth
+           ORDER BY revenue DESC
+         ) AS rnk
+  FROM m
+) x
+WHERE rnk <= 2;
+```
+
+### 3) Global leaderboard with visible ties — `RANK`
+
+```sql
+SELECT *
+FROM (
+  SELECT player_id, SUM(score) AS total,
+         RANK() OVER (ORDER BY SUM(score) DESC) AS rnk
+  FROM games
+  GROUP BY player_id
+) g
+ORDER BY rnk, player_id;
+```
+
+---
+
+## Gotchas (quick)
+
+* Always set **both**: `PARTITION BY` (group) **and** `ORDER BY` (metric).
+* Postgres has **no `QUALIFY`** → compute rank, then filter in an outer query/CTE.
+* Ranking on aggregates? **Pre-aggregate** (CTE/subquery), then rank.
+
+If you want, I can paste this into your cheatsheet file in your preferred format.
+
+
+
 ```
 
 ---
