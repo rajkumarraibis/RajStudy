@@ -94,7 +94,7 @@ raw_stream = (spark.readStream                 # Start a streaming DataFrame rea
                                                #  timestampType (int)
 )
 
-
+```
 # Convert kafka stream to dataframe
 from pyspark.sql.functions import col, from_json
 
@@ -102,6 +102,7 @@ from pyspark.sql.functions import col, from_json
 # - Columns: key (binary), value (binary), topic, partition, offset, timestamp...
 # - The actual event payload is inside the `value` column (binary).
 # - Producers (e.g., Holidu frontend/backend) usually publish JSON payloads.
+```python
 
 df_parsed = (
     raw_stream
