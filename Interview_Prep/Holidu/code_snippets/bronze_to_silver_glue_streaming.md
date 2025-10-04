@@ -95,13 +95,36 @@ raw_stream = (spark.readStream                 # Start a streaming DataFrame rea
 )
 
 
-# Kafka message schema: key (binary), value (binary), topic, partition, offset, timestamp...
+# Convert kafka stream to dataframe
 from pyspark.sql.functions import col, from_json
-parsed = (raw_stream
-    .selectExpr("CAST(value AS STRING) AS raw")
-    .select(from_json(col("raw"), schema).alias("e"))
-    .select("e.*")  # flatten to columns
+
+# 🔹 STEP 1: Kafka delivers messages in binary format
+# - Columns: key (binary), value (binary), topic, partition, offset, timestamp...
+# - The actual event payload is inside the `value` column (binary).
+# - Producers (e.g., Holidu frontend/backend) usually publish JSON payloads.
+
+df_parsed = (
+    raw_stream
+        # 🔹 STEP 2: Convert binary Kafka "value" → string (assume JSON payload)
+        # Kafka sends raw bytes → we CAST to STRING so Spark can interpret it as JSON text.
+        .selectExpr("CAST(value AS STRING) AS raw")
+
+        # 🔹 STEP 3: Parse JSON string into structured fields
+        # - from_json() takes JSON text + schema (no inference allowed in streaming).
+        # - The schema usually comes from AWS Glue Catalog (keeps it consistent).
+        # - Returns a STRUCT column called `e` with typed fields.
+        .select(from_json(col("raw"), schema).alias("e"))
+
+        # 🔹 STEP 4: Flatten struct into top-level columns
+        # - e.* expands all fields inside the struct into normal DataFrame columns.
+        # - Example: booking_id, user_id, amount, timestamp
+        .select("e.*")
 )
+
+# ✅ df_parsed is now a Streaming DataFrame with schema-enforced, tabular columns:
+# booking_id | user_id | amount | created_at | ...
+# This is the clean Bronze → Silver ingestion step.
+
 ```
 
 ---
