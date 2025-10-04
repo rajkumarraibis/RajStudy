@@ -161,7 +161,7 @@ query = (cleaned.writeStream
 
 ---
 
-## 🔹 Silver → Gold (Iceberg) — Batch job (recommended)
+## 🔹 Silver → Gold (Iceberg) 
 
 Silver→Gold is usually **batch** on AWS (e.g., every 10–15 minutes via MWAA/Airflow) for cost/perf balance.  
 Below is a Glue **batch** example that reads the **Silver Iceberg** table and writes **Gold** aggregates.
