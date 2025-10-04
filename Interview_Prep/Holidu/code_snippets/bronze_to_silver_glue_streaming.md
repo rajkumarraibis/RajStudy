@@ -1,4 +1,4 @@
-# Glue Streaming Job Walkthrough (Bronze → Silver → Gold) — **Iceberg Edition**
+# Glue Streaming Job Walkthrough (Bronze → Silver → Gold)
 
 This document explains how **AWS Glue Streaming** (Spark Structured Streaming under the hood) processes
 events from **Kafka/MSK** into **Silver (Iceberg)** and how **Silver → Gold** is produced using **Iceberg tables**
