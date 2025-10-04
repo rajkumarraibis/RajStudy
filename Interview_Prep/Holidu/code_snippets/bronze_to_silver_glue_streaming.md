@@ -207,48 +207,6 @@ gold = (silver
 
 ---
 
-## 🔹 Alternative: Silver → Gold as a second **Streaming** job
-
-If you truly need near real-time Gold (< 2–5 min), you can read Silver as a stream and write Gold as a stream too:
-
-```python
-from awsglue.context import GlueContext
-from pyspark.context import SparkContext
-from pyspark.sql import functions as F
-
-sc = SparkContext()
-glueContext = GlueContext(sc)
-spark = glueContext.spark_session
-
-SILVER_TABLE = "glue_catalog.analytics.silver_booking"
-GOLD_TABLE   = "glue_catalog.analytics.gold_booking_minute"
-CHECKPOINT   = "s3://my-bucket/checkpoints/silver_to_gold_stream/"
-
-silver_stream = (spark.readStream
-                 .format("iceberg")
-                 .table(SILVER_TABLE))
-
-agg_stream = (silver_stream
-    .withWatermark("occurred_at", "24 hours")
-    .groupBy(F.window("occurred_at", "1 minute").alias("w"),
-             F.col("listing_id"))
-    .agg(F.countDistinct("event_id").alias("bookings"),
-         F.sum("price").alias("gmv"))
-    .select(F.col("listing_id"),
-            F.col("w.start").alias("ts_minute"),
-            "bookings","gmv"))
-
-gold_query = (agg_stream.writeStream
-    .format("iceberg")
-    .option("checkpointLocation", CHECKPOINT)
-    .outputMode("append")
-    .toTable(GOLD_TABLE))
-```
-
-**Trade‑off:** lower latency, higher cost/ops. Batch is usually enough for BI (QuickSight SPICE ≈ 15 min).
-
----
-
 ## 🔹 Notes & Best Practices
 
 - **Schemas**: Version your contract in Git/Schema Registry. Do not rely on Glue Crawler inference at runtime.
