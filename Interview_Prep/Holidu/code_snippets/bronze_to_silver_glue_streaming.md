@@ -185,46 +185,6 @@ query = (cleaned.writeStream
 
 ---
 
-## 🔹 Silver → Gold (Iceberg) 
-
-Silver→Gold is usually **batch** on AWS (e.g., every 10–15 minutes via MWAA/Airflow) for cost/perf balance.  
-Below is a Glue **batch** example that reads the **Silver Iceberg** table and writes **Gold** aggregates.
-
-```python
-# Glue Batch Job: silver_to_gold_batch.py
-from awsglue.context import GlueContext
-from pyspark.context import SparkContext
-from pyspark.sql import functions as F
-
-sc = SparkContext()
-glueContext = GlueContext(sc)
-spark = glueContext.spark_session
-
-SILVER_TABLE = "glue_catalog.analytics.silver_booking"
-GOLD_TABLE   = "glue_catalog.analytics.gold_booking_minute"
-
-# Read Silver Iceberg (snapshot)
-silver = spark.read.format("iceberg").table(SILVER_TABLE)
-
-# Example: minute-level KPIs by listing
-gold = (silver
-    .groupBy(F.window("occurred_at", "1 minute").alias("w"),
-             F.col("listing_id"))
-    .agg(F.countDistinct("event_id").alias("bookings"),
-         F.sum("price").alias("gmv"))
-    .select(F.col("listing_id"),
-            F.col("w.start").alias("ts_minute"),
-            "bookings", "gmv")
-)
-
-# Write to Iceberg Gold (append or MERGE into a partitioned table)
-# Tip: Partition by date(ts_minute) for Athena/Redshift pruning
-(spark.write
-    .format("iceberg")
-    .mode("append")
-    .option("write.format.default", "parquet")   # physical file format
-    .saveAsTable(GOLD_TABLE))
-```
 
 **Scheduling:** Use **Airflow (MWAA)** to run this batch job every 10–15 minutes (or hourly for cost).  
 **Compaction:** Nightly compaction jobs (Spark/Iceberg actions) keep file counts healthy.
@@ -241,8 +201,3 @@ gold = (silver
 - **Query engines**: Athena and Redshift Spectrum can both query Iceberg tables registered in Glue Catalog.
 
 ---
-
-# ✅ Takeaways
-- Glue Streaming code **looks like raw Spark** because it *is* Spark under the hood.
-- Silver/Gold as **Iceberg** means Parquet files + managed metadata → ACID & evolution + Athena/Redshift compatibility.
-- Prefer **batch** for Silver→Gold (cost‑efficient), keep **streaming** for truly low‑latency use cases.
