@@ -24,8 +24,9 @@ raw = (spark.readStream
        
        .schema(schema)                  
        # IMPORTANT: In Structured Streaming, schema inference is not allowed.
-       # We must define the JSON schema upfront (see schema above).
-       # This ensures consistent parsing and avoids runtime surprises.
+       # We must define the JSON schema upfront .schema comes from aws glue catalog , fed by crawlers.
+       # This ensures consistent parsing and avoids runtime surprises. IN any case if a batch schema mismatches there is a DLQ for unfit records in silver layer.
+       
        
        .option("pathGlobFilter", "*.json*")  
        # Optional safety filter: ensures Spark only picks up files ending
