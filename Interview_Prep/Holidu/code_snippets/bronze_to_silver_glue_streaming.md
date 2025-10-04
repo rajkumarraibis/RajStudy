@@ -125,26 +125,36 @@ deduped = (dq_pass
 ---
 
 ## 🔹 Sink: **Silver (Iceberg on Parquet)** — Glue Catalog
+# -----------------------------------------------------------------------------
+# Iceberg is a table format (NOT a file format). Under the hood, it stores data as Parquet files,
+# but with extra metadata/manifest layers to manage schema, partitions, and versions.
+# -----------------------------------------------------------------------------
 
-```python
-# Iceberg config is typically provided via spark-submit confs, e.g.:
-# --conf spark.sql.catalog.glue_catalog=org.apache.iceberg.spark.SparkCatalog
-# --conf spark.sql.catalog.glue_catalog.warehouse=s3://<WAREHOUSE_BUCKET>/warehouse/
-# --conf spark.sql.catalog.glue_catalog.catalog-impl=org.apache.iceberg.aws.glue.GlueCatalog
-# --conf spark.sql.catalog.glue_catalog.io-impl=org.apache.iceberg.aws.s3.S3FileIO
+query = (cleaned.writeStream
+    .format("iceberg")                           # Use Iceberg table format
+                                                 # (still writes underlying Parquet files)
 
-SILVER_TABLE = "glue_catalog.analytics.silver_booking"     # <catalog>.<db>.<table>
-SILVER_CHECKPOINT = "s3://my-bucket/checkpoints/bronze_to_silver/"
+    .option("catalog", "glue_catalog")           # Glue Data Catalog acts as Iceberg catalog
+                                                 # - Stores table metadata
+                                                 # - Allows Athena/Redshift Spectrum queries
+                                                 # - Enables schema evolution
 
-silver_query = (deduped.writeStream
-    .format("iceberg")                           # Iceberg table sink (physical files = Parquet)
-    .outputMode("append")                        # append rows as they arrive
-    .option("checkpointLocation", SILVER_CHECKPOINT)
-    # NOTE: With Iceberg, table location is managed by the catalog;
-    # you reference the table by name rather than a raw S3 'path'.
-    .toTable(SILVER_TABLE)                       # creates table if missing (with proper perms)
+    .option("database", "silver")                # Logical database in Glue
+    .option("table", "booking")                  # Logical table name ("silver.booking")
+
+    .option("checkpointLocation", "s3://my-bucket/checkpoints/bronze_to_silver/")
+                                                 # Checkpointing: ensures exactly-once semantics
+                                                 # Tracks Kafka offsets + processing progress
+
+    .outputMode("append")                        # Append-only ingestion of booking events
+                                                 # For aggregates → "update" or "complete"
+
+    .trigger(processingTime="1 minute")          # Micro-batch every 1 min
+                                                 # Trade-off: lower latency vs cost
+
+    .start()
 )
-```
+
 
 > **Why Iceberg here?** ACID appends, schema evolution, partition evolution, and direct query support from Athena/Redshift via Glue Catalog.  
 > **Yes:** the data files landing in S3 are **Parquet** under the hood.
