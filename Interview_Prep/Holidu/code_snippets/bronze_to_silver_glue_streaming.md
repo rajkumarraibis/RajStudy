@@ -1,7 +1,7 @@
-# Glue Streaming Job Walkthrough (Bronze → Silver → Gold)
+# Glue Streaming Job Walkthrough (Bronze → Silver )
 
 This document explains how **AWS Glue Streaming** (Spark Structured Streaming under the hood) processes
-events from **Kafka/MSK** into **Silver (Iceberg)** and how **Silver → Gold** is produced using **Iceberg tables**
+events from **Kafka/MSK** into **Silver (Iceberg)**
 that remain physically stored as **Parquet** in Amazon S3.
 
 > **Key idea:** *Iceberg is a **table** format (metadata + manifests) layered on top of Parquet files.*  
@@ -11,7 +11,7 @@ that remain physically stored as **Parquet** in Amazon S3.
 
 ## 🔹 Why Glue Streaming == Spark Structured Streaming
 
-- Glue Streaming is **built on Spark Structured Streaming**. Your code uses `.readStream` and `.writeStream`.
+- Glue Streaming is **built on Spark Structured Streaming**.  Code uses `.readStream` and `.writeStream`.
 - Glue adds: managed provisioning (DPUs), IAM integration, logging (CloudWatch), built‑in connectors (Kafka/MSK, Kinesis).
 - You still control schemas, checkpoints, and sinks exactly like Spark Streaming.
 
