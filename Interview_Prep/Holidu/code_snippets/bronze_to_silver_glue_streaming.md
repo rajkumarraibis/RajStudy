@@ -51,21 +51,49 @@ schema = T.StructType([
     T.StructField("payload", T.StringType(), True)          # nested JSON as string (optional)
 ])
 
-# 🔹 SOURCE: Read from Kafka (preferred for real-time ingestion)
+
 # -----------------------------------------------------------------------------
-# Glue Streaming uses Spark Structured Streaming's Kafka source.
-# We subscribe to the booking_events topic; start from 'latest' to avoid backlog floods.
-# Kafka value is bytes -> cast to STRING -> parse JSON with the explicit StructType.
+# 🔹 SOURCE: Read from Kafka (preferred for real-time Bronze ingestion)
+# -----------------------------------------------------------------------------
+# This block configures Spark Structured Streaming to connect to Kafka.
+# In Glue Streaming, this is the most common entry point for real-time pipelines.
+# -----------------------------------------------------------------------------
+
 raw_stream = (spark.readStream                 # Start a streaming DataFrame reader
     .format("kafka")                           # Use Spark's built-in Kafka source
-    .option("kafka.bootstrap.servers",
-            "b-1.msk-cluster:9092")            # REQUIRED: broker endpoints (comma-separated)
-    .option("subscribe", "booking_events")     # REQUIRED: topic to consume
-    .option("startingOffsets", "latest")       # 'earliest' for full replay; 'latest' for real-time
-    # .option("maxOffsetsPerTrigger", 5000)    # Optional: throttle events per micro-batch
-    # .option("kafka.security.protocol","SSL") # Optional: for secured MSK clusters
-    .load()
+                                               # (Glue has this connector pre-installed)
+
+    .option("kafka.bootstrap.servers", 
+            "b-1.msk-cluster:9092")            # REQUIRED: Comma-separated list of Kafka brokers
+                                               # Acts as the entry point into the Kafka cluster
+                                               # In AWS MSK, this will be your broker endpoints
+                                               # Note: Spark will discover the rest of the cluster from here
+
+    .option("subscribe", "booking_events")     # REQUIRED: The topic(s) to consume from
+                                               # Here, "booking_events" is where app/frontend logs
+                                               # all user booking-related events
+                                               # Alternative: use "assign" to bind specific partitions,
+                                               # or "subscribePattern" with regex for multiple topics
+
+    .option("startingOffsets", "latest")       # Optional: Where to start reading
+                                               # "latest" = only new events from now onwards
+                                               # "earliest" = consume backlog from partition 0 offset
+                                               # Useful for replaying history (but can overload cluster)
+                                               # In prod, "latest" is safer for real-time processing
+
+    # 🔹 Other optional tuning knobs (not shown here, but good to mention):
+    # .option("maxOffsetsPerTrigger", 5000)    # Throttle ingestion to X messages per micro-batch
+    # .option("failOnDataLoss", "false")       # Handle deleted segments gracefully
+    # .option("kafka.security.protocol", "SSL")# For secured MSK clusters
+
+    .load()                                    # Execute and return a streaming DataFrame
+                                               # Schema returned:
+                                               #  key (binary), value (binary),
+                                               #  topic (string), partition (int),
+                                               #  offset (long), timestamp (ts),
+                                               #  timestampType (int)
 )
+
 
 # Kafka message schema: key (binary), value (binary), topic, partition, offset, timestamp...
 from pyspark.sql.functions import col, from_json
