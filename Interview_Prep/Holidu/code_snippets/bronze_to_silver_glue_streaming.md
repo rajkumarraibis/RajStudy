@@ -152,7 +152,7 @@ query = (cleaned.writeStream
     .trigger(processingTime="1 minute")          # Micro-batch every 1 min
                                                  # Trade-off: lower latency vs cost
 
-    .start()
+    .start()                                     #Begin executing the streaming job (turns code from a plan into an active query)    
 )
 ```
 
