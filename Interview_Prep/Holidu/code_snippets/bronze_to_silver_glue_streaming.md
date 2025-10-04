@@ -26,7 +26,7 @@ that remain physically stored as **Parquet** in Amazon S3.
 
 ---
 
-## 🔹 Streaming Source: Kafka/MSK (super‑annotated)
+## 🔹 Streaming Source: Kafka/MSK 
 
 ```python
 # Create Spark + Glue contexts
