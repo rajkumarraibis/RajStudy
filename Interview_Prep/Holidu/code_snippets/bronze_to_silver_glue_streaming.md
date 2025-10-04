@@ -125,10 +125,10 @@ deduped = (dq_pass
 ---
 
 ## 🔹 Sink: **Silver (Iceberg on Parquet)** — Glue Catalog
-# -----------------------------------------------------------------------------
-# Iceberg is a table format (NOT a file format). Under the hood, it stores data as Parquet files,
-# but with extra metadata/manifest layers to manage schema, partitions, and versions.
-# -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
+## Iceberg is a table format (NOT a file format). Under the hood, it stores data as Parquet files,
+## but with extra metadata/manifest layers to manage schema, partitions, and versions.
+## -----------------------------------------------------------------------------
 
 query = (cleaned.writeStream
     .format("iceberg")                           # Use Iceberg table format
