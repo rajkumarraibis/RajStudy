@@ -98,10 +98,10 @@ raw_stream = (spark.readStream                 # Start a streaming DataFrame rea
 # Convert kafka stream to dataframe
 from pyspark.sql.functions import col, from_json
 
-# 🔹 STEP 1: Kafka delivers messages in binary format
-# - Columns: key (binary), value (binary), topic, partition, offset, timestamp...
-# - The actual event payload is inside the `value` column (binary).
-# - Producers (e.g., Holidu frontend/backend) usually publish JSON payloads.
+ 🔹 STEP 1: Kafka delivers messages in binary format
+ - Columns: key (binary), value (binary), topic, partition, offset, timestamp...
+ - The actual event payload is inside the `value` column (binary).
+ - Producers (e.g., Holidu frontend/backend) usually publish JSON payloads.
 ```python
 
 df_parsed = (
