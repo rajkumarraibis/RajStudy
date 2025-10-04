@@ -22,12 +22,13 @@ raw = (spark.readStream
        # Firehose typically writes files in JSON or compressed JSON.GZ.
        # Spark can automatically read gzip-compressed files, so both work.
        
-       .schema(schema)                  
-       # IMPORTANT: In Structured Streaming, schema inference is not allowed.
-       # We must define the JSON schema upfront .schema comes from aws glue catalog , fed by crawlers.
-       # This ensures consistent parsing and avoids runtime surprises. IN any case if a batch schema mismatches there is a DLQ for unfit records in silver layer.
-       
-       
+       .schema(schema)
+       # IMPORTANT: In Structured Streaming, schema inference is disabled.
+       # We pass an explicit StructType here (source of truth is versioned in Git / Schema Registry).
+       # Glue Crawlers still maintain the Glue/Athena table schema for discovery,
+       # but the streaming job does NOT rely on crawler inference at runtime.
+       # If incoming data drifts from this contract, we route records to DLQ (see below).
+
        .option("pathGlobFilter", "*.json*")  
        # Optional safety filter: ensures Spark only picks up files ending
        # with .json or .json.gz. Prevents it from accidentally reading
