@@ -129,7 +129,7 @@ deduped = (dq_pass
 ### Iceberg is a table format (NOT a file format). Under the hood, it stores data as Parquet files,
 ### but with extra metadata/manifest layers to manage schema, partitions, and versions.
 ### -----------------------------------------------------------------------------
-
+```
 query = (cleaned.writeStream
     .format("iceberg")                           # Use Iceberg table format
                                                  # (still writes underlying Parquet files)
@@ -154,7 +154,7 @@ query = (cleaned.writeStream
 
     .start()
 )
-
+```
 
 > **Why Iceberg here?** ACID appends, schema evolution, partition evolution, and direct query support from Athena/Redshift via Glue Catalog.  
 > **Yes:** the data files landing in S3 are **Parquet** under the hood.
