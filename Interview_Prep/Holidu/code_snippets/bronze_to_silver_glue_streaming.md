@@ -69,6 +69,7 @@ raw_stream = (spark.readStream                 # Start a streaming DataFrame rea
                                                # "earliest" = consume backlog from partition 0 offset
                                                # Useful for replaying history (but can overload cluster)
                                                # In prod, "latest" is safer for real-time processing
+                                               # Refer to checkpointLocation in write stream for more details.  
 
     # 🔹 Other optional tuning knobs (not shown here, but good to mention):
     # .option("maxOffsetsPerTrigger", 5000)    # Throttle ingestion to X messages per micro-batch
@@ -159,6 +160,7 @@ query = (cleaned.writeStream
     .option("checkpointLocation", "s3://my-bucket/checkpoints/bronze_to_silver/")
                                                  # Checkpointing: ensures exactly-once semantics
                                                  # Tracks Kafka offsets + processing progress
+                                                 # Governs .option("startingOffsets", "latest")  in read stream
 
     .outputMode("append")                        # Append-only ingestion of booking events
                                                  # For aggregates → "update" or "complete"
