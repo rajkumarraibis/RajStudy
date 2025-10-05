@@ -177,8 +177,6 @@ query = (cleaned.writeStream
 
 ---
 
-
-**Scheduling:** Use **Airflow (MWAA)** to run this batch job every 10–15 minutes (or hourly for cost).  
 **Compaction:** Nightly compaction jobs (Spark/Iceberg actions) keep file counts healthy.
 
 ---
@@ -187,7 +185,7 @@ query = (cleaned.writeStream
 
 - **Schemas**: Version your contract in Git/Schema Registry. Do not rely on Glue Crawler inference at runtime.
 - **Checkpointing**: Always set `checkpointLocation` for streaming sinks; never share paths across jobs.
-- **Idempotency**: Enforce at Silver (e.g., `dropDuplicates(event_id)`), and use MERGE on business keys when needed.
+- **Idempotency**: Enforce at Silver (e.g., `dropDuplicates(event_id)`), and use MERGE on business keys when needed.Deailed dicussion seperate.
 - **Partitioning**: For Iceberg Gold, partition by `date(ts_minute)` (and possibly by entity) for scan pruning.
 - **Governance**: Use **Glue Catalog + Lake Formation** for permissions; Great Expectations for DQ; keep DLQ for rejects.
 - **Query engines**: Athena and Redshift Spectrum can both query Iceberg tables registered in Glue Catalog.
