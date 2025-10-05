@@ -63,8 +63,6 @@ raw_stream = (spark.readStream                 # Start a streaming DataFrame rea
     .option("subscribe", "booking_events")     # REQUIRED: The topic(s) to consume from
                                                # Here, "booking_events" is where app/frontend logs
                                                # all user booking-related events
-                                               # Alternative: use "assign" to bind specific partitions,
-                                               # or "subscribePattern" with regex for multiple topics
 
     .option("startingOffsets", "latest")       # Optional: Where to start reading
                                                # "latest" = only new events from now onwards
