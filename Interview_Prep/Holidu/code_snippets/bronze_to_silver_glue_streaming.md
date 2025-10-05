@@ -129,6 +129,7 @@ consented = parsed.filter(F.col("gdpr_consent") == F.lit(True))
 dq_pass = consented.filter("event_id IS NOT NULL AND occurred_at IS NOT NULL AND price >= 0")
 
 # Idempotency: drop duplicates by event_id with a watermark for late events
+#there is a seperate discusion slide on idempotency so ignore this, its a larger topic.
 deduped = (dq_pass
     .withWatermark("occurred_at", "24 hours")   # bounded state for late data
     .dropDuplicates(["event_id"])               # exactly-once-ish semantics
