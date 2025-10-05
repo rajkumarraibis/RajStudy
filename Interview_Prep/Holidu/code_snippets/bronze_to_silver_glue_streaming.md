@@ -17,12 +17,6 @@ that remain physically stored as **Parquet** in Amazon S3.
 
 ---
 
-## 🔹 Typical Flow
-
-1. **Raw events** → Kafka/MSK topic(s). (Firehose may also persist raw to **S3 Bronze** for archive/replay.)  
-2. **Glue Streaming job** consumes **Kafka** → validates schema, filters by consent, dedupes → writes to **Silver (Iceberg)**.  
-3. **Silver → Gold**: a **Glue Batch job** (or a second streaming job) reads **Silver (Iceberg)**, enriches/aggregates, and writes **Gold (Iceberg)**.  
-4. **BI**: Athena / Redshift Spectrum / QuickSight query **Iceberg** tables via **Glue Catalog**.
 
 ---
 
