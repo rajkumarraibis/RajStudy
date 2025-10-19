@@ -1,5 +1,7 @@
 # dbt & Data Warehouse
 
+some DBT +databricks details that i used - https://github.com/rajkumarraibis/RajStudy/blob/main/Interview_Prep/Holidu/dbt%20Core.md
+
 While my team primarily uses Databricks SQL and Spark, I’ve adopted dbt-style modular transformations and testing philosophy for maintainable data modeling.
 
 ## Highlights
