@@ -1,5 +1,5 @@
 
-# Kafka: Architect’s Pocket Guide (Python-only)
+# Kafka: Architect’s Pocket Guide
 
 ## 1) Mental model (2025+)
 
