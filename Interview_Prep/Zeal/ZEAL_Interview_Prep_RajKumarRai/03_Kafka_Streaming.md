@@ -1,5 +1,7 @@
 # Kafka & Streaming Pipelines
 
+kafka tech details : https://github.com/rajkumarraibis/RajStudy/blob/main/Data_Topics_Misc/Kafka.md
+
 Although Freeletics uses Kinesis for streaming, I’ve designed ingestion and enrichment flows conceptually identical to Kafka-based systems — event-driven, schema-managed, and idempotent.
 
 ## Experience Overview
