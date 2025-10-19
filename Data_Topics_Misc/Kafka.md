@@ -1,6 +1,3 @@
-Awesome—here’s a **super-short Kafka cheat-sheet** with **just Python** and brief, plain-English descriptions right next to each “why it matters”.
-
----
 
 # Kafka: Architect’s Pocket Guide (Python-only)
 
