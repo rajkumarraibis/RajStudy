@@ -1,6 +1,8 @@
 # Airflow & DataOps
 
-Airflow is the backbone of our orchestration at Freeletics. I’ve implemented DAGs that ensure reliability, modularity, and traceability — following DataOps principles.
+We use databricks as our Orchstrator.
+I am equally comfortable in airfloe as well. 
+we use it for some of our workloads\jobs I’ve implemented DAGs that ensure reliability, modularity, and traceability — following DataOps principles.
 
 ## Key Practices
 

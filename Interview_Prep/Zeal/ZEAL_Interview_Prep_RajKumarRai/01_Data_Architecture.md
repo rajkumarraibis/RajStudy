@@ -1,15 +1,45 @@
-# Data Architecture
 
-As a Lead Data Engineer at Freeletics, I’ve designed and maintained a modern cloud-native data platform built primarily on AWS, Databricks, and S3. My architectural approach focuses on scalability, automation, and DataOps best practices.
+# **Data Architecture**
 
-## Key Points
+As a Lead Data Engineer at Freeletics, I’ve designed and maintained a **cloud-native, modern data platform** built on **AWS, Databricks, and S3**, combining principles from **Lambda Architecture**, **Medallion Architecture**, and the **Delta Lakehouse paradigm**.
+My design philosophy focuses on **scalability, modularity, and DataOps-driven automation**.
 
-- **Ingestion Layer:** Data from multiple sources (Braze, Apple transactions, Amplitude, internal microservices) lands in S3 via Lambda and Kinesis.
-- **Processing Layer:** Databricks jobs (Spark) perform enrichment and aggregation. I use job clusters with project tags and parallel fetch logic (e.g., DynamoDB user metadata) to optimize compute.
-- **Storage Layer:** Data is structured into Bronze–Silver–Gold layers in S3, optimized for Redshift Spectrum and BI access.
-- **Serving Layer:** Analysts and ML teams consume through Athena, Databricks SQL, or APIs.
-- **Governance:** Tags, versioning, and logging are strictly enforced across layers.
+### **Architecture Overview**
 
-## What I’d Highlight to Christian
+The platform follows a hybrid **Lambda + Medallion** approach:
 
-This architecture aligns well with ZEAL’s Modern Data Stack — decoupled ingestion (Kafka/Kinesis), modular transformation (dbt/Spark), and scalable serving (Redshift/Snowflake). My focus has been on reliability, monitoring, and cost optimization while supporting analytics and ML workloads.
+* **Lambda layer:**
+  Application and backend services stream data via **Kinesis** into **AWS Step Functions** and **Lambda** workflows, which deliver data to both **Amplitude** (for analytics) and **S3** (Bronze & Silver layers).
+  This ensures **low-latency event capture** and **reliable batch persistence**.
+
+* **Medallion / Delta Lakehouse layer:**
+  From S3 (Bronze/Silver), **Databricks Spark jobs** transform, enrich, and write curated data into **Gold Delta Tables**, forming the **Delta Lakehouse**.
+  Dashboards and analytics run directly on these **Gold Delta tables** using **Databricks SQL**.
+
+* **Governance and Metadata:**
+  The entire ecosystem is managed through **Unity Catalog** for **data dictionary**, **data discovery**, and **lineage tracking**, ensuring consistency and compliance.
+
+* **Architecture Principles:**
+  Every component is **modular and loosely coupled**, enabling independent scaling and simpler maintenance.
+  The architecture supports both **real-time streaming** and **batch workloads**, enabling a unified analytical layer.
+
+* **Data Warehousing:**
+  Our data warehouse is built on **Delta Lake**; however, I’m also comfortable with **Amazon Redshift** for traditional DWH workloads when needed.
+
+---
+
+### **Key Points**
+
+* **Ingestion Layer:** Multi-source ingestion from Braze, Apple transactions, Amplitude, and internal microservices via Lambda + Kinesis into S3.
+* **Processing Layer:** Databricks jobs (Spark) handle enrichment, aggregation, and schema evolution; parallel DynamoDB lookups for enrichment.
+* **Storage Layer:** Bronze → Silver → Gold layers organized in S3, stored as Delta tables for performance and versioning.
+* **Serving Layer:** Consumers access through Databricks SQL, Athena, or APIs for analytics and ML use cases.
+* **Governance:** Unity Catalog manages access, lineage, and metadata; tagging and versioning enforced across all layers.
+
+---
+
+### **What I’d Highlight to Christian**
+
+This architecture embodies ZEAL’s **Modern Data Stack philosophy** — decoupled ingestion (Kafka/Kinesis), modular transformation (dbt/Spark), and scalable serving (Redshift/Snowflake).
+It’s built with a strong **DataOps foundation**, emphasizing **reliability**, **observability**, and **cost efficiency** while enabling analytics, experimentation, and ML at scale.
+
