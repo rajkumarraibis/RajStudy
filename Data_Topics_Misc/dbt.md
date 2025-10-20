@@ -294,12 +294,6 @@ Use logic like:
 
 ---
 
-
-
----
-
-If you like, I can **generate a downloadable PDF/one-pager** of this summary (formatted nicely) which you can print/update for your interview prep. Would you like me to do that?
-
 [1]: https://www.datacamp.com/blog/dbt-interview-questions?utm_source=chatgpt.com "Top 26 dbt Interview Questions and Answers for 2025"
 [2]: https://www.projectpro.io/article/dbt-interview-questions-and-answers/1062?utm_source=chatgpt.com "Top 25 DBT Interview Questions and Answers for 2025"
 [3]: https://medium.com/%40nishadpatkar7/data-build-tool-dbt-interview-questions-and-answers-107f6799c7a3?utm_source=chatgpt.com "Data Build Tool (DBT) Interview Questions and Answers"
