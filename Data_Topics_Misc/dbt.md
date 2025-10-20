@@ -1,4 +1,3 @@
-Great — preparing a “basic docs” summary of dbt (Data Build Tool) for interview readiness is a smart move. Based on what you watched + standard best practices, here are distilled points you can use and refine. You can print or keep this as your interview prep sheet.
 
 ---
 
@@ -48,21 +47,7 @@ Here are key terms you must know and be conversant with:
 
 ---
 
-## 🎯 Common Interview-Topics / Questions to Prepare
 
-Here are topics frequently asked and you should have answers & examples ready:
-
-* What is the difference between `ref()` and `source()`? ([ProjectPro][2])
-* What are the types of materialisations in dbt (view, table, incremental, snapshot)? ([Medium][3])
-* When would you use an incremental model and how do you configure it? ([DataCamp][1])
-* How do you test data in dbt? What kinds of tests exist? ([Medium][3])
-* How does dbt manage dependencies between models? (DAG, `ref()`, build order) ([Medium][3])
-* How do you deploy dbt in multiple environments (dev, staging, prod)? What strategies are used? ([DataCamp][1])
-* What challenges might you face when scaling dbt projects? E.g., performance, lineage, dependencies. ([DataCamp][1])
-* What is the difference between ETL vs ELT and where does dbt fit? ([DataCamp][1])
-* How do you handle refactoring models or changing schemas in dbt?
-* Use-case scenario: Suppose you have raw events table, you need to build a daily summary table – how would you do it in dbt?
-* Tools & ecosystems: dbt Cloud vs dbt Core, integration with orchestration tools, version control.
 
 ---
 
