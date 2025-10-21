@@ -1,5 +1,4 @@
-## 🧠 Databricks Unity Catalog – Markdown Revision Guide
-
+## 🧠 Databricks Unity Catalog 
 Perfect for quick interview prep, this markdown guide distills core concepts, object model, setup, security, lineage, sharing, and more—sourced from the Databricks website, official docs, and a technical YouTube deep‑dive video.
 Check out the video for demos and insights:
 
