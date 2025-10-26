@@ -85,11 +85,6 @@ def make_consumer(debug: bool = True) -> Consumer:
     def _error_cb(err):
         print(f"[kafka-error] {err}", flush=True)
 
-    def _log_cb(c, level, fac, buf):
-        # terse broker logs; comment out if noisy
-        if level >= 5:  # NOTICE or higher
-            print(f"[kafka-log] {fac}: {buf}", flush=True)
-
     conf = {
         "bootstrap.servers": KAFKA_BOOTSTRAP,
         "group.id": KAFKA_GROUP_ID,
@@ -101,10 +96,12 @@ def make_consumer(debug: bool = True) -> Consumer:
         "allow.auto.create.topics": True,
         "enable.partition.eof": True,
         "error_cb": _error_cb,
-        "log_cb": _log_cb,
-        # "debug": "cgrp,topic,broker,fetch"  # uncomment for deep diagnostics
+        # "debug": "cgrp,topic,broker,fetch",  # uncomment if you want verbose logs
     }
+
     return Consumer(conf)
+
+
 
 assigned_once = False  # tracks whether group-mode assignment happened
 
