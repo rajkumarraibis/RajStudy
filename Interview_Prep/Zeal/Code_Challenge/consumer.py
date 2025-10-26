@@ -1,99 +1,170 @@
-import os, json, time
+#!/usr/bin/env python3
+import json
+import os
+import signal
+import sys
+import time
+from typing import Optional
+
 import psycopg2
 from psycopg2.extras import Json
-from confluent_kafka import Consumer, KafkaException, KafkaError
+from urllib.parse import urlparse
+from confluent_kafka import Consumer, KafkaError, KafkaException
 
-TOPIC = os.getenv("KAFKA_TOPIC", "events.raw")
-GROUP = os.getenv("KAFKA_GROUP_ID", "zeal-consumer")
-BOOT  = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "redpanda:9092")
+# -------- Read env (support both your compose & prior code) --------
+KAFKA_BOOTSTRAP = (
+    os.getenv("KAFKA_BOOTSTRAP_SERVERS")
+    or os.getenv("KAFKA_BOOTSTRAP")
+    or "redpanda:9092"
+)
+KAFKA_GROUP_ID = os.getenv("KAFKA_GROUP_ID", "zeal-consumer-fresh")
+KAFKA_TOPIC = os.getenv("KAFKA_TOPIC") or os.getenv("INPUT_TOPIC") or "events.raw"
 
-PGHOST = os.getenv("PGHOST", "postgres")
-PGUSER = os.getenv("PGUSER", "zeal")
-PGPASSWORD = os.getenv("PGPASSWORD", "zeal")
-PGDATABASE = os.getenv("PGDATABASE", "events")
-PGPORT = int(os.getenv("PGPORT", "5432"))
+POSTGRES_DSN = os.getenv("POSTGRES_DSN")  # e.g. postgresql://zeal:zeal@postgres:5432/events
+
+PG_HOST = os.getenv("POSTGRES_HOST", "postgres")
+PG_DB = os.getenv("POSTGRES_DB", "postgres")
+PG_USER = os.getenv("POSTGRES_USER", "zeal")
+PG_PASS = os.getenv("POSTGRES_PASSWORD", "zeal")
+PG_PORT = int(os.getenv("POSTGRES_PORT", "5432"))
+
+POLL_TIMEOUT = float(os.getenv("POLL_TIMEOUT_SEC", "1.0"))  # seconds
+COMMIT_EVERY = int(os.getenv("COMMIT_EVERY", "1"))          # commit after N successful inserts
+
+# -------- Graceful shutdown flag --------
+_running = True
+def _stop(*_):
+    global _running
+    _running = False
+signal.signal(signal.SIGINT, _stop)
+signal.signal(signal.SIGTERM, _stop)
+
+# -------- Postgres helpers --------
+DDL = """
+CREATE TABLE IF NOT EXISTS events_raw (
+  id          BIGSERIAL PRIMARY KEY,
+  msg_key     TEXT,
+  payload     JSONB NOT NULL,
+  received_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+"""
+INSERT_SQL = "INSERT INTO events_raw (msg_key, payload) VALUES (%s, %s);"
+
+def _parse_dsn(dsn: str):
+    u = urlparse(dsn)
+    return {
+        "host": u.hostname or "postgres",
+        "port": u.port or 5432,
+        "dbname": (u.path or "/postgres").lstrip("/"),
+        "user": u.username or "zeal",
+        "password": u.password or "zeal",
+    }
 
 def pg_connect():
-    for i in range(1, 31):
-        try:
-            conn = psycopg2.connect(host=PGHOST, user=PGUSER, password=PGPASSWORD, dbname=PGDATABASE, port=PGPORT, connect_timeout=5)
-            conn.autocommit = False
-            print(f"[pg] connected")
-            return conn
-        except Exception as e:
-            print(f"[pg] connect failed ({i}): {e}")
-            time.sleep(min(2*i, 5))
-    raise SystemExit("pg connect failed")
+    if POSTGRES_DSN:
+        cfg = _parse_dsn(POSTGRES_DSN)
+    else:
+        cfg = dict(host=PG_HOST, port=PG_PORT, dbname=PG_DB, user=PG_USER, password=PG_PASS)
 
-def ensure_schema(conn):
+    conn = psycopg2.connect(**cfg)
+    conn.autocommit = True
     with conn.cursor() as cur:
-        cur.execute("""
-        CREATE TABLE IF NOT EXISTS events_raw (
-            id BIGSERIAL PRIMARY KEY,
-            key TEXT,
-            payload JSONB NOT NULL,
-            ts TIMESTAMPTZ DEFAULT NOW()
-        );
-        """)
-    conn.commit()
-    print("[pg] ensured table events_raw")
+        cur.execute(DDL)
+    # helpful startup log
+    print(f"[db] connected → {cfg['host']}:{cfg['port']}/{cfg['dbname']} as {cfg['user']}", flush=True)
+    return conn
+
+# -------- Kafka consumer setup --------
+def make_consumer() -> Consumer:
+    conf = {
+        "bootstrap.servers": KAFKA_BOOTSTRAP,
+        "group.id": KAFKA_GROUP_ID,
+        "enable.auto.commit": False,      # commit only after DB success
+        "auto.offset.reset": "earliest",  # safe for fresh groups
+        "session.timeout.ms": 45000,
+        "max.poll.interval.ms": 300000,
+        # simpler strategy to avoid incremental assign API requirements
+        "partition.assignment.strategy": "range",
+        "allow.auto.create.topics": True,
+    }
+
+    c = Consumer(conf)
+
+    def on_assign(consumer, partitions):
+        print(f"[rebalance] Assigned: {partitions}", flush=True)
+        # Force the consumer to start reading from the earliest offset
+        tps = [TopicPartition(p.topic, p.partition, OFFSET_BEGINNING) for p in partitions]
+        consumer.assign(tps)
+        print("[rebalance] Forced seek to earliest offsets", flush=True)
+
+
+    def on_revoke(consumer, partitions):
+        print(f"[rebalance] Revoked: {partitions}", flush=True)
+        try:
+            consumer.commit(asynchronous=False)
+        except KafkaException as e:
+            print(f"[rebalance] Commit on revoke failed: {e}", flush=True)
+
+    c.subscribe([KAFKA_TOPIC], on_assign=on_assign, on_revoke=on_revoke)
+    return c
 
 def main():
-    print(f"[boot] BOOTSTRAP={BOOT} TOPIC={TOPIC} GROUP={GROUP}", flush=True)
-    conf = {
-        "bootstrap.servers": BOOT,
-        "group.id": GROUP,
-        "auto.offset.reset": "latest",
-        "enable.auto.commit": False,
-        "security.protocol": "PLAINTEXT",
-        "broker.address.family": "v4",
-        "socket.keepalive.enable": True,
-        "connections.max.idle.ms": 0,
-        "session.timeout.ms": 45000,
-        "socket.timeout.ms": 60000,
-        "reconnect.backoff.ms": 500,
-        "reconnect.backoff.max.ms": 10000,
-        "log.connection.close": False,
-    }
-    c = Consumer(conf)
-    c.subscribe([TOPIC])
-    print("[kafka] subscribed", flush=True)
+    print(f"[cfg] kafka bootstrap   = {KAFKA_BOOTSTRAP}", flush=True)
+    print(f"[cfg] kafka group.id    = {KAFKA_GROUP_ID}", flush=True)
+    print(f"[cfg] kafka topic       = {KAFKA_TOPIC}", flush=True)
+    print(f"[cfg] postgres dsn set  = {'yes' if POSTGRES_DSN else 'no'}", flush=True)
 
-    pg = pg_connect()
-    ensure_schema(pg)
-    cur = pg.cursor()
+    conn = pg_connect()
+    consumer = make_consumer()
+
+    commit_counter = 0
+    last_log = time.time()
 
     try:
-        while True:
-            m = c.poll(2.0)
-            if m is None:
-                continue
-            if m.error():
-                if m.error().code() == KafkaError._PARTITION_EOF:
+        with conn.cursor() as cur:
+            while _running:
+                msg = consumer.poll(POLL_TIMEOUT)
+                if msg is None:
+                    if time.time() - last_log > 15:
+                        print("[loop] idle...", flush=True)
+                        last_log = time.time()
                     continue
-                print("[kafka][error]", m.error(), flush=True)
-                raise KafkaException(m.error())
 
-            key = m.key().decode() if m.key() else None
-            try:
-                payload = json.loads(m.value().decode("utf-8"))
-            except Exception as e:
-                print(f"[consumer][warn] bad JSON at offset {m.offset()}: {e}", flush=True)
-                payload = {"raw": m.value().decode("utf-8", "replace")}
+                if msg.error():
+                    if msg.error().code() == KafkaError._PARTITION_EOF:
+                        continue
+                    raise KafkaException(msg.error())
 
-            cur.execute("INSERT INTO events_raw (key, payload) VALUES (%s, %s)", (key, Json(payload)))
-            pg.commit()
-            c.commit(message=m)
-            print(f"[consumer] stored key={key} offset={m.offset()}", flush=True)
+                try:
+                    key: Optional[str] = msg.key().decode("utf-8") if msg.key() else None
+                    raw_value = msg.value()
+                    try:
+                        value_obj = json.loads(raw_value)
+                    except Exception:
+                        value_obj = {"raw": raw_value.decode("utf-8") if isinstance(raw_value, (bytes, bytearray)) else str(raw_value)}
+
+                    cur.execute(INSERT_SQL, (key, Json(value_obj)))
+                    consumer.commit(message=msg, asynchronous=False)
+                    commit_counter += 1
+
+                    if commit_counter % COMMIT_EVERY == 0:
+                        print(f"[ok] inserted + committed {msg.topic()}[{msg.partition()}]@{msg.offset()} key={key}", flush=True)
+
+                except (psycopg2.Error, Exception) as e:
+                    print(f"[error] DB insert failed; leaving offset uncommitted. Reason: {e}", flush=True)
+                    time.sleep(0.5)
 
     except KeyboardInterrupt:
-        print("[consumer] shutting down…", flush=True)
+        pass
     finally:
         try:
-            cur.close(); pg.close()
-        except Exception:
-            pass
-        c.close()
+            print("[shutdown] final synchronous commit...", flush=True)
+            consumer.commit(asynchronous=False)
+        except Exception as e:
+            print(f"[shutdown] final commit failed: {e}", flush=True)
+        consumer.close()
+        conn.close()
+        print("[shutdown] consumer closed, DB connection closed.", flush=True)
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
