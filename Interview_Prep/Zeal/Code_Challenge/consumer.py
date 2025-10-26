@@ -1,82 +1,82 @@
-import json
-import time
+import os, json, time, signal
 from confluent_kafka import Consumer, KafkaException
 import psycopg2
 
-# 🔹 Kafka / Redpanda connection
-BROKER = "localhost:9094"
-TOPIC = "events.raw"
+BOOTSTRAP = os.getenv(\"KAFKA_BOOTSTRAP\", \"redpanda:9092\")
+INPUT_TOPIC = os.getenv(\"INPUT_TOPIC\", \"events.raw\")
+POSTGRES_DSN = os.getenv(\"POSTGRES_DSN\", \"postgresql://zeal:zeal@postgres:5432/events\")
 
-# 🔹 Postgres connection
-DB_CONFIG = {
-    "dbname": "events",
-    "user": "zeal",
-    "password": "zeal",
-    "host": "localhost",
-    "port": "5432",
-}
+stop = False
+def _stop(*_):
+    global stop; stop = True
+signal.signal(signal.SIGINT, _stop)
+signal.signal(signal.SIGTERM, _stop)
 
-
-def save_to_postgres(event):
-    """Insert event into Postgres safely."""
-    with psycopg2.connect(**DB_CONFIG) as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO events (user_id, event_type, event_timestamp)
-                VALUES (%s, %s, %s)
-                """,
-                (event["user_id"], event["event_type"], event["timestamp"]),
-            )
+def ensure_table(conn):
+    with conn.cursor() as cur:
+        cur.execute(
+            \"\"\"CREATE TABLE IF NOT EXISTS events (
+              id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+              user_id INT,
+              event_type TEXT,
+              ts_ms BIGINT,
+              payload JSONB,
+              received_at TIMESTAMPTZ DEFAULT NOW()
+            );\"\"\"
+        )
         conn.commit()
 
-
 def main():
-    consumer_conf = {
-        "bootstrap.servers": "127.0.0.1:9092",   # force IPv4 instead of 'localhost'
-        "group.id": "zeal-consumer-1",
-        "security.protocol": "PLAINTEXT",
-        "broker.address.family": "v4",           # <-- avoid IPv6/::1 edge cases
-        "session.timeout.ms": 45000,
-        "socket.keepalive.enable": True,
-        "enable.auto.commit": False,
-        "auto.offset.reset": "earliest",
-        # "debug": "broker"  # uncomment if you want verbose connection logs
-    }
+    # Kafka
+    c = Consumer({
+        \"bootstrap.servers\": BOOTSTRAP,
+        \"group.id\": \"zeal-consumer\",
+        \"auto.offset.reset\": \"earliest\",
+        \"enable.auto.commit\": True,
+    })
+    c.subscribe([INPUT_TOPIC])
 
+    # DB (retry until ready)
+    conn = None
+    for attempt in range(30):
+        try:
+            conn = psycopg2.connect(POSTGRES_DSN)
+            break
+        except Exception as e:
+            print(f\"⏳ Waiting for Postgres... ({e})\")
+            time.sleep(2)
+    if conn is None:
+        raise RuntimeError(\"Postgres not reachable\")
+    ensure_table(conn)
 
-
-    consumer = Consumer(consumer_conf)
-    consumer.subscribe([TOPIC])
-
-    print("🚀 Consumer started. Listening for events... (Ctrl+C to stop)")
-
+    print(\"🎧 Consumer listening... Ctrl+C to stop.\")
     try:
-        while True:
-            msg = consumer.poll(1.0)
-
+        while not stop:
+            msg = c.poll(1.0)
             if msg is None:
                 continue
             if msg.error():
                 raise KafkaException(msg.error())
-
             try:
-                event = json.loads(msg.value().decode("utf-8"))
-                save_to_postgres(event)
-                consumer.commit(msg, asynchronous=False)
-                print(f"✅ Saved event and committed offset {msg.offset()}: {event}")
-
-            except json.JSONDecodeError:
-                print(f"⚠️ Skipping invalid JSON message: {msg.value()}")
+                evt = json.loads(msg.value())
+                with conn.cursor() as cur:
+                    cur.execute(
+                        \"INSERT INTO events (user_id, event_type, ts_ms, payload) VALUES (%s,%s,%s,%s::jsonb)\",
+                        (evt.get(\"user_id\"), evt.get(\"event_type\"), evt.get(\"ts\"), json.dumps(evt))
+                    )
+                conn.commit()
+                print(f\"📥 stored event user={evt.get('user_id')} type={evt.get('event_type')}\")
             except Exception as e:
-                print(f"❌ Error processing message: {e}")
-                time.sleep(1)  # small pause to avoid tight loop on DB errors
-
-    except KeyboardInterrupt:
-        print("\n🛑 Consumer stopped manually.")
+                print(f\"❌ processing error: {e}\")
+                conn.rollback()
     finally:
-        consumer.close()
+        print(\"🛑 Closing consumer...\")
+        try:
+            c.close()
+        finally:
+            if conn:
+                conn.close()
+        print(\"✅ Consumer exited.\")
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

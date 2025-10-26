@@ -1,61 +1,46 @@
-import json
-import time
-import random
+import os, json, time, random, signal
 from datetime import datetime
 from confluent_kafka import Producer
 
-BROKER = "localhost:9094"
-TOPIC = "events.raw"
+BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "redpanda:9092")
+TOPIC = os.getenv("TOPIC", "events.raw")
 
-producer_config = {
-    "bootstrap.servers": BROKER,
+stop = False
+def _stop(*_):
+    global stop; stop = True
+signal.signal(signal.SIGINT, _stop)
+signal.signal(signal.SIGTERM, _stop)
+
+p = Producer({
+    "bootstrap.servers": BOOTSTRAP,
     "client.id": "zeal-producer",
-    "linger.ms": 10
-}
+})
 
-producer = Producer(producer_config)
-EVENT_TYPES = ["page_view", "login", "purchase", "logout"]
-
-
-def generate_event():
-    """Generate a mock user event"""
-    return {
-        "user_id": random.randint(1000, 1020),
-        "event_type": random.choice(EVENT_TYPES),
-        "timestamp": datetime.utcnow().isoformat()
-    }
-
-
-def delivery_report(err, msg):
-    if err is not None:
-        print(f"❌ Delivery failed for record {msg.key()}: {err}")
+def on_delivery(err, msg):
+    if err:
+        print(f"❌ delivery failed: {err}")
     else:
-        print(f"✅ Sent → {msg.value()} @ offset {msg.offset()}")
+        print(f"✅ delivered to {msg.topic()}[{msg.partition()}]@{msg.offset()}")
 
-
-if __name__ == "__main__":
-    print("🚀 Starting producer... Press Ctrl+C to stop.")
-    try:
-        first = True
-        while True:
-            event = generate_event()
-            producer.produce(
-                topic=TOPIC,
-                key=str(event["user_id"]),
-                value=json.dumps(event),
-                callback=delivery_report
-            )
-            producer.poll(0)
-
-            # first event immediately, then random 1–50 s
-            if first:
-                first = False
-            else:
-                wait_time = random.randint(1, 50)
-                print(f"⏱️ Waiting {wait_time}s before next event...")
-                time.sleep(wait_time)
-
-    except KeyboardInterrupt:
-        print("🛑 Stopping producer...")
-    finally:
-        producer.flush()
+print("🚀 Starting producer... Ctrl+C to stop.")
+i = 0
+try:
+    while not stop:
+        evt = {
+            "id": i,
+            "user_id": i % 5,
+            "event_type": random.choice([\"click\",\"view\",\"purchase\"]),
+            "ts": int(time.time()*1000),
+            "iso": datetime.utcnow().isoformat(timespec=\"seconds\") + \"Z\",
+        }
+        p.produce(TOPIC, json.dumps(evt).encode(), callback=on_delivery)
+        p.poll(0)
+        # short, responsive sleep
+        for _ in range(random.randint(3,8)):
+            if stop: break
+            time.sleep(1)
+        i += 1
+finally:
+    print(\"🛑 Stopping producer... flushing...\")
+    p.flush(5)
+    print(\"✅ Producer exited.\")
