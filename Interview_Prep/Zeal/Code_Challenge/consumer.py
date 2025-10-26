@@ -86,18 +86,21 @@ def make_consumer(debug: bool = True) -> Consumer:
         print(f"[kafka-error] {err}", flush=True)
 
     conf = {
-        "bootstrap.servers": KAFKA_BOOTSTRAP,
-        "group.id": KAFKA_GROUP_ID,
-        "enable.auto.commit": False,
+        "bootstrap.servers": "redpanda:9092",
+        "group.id": os.getenv("KAFKA_GROUP_ID", "zeal-consumer-fresh"),
         "auto.offset.reset": "earliest",
-        "session.timeout.ms": 45000,
+        "enable.auto.commit": False,
+        "session.timeout.ms": 6000,
         "max.poll.interval.ms": 300000,
-        "partition.assignment.strategy": "range",
         "allow.auto.create.topics": True,
-        "enable.partition.eof": True,
-        "error_cb": _error_cb,
-        # "debug": "cgrp,topic,broker,fetch",  # uncomment if you want verbose logs
+        "partition.assignment.strategy": "range",
+        "security.protocol": "PLAINTEXT",
+        "broker.address.family": "v4",
+        "socket.timeout.ms": 20000,
+        "debug": "broker,protocol,topic,cgrp,fetch",
     }
+
+
 
     return Consumer(conf)
 

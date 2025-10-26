@@ -83,8 +83,11 @@ services:
         condition: service_completed_successfully
     command: >
       sh -c "
-        echo '📄 producer requirements (inline): confluent-kafka' &&
-        pip install --no-cache-dir confluent-kafka &&
+        echo '📄 Showing requirements.txt content:' &&
+        cat /app/requirements.txt &&
+        echo '📦 Installing dependencies...' &&
+        pip install --no-cache-dir -r /app/requirements.txt &&
+        echo '✅ Finished installing dependencies.' &&
         python -u /app/producer.py
       "
     tty: true
