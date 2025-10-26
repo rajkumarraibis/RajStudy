@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   redpanda:
     image: docker.redpanda.com/redpandadata/redpanda:v24.2.6
@@ -24,7 +23,7 @@ services:
       - "8081:9644" # optional: admin API if you want it on host
 
   console:
-    image: docker.redpanda.com/redpandadata/console:v2.6.2
+    image: redpandadata/console:latest   # public image on Docker Hub
     container_name: redpanda-console
     environment:
       - KAFKA_BROKERS=redpanda:9092

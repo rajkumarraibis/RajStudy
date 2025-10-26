@@ -7,7 +7,9 @@ TOPIC = os.getenv("TOPIC", "events.raw")
 
 stop = False
 def _stop(*_):
-    global stop; stop = True
+    global stop
+    stop = True
+
 signal.signal(signal.SIGINT, _stop)
 signal.signal(signal.SIGTERM, _stop)
 
@@ -29,18 +31,19 @@ try:
         evt = {
             "id": i,
             "user_id": i % 5,
-            "event_type": random.choice([\"click\",\"view\",\"purchase\"]),
-            "ts": int(time.time()*1000),
-            "iso": datetime.utcnow().isoformat(timespec=\"seconds\") + \"Z\",
+            "event_type": random.choice(["click", "view", "purchase"]),
+            "ts": int(time.time() * 1000),
+            "iso": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         }
         p.produce(TOPIC, json.dumps(evt).encode(), callback=on_delivery)
         p.poll(0)
         # short, responsive sleep
-        for _ in range(random.randint(3,8)):
-            if stop: break
+        for _ in range(random.randint(3, 8)):
+            if stop:
+                break
             time.sleep(1)
         i += 1
 finally:
-    print(\"🛑 Stopping producer... flushing...\")
+    print("🛑 Stopping producer... flushing...")
     p.flush(5)
-    print(\"✅ Producer exited.\")
+    print("✅ Producer exited.")
