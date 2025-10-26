@@ -1,8 +1,8 @@
-# docker-compose.yml
+version: "3.9"
 services:
-  kafka:
-    image: redpandadata/redpanda:v23.3.11
-    container_name: kafka
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.6
+    container_name: redpanda
     command:
       - redpanda
       - start
@@ -10,43 +10,106 @@ services:
       - --smp=1
       - --memory=1G
       - --reserve-memory=0M
-      - --node-id=1
+      - --node-id=0
       - --check=false
-      - --kafka-addr=PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9094
-      - --advertise-kafka-addr=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9094
+      # single internal listener for in-Docker comms
+      - --kafka-addr=PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr=PLAINTEXT://redpanda:9092
+    healthcheck:
+      test: ["CMD", "rpk", "cluster", "info", "--brokers", "redpanda:9092"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
     ports:
-      - "9092:9092"
-      - "9094:9094"
+      - "8081:9644" # optional: admin API if you want it on host
 
-  redpanda-console:
-    image: redpandadata/console:latest
+  console:
+    image: docker.redpanda.com/redpandadata/console:v2.6.2
     container_name: redpanda-console
+    environment:
+      - KAFKA_BROKERS=redpanda:9092
     ports:
       - "8080:8080"
-    environment:
-      - KAFKA_BROKERS=kafka:9092
     depends_on:
-      - kafka
-
-
+      redpanda:
+        condition: service_healthy
 
   postgres:
     image: postgres:16
     container_name: postgres
     environment:
+      - POSTGRES_DB=events
       - POSTGRES_USER=zeal
       - POSTGRES_PASSWORD=zeal
-      - POSTGRES_DB=events
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zeal -d events"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
-    ports:
-      - "5050:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@zeal.com
       PGADMIN_DEFAULT_PASSWORD: zeal123
+    ports:
+      - "5050:80"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+
+  topics-init:
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.6
+    container_name: topics-init
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    entrypoint: ["/bin/sh","-c"]
+    command: >
+      "rpk topic create events.raw events.agg --brokers redpanda:9092 || true"
+
+  producer:
+    image: python:3.11-slim
+    container_name: producer
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      - KAFKA_BOOTSTRAP=redpanda:9092
+      - TOPIC=events.raw
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      topics-init:
+        condition: service_completed_successfully
+    command: >
+      sh -c "pip install --no-cache-dir confluent-kafka &&
+             python -u /app/producer.py"
+    tty: true
+    stdin_open: true
+
+  consumer:
+    image: python:3.11-slim
+    container_name: consumer
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      - KAFKA_BOOTSTRAP=redpanda:9092
+      - INPUT_TOPIC=events.raw
+      - POSTGRES_DSN=postgresql://zeal:zeal@postgres:5432/events
+    depends_on:
+      redpanda:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      topics-init:
+        condition: service_completed_successfully
+    command: >
+      sh -c "pip install --no-cache-dir confluent-kafka psycopg2-binary &&
+             python -u /app/consumer.py"
+    tty: true
+    stdin_open: true
