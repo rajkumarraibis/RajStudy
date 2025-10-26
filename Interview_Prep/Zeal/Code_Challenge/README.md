@@ -1,22 +1,41 @@
-# Quick Start (All-in-Docker)
+# Quick Start (All-in-Docker, minimal & interview-friendly)
 
-## Files
-- `docker-compose.yml` — runs Redpanda, Console UI, Postgres, pgAdmin, topics init, Producer, and Consumer.
-- `producer.py` — simple JSON event producer.
-- `consumer.py` — consumes events and writes to Postgres table `events`.
+## What this runs
+- **Redpanda** (Kafka-compatible broker) + **Console UI**
+- **Postgres** + **pgAdmin**
+- **Producer** (simulated events at irregular intervals)
+- **Consumer** (ingests to Postgres, builds hourly view, prints stall alerts)
 
 ## Run
 ```bash
-docker compose up --build
+docker compose up -d --build
 ```
 - Redpanda Console: http://localhost:8080
-- Postgres: `postgresql://zeal:zeal@localhost:5432/events` (pgAdmin at http://localhost:5050)
+- pgAdmin: http://localhost:5050 (admin@zeal.com / zeal123)
+- Postgres: `postgresql://zeal:zeal@localhost:5432/events`
 
 ## Stop
 ```bash
-docker compose down
+docker compose down -v
 ```
 
-## Notes
-- Everything talks to Kafka at `redpanda:9092` inside Docker (no host networking issues).
-- Change event rate by adjusting the small sleep loop in `producer.py`.
+## What to demo
+1. **Flow**: Producer → Redpanda → Consumer → Postgres
+2. **Transformation**: `events_hourly_view` (hourly count + unique users)
+3. **Observability (lite)**:
+   - Redpanda Console shows topic health & throughput
+   - Consumer logs print an **ALERT** if no messages processed for 60s
+   - Query KPIs in pgAdmin
+
+## Useful SQL
+```sql
+-- Hourly KPIs
+SELECT * FROM events_hourly_view ORDER BY event_hour DESC, event_type;
+
+-- Total processed
+SELECT COUNT(*) AS total_events FROM events;
+
+-- Recent events
+SELECT id, user_id, event_type, to_timestamp(ts_ms/1000.0) AS ts
+FROM events ORDER BY id DESC LIMIT 10;
+```

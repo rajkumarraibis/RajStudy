@@ -1,124 +1,99 @@
-import os, json, time, signal, threading
-from flask import Flask, Response
-from confluent_kafka import Consumer, KafkaException
+import os, json, time
 import psycopg2
+from psycopg2.extras import Json
+from confluent_kafka import Consumer, KafkaException, KafkaError
 
-BOOTSTRAP = os.getenv("KAFKA_BOOTSTRAP", "redpanda:9092")
-INPUT_TOPIC = os.getenv("INPUT_TOPIC", "events.raw")
-POSTGRES_DSN = os.getenv("POSTGRES_DSN", "postgresql://zeal:zeal@postgres:5432/events")
+TOPIC = os.getenv("KAFKA_TOPIC", "events.raw")
+GROUP = os.getenv("KAFKA_GROUP_ID", "zeal-consumer")
+BOOT  = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "redpanda:9092")
 
-stop = False
-message_count = 0
+PGHOST = os.getenv("PGHOST", "postgres")
+PGUSER = os.getenv("PGUSER", "zeal")
+PGPASSWORD = os.getenv("PGPASSWORD", "zeal")
+PGDATABASE = os.getenv("PGDATABASE", "events")
+PGPORT = int(os.getenv("PGPORT", "5432"))
 
-def _stop(*_):
-    global stop
-    stop = True
+def pg_connect():
+    for i in range(1, 31):
+        try:
+            conn = psycopg2.connect(host=PGHOST, user=PGUSER, password=PGPASSWORD, dbname=PGDATABASE, port=PGPORT, connect_timeout=5)
+            conn.autocommit = False
+            print(f"[pg] connected")
+            return conn
+        except Exception as e:
+            print(f"[pg] connect failed ({i}): {e}")
+            time.sleep(min(2*i, 5))
+    raise SystemExit("pg connect failed")
 
-signal.signal(signal.SIGINT, _stop)
-signal.signal(signal.SIGTERM, _stop)
-
-# Simple Flask app for Prometheus metrics
-app = Flask(__name__)
-
-@app.route("/metrics")
-def metrics():
-    return Response(f"consumer_messages_total {message_count}\n", mimetype="text/plain")
-
-def start_metrics_server():
-    app.run(host="0.0.0.0", port=8000)
-
-def ensure_table_and_view(conn):
+def ensure_schema(conn):
     with conn.cursor() as cur:
         cur.execute("""
-            CREATE TABLE IF NOT EXISTS events (
-                id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-                user_id INT,
-                event_type TEXT,
-                ts_ms BIGINT,
-                payload JSONB,
-                received_at TIMESTAMPTZ DEFAULT NOW()
-            );
+        CREATE TABLE IF NOT EXISTS events_raw (
+            id BIGSERIAL PRIMARY KEY,
+            key TEXT,
+            payload JSONB NOT NULL,
+            ts TIMESTAMPTZ DEFAULT NOW()
+        );
         """)
-        conn.commit()
-
-        cur.execute("""
-            CREATE OR REPLACE VIEW events_hourly_view AS
-            SELECT
-                date_trunc('hour', to_timestamp(ts_ms / 1000.0)) AS event_hour,
-                event_type,
-                COUNT(*) AS event_count,
-                COUNT(DISTINCT user_id) AS unique_users
-            FROM events
-            GROUP BY 1, 2
-            ORDER BY 1 DESC, 2;
-        """)
-        conn.commit()
-        print("🧮 Created or replaced view 'events_hourly_view'")
+    conn.commit()
+    print("[pg] ensured table events_raw")
 
 def main():
-    global message_count
-
-    # Start metrics server in background
-    threading.Thread(target=start_metrics_server, daemon=True).start()
-    print("📊 Metrics endpoint started on :8000")
-
-    # Kafka consumer
-    c = Consumer({
-        "bootstrap.servers": BOOTSTRAP,
-        "group.id": "zeal-consumer",
-        "auto.offset.reset": "earliest",
-        "enable.auto.commit": True,
-
-        # 🔧 Important Redpanda/Kafka network stability settings
+    print(f"[boot] BOOTSTRAP={BOOT} TOPIC={TOPIC} GROUP={GROUP}", flush=True)
+    conf = {
+        "bootstrap.servers": BOOT,
+        "group.id": GROUP,
+        "auto.offset.reset": "latest",
+        "enable.auto.commit": False,
         "security.protocol": "PLAINTEXT",
         "broker.address.family": "v4",
         "socket.keepalive.enable": True,
-        "connections.max.idle.ms": 0,   # keep connection alive
+        "connections.max.idle.ms": 0,
         "session.timeout.ms": 45000,
-    })
+        "socket.timeout.ms": 60000,
+        "reconnect.backoff.ms": 500,
+        "reconnect.backoff.max.ms": 10000,
+        "log.connection.close": False,
+    }
+    c = Consumer(conf)
+    c.subscribe([TOPIC])
+    print("[kafka] subscribed", flush=True)
 
-    c.subscribe([INPUT_TOPIC])
-
-    # Connect to Postgres
-    conn = None
-    for attempt in range(30):
-        try:
-            conn = psycopg2.connect(POSTGRES_DSN)
-            break
-        except Exception as e:
-            print(f"⏳ Waiting for Postgres... ({e})")
-            time.sleep(2)
-    if conn is None:
-        raise RuntimeError("Postgres not reachable")
-
-    ensure_table_and_view(conn)
-    print("🎧 Consumer listening... Ctrl+C to stop.")
+    pg = pg_connect()
+    ensure_schema(pg)
+    cur = pg.cursor()
 
     try:
-        while not stop:
-            msg = c.poll(1.0)
-            if msg is None:
+        while True:
+            m = c.poll(2.0)
+            if m is None:
                 continue
-            if msg.error():
-                raise KafkaException(msg.error())
+            if m.error():
+                if m.error().code() == KafkaError._PARTITION_EOF:
+                    continue
+                print("[kafka][error]", m.error(), flush=True)
+                raise KafkaException(m.error())
+
+            key = m.key().decode() if m.key() else None
             try:
-                evt = json.loads(msg.value())
-                with conn.cursor() as cur:
-                    cur.execute(
-                        "INSERT INTO events (user_id, event_type, ts_ms, payload) VALUES (%s, %s, %s, %s::jsonb)",
-                        (evt.get("user_id"), evt.get("event_type"), evt.get("ts"), json.dumps(evt)),
-                    )
-                conn.commit()
-                message_count += 1
-                print(f"📥 stored event user={evt.get('user_id')} type={evt.get('event_type')} total={message_count}")
+                payload = json.loads(m.value().decode("utf-8"))
             except Exception as e:
-                print(f"❌ processing error: {e}")
-                conn.rollback()
+                print(f"[consumer][warn] bad JSON at offset {m.offset()}: {e}", flush=True)
+                payload = {"raw": m.value().decode("utf-8", "replace")}
+
+            cur.execute("INSERT INTO events_raw (key, payload) VALUES (%s, %s)", (key, Json(payload)))
+            pg.commit()
+            c.commit(message=m)
+            print(f"[consumer] stored key={key} offset={m.offset()}", flush=True)
+
+    except KeyboardInterrupt:
+        print("[consumer] shutting down…", flush=True)
     finally:
-        print("🛑 Closing consumer...")
+        try:
+            cur.close(); pg.close()
+        except Exception:
+            pass
         c.close()
-        conn.close()
-        print("✅ Consumer exited.")
 
 if __name__ == "__main__":
     main()

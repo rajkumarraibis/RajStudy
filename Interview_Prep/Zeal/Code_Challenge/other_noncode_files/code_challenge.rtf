@@ -5,9 +5,9 @@
 \margl1440\margr1440\vieww35340\viewh18780\viewkind0
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs28 \cf2 \cb3 \CocoaLigature0 # stop\
-docker stop redpanda-console kafka\
-\
-# remove\
-docker rm redpanda-console kafka\
+\f0\fs28 \cf2 \cb3 \CocoaLigature0 docker compose down -v\
+docker container prune -f\
+docker network rm code_challenge_default\
+    \
+docker compose up -d --build\
 }

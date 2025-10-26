@@ -11,7 +11,6 @@ services:
       - --reserve-memory=0M
       - --node-id=0
       - --check=false
-      # single internal listener for in-Docker comms
       - --kafka-addr=PLAINTEXT://0.0.0.0:9092
       - --advertise-kafka-addr=PLAINTEXT://redpanda:9092
     healthcheck:
@@ -19,11 +18,9 @@ services:
       interval: 5s
       timeout: 3s
       retries: 30
-    ports:
-      - "8081:9644" # optional: admin API if you want it on host
 
   console:
-    image: redpandadata/console:latest   # public image on Docker Hub
+    image: redpandadata/console:latest
     container_name: redpanda-console
     environment:
       - KAFKA_BROKERS=redpanda:9092
@@ -85,8 +82,11 @@ services:
       topics-init:
         condition: service_completed_successfully
     command: >
-      sh -c "pip install --no-cache-dir confluent-kafka &&
-             python -u /app/producer.py"
+      sh -c "
+        echo '📄 producer requirements (inline): confluent-kafka' &&
+        pip install --no-cache-dir confluent-kafka &&
+        python -u /app/producer.py
+      "
     tty: true
     stdin_open: true
 
@@ -100,8 +100,6 @@ services:
       - KAFKA_BOOTSTRAP=redpanda:9092
       - INPUT_TOPIC=events.raw
       - POSTGRES_DSN=postgresql://zeal:zeal@postgres:5432/events
-    ports:
-      - "8000:8000"
     command: >
       sh -c "
         echo '📄 Showing requirements.txt content:' &&
@@ -120,28 +118,3 @@ services:
         condition: service_completed_successfully
     tty: true
     stdin_open: true
-
-
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    depends_on:
-      - consumer
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
-      - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards
-    depends_on:
-      - prometheus

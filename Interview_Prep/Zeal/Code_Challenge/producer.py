@@ -9,16 +9,28 @@ stop = False
 def _stop(*_):
     global stop
     stop = True
-
 signal.signal(signal.SIGINT, _stop)
 signal.signal(signal.SIGTERM, _stop)
 
 p = Producer({
     "bootstrap.servers": BOOTSTRAP,
     "client.id": "zeal-producer",
+    "security.protocol": "PLAINTEXT",
+    "broker.address.family": "v4",
 })
 
-def on_delivery(err, msg):
+EVENT_TYPES = ["page_view", "login", "purchase", "logout"]
+
+def make_event(i: int) -> dict:
+    return {
+        "id": i,
+        "user_id": random.randint(1000, 1020),
+        "event_type": random.choice(EVENT_TYPES),
+        "ts": int(time.time() * 1000),
+        "iso": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+    }
+
+def dr(err, msg):
     if err:
         print(f"❌ delivery failed: {err}")
     else:
@@ -28,17 +40,11 @@ print("🚀 Starting producer... Ctrl+C to stop.")
 i = 0
 try:
     while not stop:
-        evt = {
-            "id": i,
-            "user_id": i % 5,
-            "event_type": random.choice(["click", "view", "purchase"]),
-            "ts": int(time.time() * 1000),
-            "iso": datetime.utcnow().isoformat(timespec="seconds") + "Z",
-        }
-        p.produce(TOPIC, json.dumps(evt).encode(), callback=on_delivery)
+        evt = make_event(i)
+        p.produce(TOPIC, json.dumps(evt).encode(), callback=dr)
         p.poll(0)
-        # short, responsive sleep
-        for _ in range(random.randint(3, 8)):
+        sleep_total = random.randint(2, 6)
+        for _ in range(sleep_total):
             if stop:
                 break
             time.sleep(1)
