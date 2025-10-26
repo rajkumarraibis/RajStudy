@@ -68,7 +68,7 @@ services:
         condition: service_healthy
     entrypoint: ["/bin/sh","-c"]
     command: >
-      "rpk topic create events.raw events.agg --brokers redpanda:9092 || true"
+      "rpk topic create events.raw --brokers redpanda:9092 || true"
 
   producer:
     image: python:3.11-slim

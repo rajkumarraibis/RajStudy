@@ -28,6 +28,22 @@ def ensure_table(conn):
         """)
         conn.commit()
 
+        # Create hourly aggregation view
+        cur.execute("""
+            CREATE OR REPLACE VIEW events_hourly_view AS
+            SELECT
+                date_trunc('hour', to_timestamp(ts_ms / 1000.0)) AS event_hour,
+                event_type,
+                COUNT(*) AS event_count,
+                COUNT(DISTINCT user_id) AS unique_users
+            FROM events
+            GROUP BY 1, 2
+            ORDER BY 1 DESC, 2;
+        """)
+        conn.commit()
+        print("🧮 Created or replaced view 'events_hourly_view'")
+
+
 def main():
     # Kafka consumer
     c = Consumer({
