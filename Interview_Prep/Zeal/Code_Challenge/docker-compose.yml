@@ -1,0 +1,52 @@
+# docker-compose.yml
+services:
+  kafka:
+    image: redpandadata/redpanda:v23.3.11
+    container_name: kafka
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp=1
+      - --memory=1G
+      - --reserve-memory=0M
+      - --node-id=1
+      - --check=false
+      - --kafka-addr=PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9094
+      - --advertise-kafka-addr=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9094
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+
+  redpanda-console:
+    image: redpandadata/console:latest
+    container_name: redpanda-console
+    ports:
+      - "8080:8080"
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      - kafka
+
+
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=zeal
+      - POSTGRES_PASSWORD=zeal
+      - POSTGRES_DB=events
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@zeal.com
+      PGADMIN_DEFAULT_PASSWORD: zeal123
+    depends_on:
+      - postgres
