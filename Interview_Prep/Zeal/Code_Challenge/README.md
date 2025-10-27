@@ -57,9 +57,9 @@ After running the setup commands, you should see the system working end-to-end a
 
 | Component | Screenshot | Description |
 |------------|-------------|--------------|
-| 🧩 **Containers Running** | ![Docker Compose PS](docs/docker_compose_ps.png) | All containers (Redpanda, Postgres, Consumer, Producer, pgAdmin) are healthy and running. |
-| 📊 **Redpanda Console** | ![Redpanda Console](docs/redpanda_console.png) | Shows messages successfully published to the `events.raw` topic. |
-| 🗄️ **pgAdmin – Data Verification** | ![pgAdmin View](docs/pgadmin_view.png) | Displays inserted records in `events_raw` and aggregated data in `hourly_aggregate` view. |
+| 🧩 **Containers Running** | ![Docker Compose PS](docs/docker.png) | All containers (Redpanda, Postgres, Consumer, Producer, pgAdmin) are healthy and running. |
+| 📊 **Redpanda Console** | ![Redpanda Console](docs/redpanda.png) | Shows messages successfully published to the `events.raw` topic. |
+| 🗄️ **pgAdmin – Data Verification** | ![pgAdmin View](docs/pgadmin.png) | Displays inserted records in `events_raw` and aggregated data in `hourly_aggregate` view. |
 
 These screenshots confirm that:
 1. Kafka → Postgres integration is functional  
