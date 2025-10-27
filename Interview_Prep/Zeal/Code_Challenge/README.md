@@ -57,7 +57,7 @@ After running the setup commands, you should see the system working end-to-end a
 
 | Component | Screenshot | Description |
 |------------|-------------|--------------|
-| 🧩 **Containers Running** | ![Docker Compose PS](docs/docker.png) | All containers (Redpanda, Postgres, Consumer, Producer, pgAdmin) are healthy and running. |
+| 🧩 **Containers Running** | ![Docker Compose PS](docs/Docker.png) | All containers (Redpanda, Postgres, Consumer, Producer, pgAdmin) are healthy and running. |
 | 📊 **Redpanda Console** | ![Redpanda Console](docs/redpanda.png) | Shows messages successfully published to the `events.raw` topic. |
 | 🗄️ **pgAdmin – Data Verification** | ![pgAdmin View](docs/pgadmin.png) | Displays inserted records in `events_raw` and aggregated data in `hourly_aggregate` view. |
 
