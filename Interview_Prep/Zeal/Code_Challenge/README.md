@@ -1,4 +1,4 @@
-# Zeal Code Challenge — E2E Streaming (Python Consumer  →  Redpanda → Python Consumer → Postgres → pgAdmin)
+# Zeal Code Challenge — E2E Streaming (Python Producer  →  Redpanda → Python Consumer → Postgres → pgAdmin)
 
 A minimal, production-ish pipeline:
 
