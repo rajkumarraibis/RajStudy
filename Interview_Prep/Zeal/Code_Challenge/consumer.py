@@ -57,6 +57,16 @@ CREATE TABLE IF NOT EXISTS events_raw (
   received_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 """
+DDL_VIEW = """
+CREATE OR REPLACE VIEW hourly_aggregate AS
+SELECT
+    date_trunc('hour', received_at) AS event_hour,
+    COALESCE(payload->>'event_type', 'unknown') AS event_type,
+    COUNT(*) AS event_count
+FROM events_raw
+GROUP BY 1, 2
+ORDER BY event_hour DESC;
+"""
 INSERT_SQL = "INSERT INTO events_raw (msg_key, payload) VALUES (%s, %s);"
 
 def _parse_dsn(dsn: str):
@@ -77,6 +87,7 @@ def pg_connect():
     conn.autocommit = True
     with conn.cursor() as cur:
         cur.execute(DDL)
+        cur.execute(DDL_VIEW)
     print(f"[db] connected → {cfg['host']}:{cfg['port']}/{cfg['dbname']} as {cfg['user']}", flush=True)
     return conn
 
@@ -96,8 +107,7 @@ def make_consumer(debug: bool = True) -> Consumer:
         "partition.assignment.strategy": "range",
         "security.protocol": "PLAINTEXT",
         "broker.address.family": "v4",
-        "socket.timeout.ms": 20000,
-        "debug": "broker,protocol,topic,cgrp,fetch",
+        "socket.timeout.ms": 20000
     }
 
 
