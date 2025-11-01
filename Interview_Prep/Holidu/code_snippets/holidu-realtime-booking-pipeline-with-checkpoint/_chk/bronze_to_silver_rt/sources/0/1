@@ -1,7 +1,0 @@
-{
-  "batchId": 1,
-  "processedFiles": [
-    "s3://lake/bronze/events/booking_confirmed/dt=2025-10-02/hour=12/file-0003.json.gz"
-  ],
-  "timestamp": "2025-10-02T12:02:05Z"
-}
