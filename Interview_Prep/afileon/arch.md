@@ -1,12 +1,4 @@
-Here is the **plain Markdown code** (no Mermaid) that will display correctly everywhere.
 
-You can copy–paste this directly into any `.md` file.
-
----
-
-# **Unified Multi-Tenant Data & AI Platform (Databricks + ClickHouse)**
-
-### **Architecture Diagram (Markdown ASCII)**
 
 ```markdown
 ## Unified Multi-Tenant Data & AI Platform (Databricks + ClickHouse)
@@ -62,12 +54,3 @@ Tenants' Systems (ERP, DMS, CRM, Tax Tools)
 
 ```
 
----
-
-If you want, I can give you:
-
-✅ a **compact version** (for slides)
-✅ a **detailed version** (for documentation)
-✅ or a **multi-tenancy-focused diagram**
-
-Which one do you want?
