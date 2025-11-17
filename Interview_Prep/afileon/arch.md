@@ -1,55 +1,51 @@
-flowchart LR
-    %% ================================
-    %% Tenants / Source Systems
-    %% ================================
-    subgraph T[Tenants' Source Systems]
-        A1[Tax Firm A<br/>ERP / DMS / CRM]
-        A2[Tax Firm B<br/>ERP / DMS / CRM]
-        A3[Tax Firm N<br/>Local Systems]
-    end
+## Unified Multi-Tenant Data & AI Platform (Databricks + ClickHouse)
 
-    A1 --> LZ
-    A2 --> LZ
-    A3 --> LZ
+Tenants' Systems (ERP, DMS, CRM, Tax Tools)
+    ├── Tax Firm A
+    ├── Tax Firm B
+    └── Tax Firm N
+            |
+            v
 
-    %% ================================
-    %% Ingestion Layer
-    %% ================================
-    subgraph ING[Ingestion Layer]
-        IG1[Batch Ingestion<br/>ADF / Glue / Autoloader]
-        IG2[Streaming Ingestion<br/>Kafka (tenant-aware)]
-    end
+[ Ingestion Layer ]
+    ├── Batch: ADF / AWS Glue / Databricks Autoloader
+    ├── Streaming: Kafka (tenant-aware topics)
+    └── Metadata: tenant_id, source_system, timestamps
+            |
+            v
 
-    LZ[(Landing Zone<br/>Object Storage<br/>/tenant=<id>/...)]
-    LZ --> IG1
-    IG2 --> DBX
+[ Landing Zone (Object Storage: S3 / ADLS) ]
+    └── Partitioned by: tenant_id / system / date
+            |
+            v
 
-    %% ================================
-    %% Lakehouse (Bronze/Silver/Gold)
-    %% ================================
-    subgraph DBX[Databricks Lakehouse<br/>Delta Bronze / Silver / Gold]
-        BR[Bronze<br/>Raw Delta Tables]
-        SV[Silver<br/>Standardized Data Models]
-        GD[Gold<br/>Marts & AI-Ready Tables]
-    end
+[ Databricks Lakehouse (Delta) ]
+    ├── Bronze  – Raw, append-only data
+    ├── Silver  – Cleaned, standardized domain models
+    ├── Gold    – Curated marts, KPIs, AI-ready tables
+    ├── ETL/ELT Pipelines via Databricks Workflows
+    └── Streaming ETL via Spark Structured Streaming
+            |
+            |-------> [ AI & ML on Databricks ]
+            |            ├── Feature Store
+            |            ├── ML/LLM Models
+            |            └── Model Registry
+            |
+            |-------> [ ClickHouse Analytics DB ]
+            |            ├── Fast OLAP queries
+            |            ├── Tenant-aware schemas
+            |            └── Real-time dashboards
+            |
+            v
 
-    IG1 --> BR
-    BR --> SV
-    SV --> GD
+[ BI & Apps ]
+    ├── Power BI / Tableau / Superset
+    ├── Firm-level dashboards (tenant-isolated)
+    └── Group-level analytics (aggregated)
 
-    %% ================================
-    %% Governance Layer
-    %% ================================
-    GOV[[Unity Catalog<br/>RBAC • RLS • Lineage • Quality]]
+[ Governance & Security (Unity Catalog) ]
+    ├── RBAC & ACLs
+    ├── Row/Column Level Security (tenant_id)
+    ├── Auditing, Lineage
+    └── Data Quality (DQ checks, SLAs)
 
-    DBX <--> GOV
-
-    %% ================================
-    %% Serving / AI / BI
-    %% ================================
-    DBX --> CH[ClickHouse Cluster<br/>Real-Time Analytics DB]
-    DBX --> ML[AI & ML on Databricks<br/>Feature Store • Models • LLMs]
-
-    CH --> BI[Dashboards & Self-Service BI<br/>Per-Tenant & Group-wide]
-
-    ML --> APP[AI Apps & APIs<br/>Scoring • Recommendations • Copilots]
